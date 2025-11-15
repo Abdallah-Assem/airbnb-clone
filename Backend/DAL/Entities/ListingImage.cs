@@ -4,6 +4,7 @@ namespace DAL.Entities
     public class ListingImage
     {
         public int Id { get; private set; }
+        public int ListingId { get; private set; }
         public string ImageUrl { get; private set; } = null!;
 
         // Relationships
