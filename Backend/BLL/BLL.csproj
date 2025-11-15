@@ -11,15 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AutoMapper\" />
     <Folder Include="Common\" />
-    <Folder Include="Global\" />
-    <Folder Include="ModelVM\" />
-    <Folder Include="Services\Abstractions\" />
-    <Folder Include="Services\Impelementation\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="15.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
   </ItemGroup>

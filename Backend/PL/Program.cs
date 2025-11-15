@@ -1,3 +1,5 @@
+using BLL.AutoMapper;
+using DAL.Common;
 using DAL.Database;
 using DAL.Entities;
 using DAL.Enum;
@@ -26,28 +28,36 @@ namespace PL
                 options.Password.RequireUppercase = false;
             })
             .AddEntityFrameworkStores<AppDbContext>()
+
             .AddDefaultTokenProviders();
-
+            //----->Abdelrahman Mohamed Hamed
             // Repositories
-            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            //builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            //builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<IListingRepository, ListingRepository>();
-            builder.Services.AddScoped<IBookingRepository, BookingRepository>();
-            builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
-            builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
-            builder.Services.AddScoped<IMessageRepository, MessageRepository>();
-            builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
-            builder.Services.AddScoped<IListingImageRepository, ListingImageRepository>();
-            builder.Services.AddScoped<IAmenityRepository, AmenityRepository>();
-            builder.Services.AddScoped<IKeywordRepository, KeywordRepository>();
+            //builder.Services.AddScoped<IUserRepository, UserRepository>();
+            //builder.Services.AddScoped<IListingRepository, ListingRepository>();
+            //builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+            //builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+            //builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+            //builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+            //builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+            //builder.Services.AddScoped<IListingImageRepository, ListingImageRepository>();
+            //builder.Services.AddScoped<IAmenityRepository, AmenityRepository>();
+            //builder.Services.AddScoped<IKeywordRepository, KeywordRepository>();
+
+            builder.Services.AddBussinesInDAL(); //Modular Data Access Layer
+
+            builder.Services.AddAutoMapper(cfg => cfg.AddProfile<ListingProfile>());//AutoMapperForListing BLL
+
+            // End of Abdelrahman Mohamed Hamed
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+            app.UseStaticFiles();
 
             await AppDbInitializer.SeedAsync(app);
 
@@ -156,7 +166,10 @@ namespace PL
                     latitude: 34.0195,
                     longitude: -118.4912,
                     maxGuests: 6,
-                    userId: adminId
+                    userId: adminId,
+                    tags: new List<string> { "beach", "villa", "luxury" },//
+                    createdBy: "System Admin"//
+
                 );
                 listing1.Amenities.Add(wifiAmenity);
                 listing1.Amenities.Add(poolAmenity);
@@ -172,7 +185,9 @@ namespace PL
                     latitude: 40.7128,
                     longitude: -74.0060,
                     maxGuests: 4,
-                    userId: adminId
+                    userId: adminId,
+                    tags: new List<string> { "city", "apartment", "modern" },//
+                    createdBy: "System Admin"//
                 );
                 listing2.Amenities.Add(wifiAmenity);
                 listing2.Amenities.Add(acAmenity);
