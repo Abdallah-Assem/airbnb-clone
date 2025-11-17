@@ -1,8 +1,4 @@
-﻿
-
-
-
-namespace BLL.Common
+﻿namespace BLL.Common
 {
     public static class ModularBLL
     {
@@ -10,7 +6,15 @@ namespace BLL.Common
         {
             //notifiaction
             services.AddScoped<INotificationService, NotificationService>();
-             
+            // messages
+            services.AddScoped<IMessageService, MessageService>();
+            // identity
+            services.AddScoped<IIdentityService, IdentityService>();
+            // reviews
+            services.AddScoped<IReviewService, ReviewService>();
+            // admin
+            services.AddScoped<IAdminService, AdminService>();
+            
             services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
             return services;
         }

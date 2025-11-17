@@ -1,6 +1,6 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using BLL.ModelVM.Notification;
+using BLL.ModelVM.Message;
 using DAL.Entities;
 
 namespace BLL.AutoMapper
@@ -12,6 +12,9 @@ namespace BLL.AutoMapper
             // notifications
             CreateMap<Notification, GetNotificationVM>().ReverseMap();
             CreateMap<Notification, CreateNotificationVM>().ReverseMap();
+            // messages
+            CreateMap<Message, GetMessageVM>().ReverseMap();
+            CreateMap<Message, CreateMessageVM>().ReverseMap();
         } 
 
     }

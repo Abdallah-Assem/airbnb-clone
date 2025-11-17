@@ -3,25 +3,38 @@ using DAL.Common;
 using DAL.Database;
 using DAL.Entities;
 using DAL.Enum;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using PL.Hubs;
 using BLL.AutoMapper;
-using BLL.Common;
-using DAL.Common;
-using DAL.Database;
-using DAL.Entities;
-using DAL.Enum;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace PL
 {
-    public class Program
+    public class Program 
     {
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // 1. ????? ????? CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200") // ??? ?????? ???? Angular
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials(); // ?? ??????? SignalR
+                });
+            });
+
+            
 
             // DbContext
             builder.Services.AddDbContext<AppDbContext>(options =>
@@ -34,24 +47,88 @@ namespace PL
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
             })
-            .AddEntityFrameworkStores<AppDbContext>();
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
 
+            // External authentication providers - register only when credentials exist
+            // JWT as default auth scheme
+            var authBuilder = builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            });
+            
+            // Configure JWT validation
+            var jwtKey = builder.Configuration["Jwt:Key"];
+            var jwtIssuer = builder.Configuration["Jwt:Issuer"];
+            var jwtAudience = builder.Configuration["Jwt:Audience"];
+            if (!string.IsNullOrWhiteSpace(jwtKey))
+            {
+                authBuilder.AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = jwtIssuer,
+                        ValidateAudience = true,
+                        ValidAudience = jwtAudience,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.FromMinutes(2)
+                    };
+                });
+            }
+
+            var googleId = builder.Configuration["Authentication:Google:ClientId"];
+            var googleSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+            if (!string.IsNullOrWhiteSpace(googleId) && !string.IsNullOrWhiteSpace(googleSecret))
+            {
+                authBuilder.AddGoogle(opts =>
+                {
+                    opts.ClientId = googleId;
+                    opts.ClientSecret = googleSecret;
+                });
+            }
+
+            var fbId = builder.Configuration["Authentication:Facebook:AppId"];
+            var fbSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
+            if (!string.IsNullOrWhiteSpace(fbId) && !string.IsNullOrWhiteSpace(fbSecret))
+            {
+                authBuilder.AddFacebook(opts =>
+                {
+                    opts.AppId = fbId;
+                    opts.AppSecret = fbSecret;
+                });
+            }
 
             // add modular in program
-            builder.Services.AddBuissinesInBLL();
+            // ensure DAL registrations occur before BLL so required repos are available
             builder.Services.AddBuissinesInDAL();
+            builder.Services.AddBuissinesInBLL();
+            // safe-guard: ensure IAdminRepository is registered (some extension variants may not register it)
+            builder.Services.AddScoped<DAL.Repo.Abstraction.IAdminRepository, DAL.Repo.Implementation.AdminRepository>();
             builder.Services.AddAutoMapper(cfg => cfg.AddProfile<ListingProfile>());//AutoMapperForListing BLL
 
+            
 
+            
 
 
 
 
             builder.Services.AddControllers();
+
+            //signalR
+            builder.Services.AddSignalR();
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+            app.UseCors("AllowFrontend");
+
             app.UseStaticFiles();
 
             await AppDbInitializer.SeedAsync(app);
@@ -69,6 +146,11 @@ namespace PL
             app.UseAuthorization();
 
             app.MapControllers();
+
+            //signal R
+            app.MapHub<NotificationHub>("/notificationsHub");
+            app.MapHub<MessageHub>("/messagesHub");
+           
 
             app.Run();
         }

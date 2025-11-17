@@ -16,7 +16,7 @@
         private Review() { }
 
         // Create a review
-        internal static Review Create(
+        public static Review Create(
             int bookingId,
             Guid guestId,
             int rating,
@@ -34,7 +34,7 @@
         }
 
         // Update existing review
-        internal void Update(
+        public void Update(
             int rating,
             string comment)
         {

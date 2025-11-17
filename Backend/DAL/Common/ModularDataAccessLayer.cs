@@ -1,4 +1,4 @@
-﻿
+﻿using DAL.Repo.Abstraction;
 using DAL.Repo.Implementation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,6 +21,8 @@ namespace DAL.Common
             services.AddScoped<IKeywordRepository, KeywordRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            // admin (register abstraction and implementation)
+            services.AddScoped<IAdminRepository, AdminRepository>();
             return services;
         }
 
