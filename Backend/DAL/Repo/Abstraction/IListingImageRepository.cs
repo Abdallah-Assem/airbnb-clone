@@ -1,22 +1,21 @@
-﻿namespace DAL.Repo.Abstraction
+﻿using DAL.Entities;
+
+namespace DAL.Repo.Abstraction
 {
     public interface IListingImageRepository : IGenericRepository<ListingImage>
     {
-        //AddImagesToListAsync
-        Task<List<ListingImage>> AddImagesToListAsync(int listingId, string imgPath ,string CreatedBy);
-        //DeleteImagesFromListAsync
-        Task<bool> DeleteImagesFromListAsync(int listingId,int listingImageId, string DeletedBy);
+        Task<ListingImage?> GetImageByIdAsync(int id, CancellationToken ct = default);
 
-        //get All Images By ListingId for view details
-        Task<List<ListingImage>> GetAllImagesByListingIdAsync(int listingId);
+        Task<IEnumerable<ListingImage>> GetActiveImagesByListingIdAsync(int listingId, CancellationToken ct = default);
 
-        //update Image in listing
-        Task<ListingImage> UpdateImageInListingAsync(int listingId, int listingImageId, string newImageUrl, string UpdatedBy);
-        
+        Task<int> AddImagesAsync(int listingId, List<string> imageUrls, string createdBy, CancellationToken ct = default);
 
+        Task<bool> SoftDeleteImagesAsync(List<int> imageIds, string deletedBy, CancellationToken ct = default);
 
+        Task<bool> SetMainImageAsync(int listingId, int imageId, string performedBy, CancellationToken ct = default);
 
+        Task<bool> IsImageOwnerAsync(int imageId, Guid userId, CancellationToken ct = default);
 
-
+        Task<bool> HardDeleteImageById(int imageId, string deletedBy, CancellationToken ct = default);
     }
 }
