@@ -62,9 +62,9 @@
                 // Combine the correct path to the file
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", folderName, fileName);
 
-                if (File.Exists(filePath))
+                if (System.IO.File.Exists(filePath))
                 {
-                    await Task.Run(() => File.Delete(filePath));
+                    await Task.Run(() => System.IO.File.Delete(filePath));
                     return "File Deleted Successfully";
                 }
 

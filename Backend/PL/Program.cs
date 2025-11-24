@@ -1,3 +1,4 @@
+using Stripe;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -23,6 +24,17 @@ namespace PL
             // Keep original JWT claim types (don't remap sub/name, etc.)
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
+            // Configure Stripe Settings
+            builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+
+            var stripeSettings = builder.Configuration.GetSection("Stripe").Get<StripeSettings>();
+            StripeConfiguration.ApiKey = stripeSettings.SecretKey;
+
+            // ----------------------------------------------------------------------------
+            // CORS
+            // Allow the SPA frontend (Angular on localhost:4200) to access this API
+            // and allow credentials for SignalR connections.
+            // ----------------------------------------------------------------------------
             // --------------------------------------------------------------------
             // CORS (allow Angular frontend on localhost:4200)
             // --------------------------------------------------------------------

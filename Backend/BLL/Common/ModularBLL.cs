@@ -9,9 +9,9 @@
             // messages
             services.AddScoped<IMessageService, MessageService>();
             // identity
-            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<IIdentityService, Services.Impelementation.IdentityService>();
             // reviews
-            services.AddScoped<IReviewService, ReviewService>();
+            services.AddScoped<IReviewService, Services.Impelementation.ReviewService>();
             // admin
             services.AddScoped<IAdminService, AdminService>();
             
@@ -26,7 +26,7 @@
 
             services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
             // Token service
-            services.AddSingleton<ITokenService, TokenService>();
+            services.AddSingleton<ITokenService, Services.Impelementation.TokenService>();
             // Ensure IdentityService is registered with token service injected
             //services.AddScoped<IIdentityService, IdentityService>();
             return services;
