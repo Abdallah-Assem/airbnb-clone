@@ -20,11 +20,11 @@ export interface LoginCredentials{
   password:string;
 }
 export interface RegisterData{
-  email:string;
-  password:string;
-  firstName:string;
-  lastName:string;
-  role: 'guest' | 'host';
+  email: string;
+  password: string;
+  fullName: string;
+  userName: string;
+  firebaseUid: string; // will be "null" until firebase is implemented
 }
 export interface SocialLoginRequest {
   token: string;

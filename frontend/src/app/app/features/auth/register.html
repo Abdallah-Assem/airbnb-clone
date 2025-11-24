@@ -1,0 +1,13 @@
+<div class="auth-card">
+  <h3>Register</h3>
+  <form (ngSubmit)="submit()" class="auth-form">
+    <input name="fullname" [(ngModel)]="fullname" placeholder="Full name" class="auth-input" />
+    <input name="userName" [(ngModel)]="userName" placeholder="Username" class="auth-input" />
+    <input name="email" [(ngModel)]="email" placeholder="Email" class="auth-input" />
+    <input name="password" [(ngModel)]="password" type="password" placeholder="Password" class="auth-input" />
+    <input name="confirmPassword" [(ngModel)]="confirmPassword" type="password" placeholder="Confirm password" class="auth-input" />
+    <div *ngIf="errorMessage" class="auth-error">{{ errorMessage }}</div>
+    <button type="submit" class="auth-btn">Register</button>
+  </form>
+  <div class="links">Have an account? <a routerLink="/auth/login">Login</a></div>
+</div>

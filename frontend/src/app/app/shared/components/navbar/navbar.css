@@ -46,3 +46,20 @@ img{
 
 /* temporary highlight for newly arrived notifications */
 .notification-bell .dropdown .item.just-arrived{ box-shadow: inset 0 0 0 2px rgba(220,53,69,0.08); background: linear-gradient(90deg, rgba(220,53,69,0.04), rgba(255,255,255,0)); transition: background 0.4s ease; }
+
+/* messages dropdown */
+.message-bell{ position: relative; display: inline-block; margin-left: 12px; }
+.message-bell .dropdown{ position: absolute; right: 0; top: 36px; width: 360px; max-height: 420px; overflow-y: auto; box-shadow: 0 6px 18px rgba(0,0,0,0.12); border-radius: 8px; background: rgba(255,255,255,0.98); z-index: 1000; padding: 8px; border: 1px solid rgba(0,0,0,0.06); color: #222; }
+.message-bell .dropdown { position: absolute; right: 0; top: 36px; width: 380px; max-height: 420px; overflow: hidden; box-shadow: 0 8px 26px rgba(15,15,15,0.12); border-radius: 10px; background: #fff; z-index: 1000; padding: 0; border: 1px solid rgba(12,30,60,0.04); color: #222; }
+.message-bell .dropdown .dropdown-top{ display:flex; justify-content:flex-end; padding:8px; border-bottom:1px solid #f4f6fb; background:linear-gradient(90deg,#fff,#fbfdff)}
+.message-bell .dropdown .open-chat{background:#0b5ed7;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer}
+.message-bell .dropdown .list{max-height:320px;overflow:auto;padding:8px}
+.message-bell .dropdown .item{ display:flex; gap:10px; align-items:flex-start; padding:10px; border-bottom:1px solid #f4f6fb; cursor:pointer }
+.message-bell .dropdown .item:last-child{ border-bottom:none }
+.message-bell .dropdown .avatar{width:38px;height:38px;border-radius:50%;background:#e9eef8;display:inline-block}
+.message-bell .dropdown .meta{flex:1;display:flex;flex-direction:column}
+.message-bell .dropdown .meta .title{font-weight:600;color:#0b5ed7}
+.message-bell .dropdown .meta .snippet{font-size:0.92rem;color:#556}
+.message-bell .dropdown .time{font-size:0.78rem;color:#9aa0a6}
+.message-bell .dropdown .item.unread .title{font-weight:700}
+.message-bell .msgs{ max-height: 260px; overflow-y: auto; }

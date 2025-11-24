@@ -1,0 +1,7 @@
+.auth-card{max-width:380px;margin:40px auto;padding:20px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,0.08);background:#fff}
+.auth-card h3{margin:0 0 12px;font-size:1.25rem}
+.auth-form{display:flex;flex-direction:column;gap:8px}
+.auth-input{padding:10px;border:1px solid #ddd;border-radius:4px;font-size:0.95rem}
+.auth-btn{padding:10px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer}
+.auth-btn:hover{background:#0069d9}
+.links{margin-top:10px;font-size:0.9rem;text-align:center}

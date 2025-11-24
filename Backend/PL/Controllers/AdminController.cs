@@ -1,12 +1,11 @@
-
-
+using Microsoft.AspNetCore.Mvc;
 
 namespace PL.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = "Admin")]
-    public class AdminController : ControllerBase
+    public class AdminController : BaseController
     {
         private readonly IAdminService _adminService;
         public AdminController(IAdminService adminService)

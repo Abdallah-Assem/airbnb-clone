@@ -1,0 +1,9 @@
+<div class="auth-card">
+  <h3>Login</h3>
+  <form (ngSubmit)="submit()" class="auth-form">
+    <input name="email" [(ngModel)]="email" placeholder="Email" class="auth-input" />
+    <input name="password" [(ngModel)]="password" type="password" placeholder="Password" class="auth-input" />
+    <button type="submit" class="auth-btn">Login</button>
+  </form>
+  <div class="links">No account? <a routerLink="/auth/register">Register</a></div>
+</div>

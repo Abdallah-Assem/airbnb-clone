@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { NotificationDto } from '../models/notification';
 import { NotificationHub } from './notification-hub';
-import { HttpClient } from '@angular/common/http';
+import { NotificationService } from './api/notification.service';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationStoreService {
@@ -14,10 +14,10 @@ export class NotificationStoreService {
   private unreadCountSubject = new BehaviorSubject<number>(0);
   unreadCount$ = this.unreadCountSubject.asObservable();
 
-  private apiBase = 'http://localhost:5235/api/notification';
+  // use NotificationService for API calls
 
   constructor(
-    private http: HttpClient,
+    private api: NotificationService,
     private hub: NotificationHub
   ) {
     // كل ما يجي notification من الـ hub نحدّث الستيت محليًا
@@ -26,19 +26,19 @@ export class NotificationStoreService {
 
   // initial load
   loadInitial() {
-  this.http.get<{ result: NotificationDto[] }>(`${this.apiBase}/user`)
-    .pipe(
-      map(res => Array.isArray(res.result) ? res.result : []),
-      tap((list: NotificationDto[]) => {
-        this.notificationsSubject.next(list);
-        this.unreadCountSubject.next(list.filter((x: NotificationDto) => !x.isRead).length);
-      })
-    )
-    .subscribe({
-      next: (list: NotificationDto[]) => console.log('notifications loaded', list),
-      error: err => console.error('Failed to load notifications', err)
-    });
-}
+    this.api.getForCurrentUser()
+      .pipe(
+        map((res: any) => Array.isArray(res.result) ? res.result : []),
+        tap((list: NotificationDto[]) => {
+          this.notificationsSubject.next(list);
+          this.unreadCountSubject.next(list.filter((x: NotificationDto) => !x.isRead).length);
+        })
+      )
+      .subscribe({
+        next: (list: NotificationDto[]) => console.log('notifications loaded', list),
+        error: err => console.error('Failed to load notifications', err)
+      });
+  }
 
   private prependNotification(n: NotificationDto) {
     const current = this.notificationsSubject.value;
@@ -47,7 +47,7 @@ export class NotificationStoreService {
   }
 
   markAsRead(id: number) {
-    return this.http.put(`${this.apiBase}/${id}/read`, {}).pipe(
+    return this.api.markAsRead(id).pipe(
       tap(() => {
         const list = this.notificationsSubject.value.map(x => x.id === id ? { ...x, isRead: true } : x);
         this.notificationsSubject.next(list);
@@ -57,7 +57,7 @@ export class NotificationStoreService {
   }
 
   markAllAsRead() {
-    return this.http.put(`${this.apiBase}/read-all`, {}).pipe(
+    return this.api.markAllAsRead().pipe(
       tap(() => {
         const list = this.notificationsSubject.value.map(x => ({ ...x, isRead: true }));
         this.notificationsSubject.next(list);

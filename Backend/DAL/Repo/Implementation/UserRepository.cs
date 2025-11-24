@@ -1,4 +1,5 @@
-﻿namespace DAL.Repo.Implementation
+﻿
+namespace DAL.Repo.Implementation
 {
     public class UserRepository : GenericRepository<User>, IUserRepository
     {
@@ -8,6 +9,17 @@
         {
             return await _context.Users
                 .FirstOrDefaultAsync(u => u.Email!.ToLower() == email.ToLower());
+        }
+
+        public async Task<User?> GetByUserNameAsync(string userName)
+        {
+            return await _context.Users
+                .FirstOrDefaultAsync(u => u.UserName!.ToLower() == userName.ToLower());
+        }
+
+        public async Task<User?> GetByIdAsync(Guid id)
+        {
+            return await _context.Users.FindAsync(id);
         }
 
         public async Task<IEnumerable<User>> GetActiveUsersAsync()
@@ -33,6 +45,17 @@
                 user.SetActive(false);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<User?> GetByIdAsyncForlisting(Guid id, CancellationToken ct = default)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id, ct);
+            if (user != null)
+            {
+                return user;
+            }
+            return null;
+
         }
     }
 }

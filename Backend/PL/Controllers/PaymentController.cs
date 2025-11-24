@@ -2,7 +2,7 @@ namespace PL.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PaymentController : ControllerBase
+    public class PaymentController : BaseController
     {
         private readonly IPaymentService _paymentService;
 
@@ -76,11 +76,10 @@ namespace PL.Controllers
         [HttpPost("initiate")]
         public async Task<IActionResult> Initiate([FromBody] CreatePaymentVM model)
         {
-            var sub = User.FindFirst("sub")?.Value;
-            if (string.IsNullOrEmpty(sub)) return Unauthorized();
-            if (!Guid.TryParse(sub, out var userId)) return Unauthorized();
+            var userId = GetUserIdFromClaims();
+            if (userId == null) return Unauthorized();
 
-            var resp = await _paymentService.InitiatePaymentAsync(userId, model.BookingId, model.Amount, model.PaymentMethod);
+            var resp = await _paymentService.InitiatePaymentAsync(userId.Value, model.BookingId, model.Amount, model.PaymentMethod);
             if (!resp.Success) return BadRequest(resp.errorMessage);
             return Ok(resp.result);
         }

@@ -22,53 +22,53 @@
         public ICollection<Booking> Bookings { get; private set; } = new List<Booking>();
         public ICollection<Review> Reviews { get; private set; } = new List<Review>();
         public ICollection<Amenity> Amenities { get; private set; } = new List<Amenity>();
-        public ICollection<Keyword> Keywords { get; private set; } = new List<Keyword>();
         public ICollection<ListingImage> Images { get; private set; } = new List<ListingImage>();
 
-        #region Abdelrahman Mohamed Hamed 
-        // optional explicit main image (nullable)
+
+        // Main Image
         public int? MainImageId { get; private set; }
         public ListingImage? MainImage { get; private set; }
 
-        public int Priority { get; private set; }
+        //public List<string> Tags { get; private set; } = new List<string>();
 
-        public List<string> Tags { get; set; } = new List<string>();
-
+        // Approval Workflow
         public bool IsReviewed { get; private set; }
         public bool IsApproved { get; private set; }
-        public string CreatedBy { get; private set; } = null!;
+        public DateTime? SubmittedForReviewAt { get; private set; }
+        public DateTime? ReviewedAt { get; private set; }
+        public string? ReviewNotes { get; private set; }
+        public string? ReviewedBy { get; private set; }
 
+        // Auditing
+        public string CreatedBy { get; private set; } = null!;
         public string? UpdatedBy { get; private set; }
         public DateTime? UpdatedOn { get; private set; }
-
         public string? DeletedBy { get; private set; }
         public DateTime? DeletedOn { get; private set; }
-
         public bool IsDeleted { get; private set; }
 
-        //  concurrency token
-        public byte[]? RowVersion { get; private set; }
-        #endregion
+ 
 
-        protected Listing() { }
+        // Private constructor for EF
+        private Listing() { }
 
-        // Create a new listing
+        // Factory method for creating new listing
         public static Listing Create(
-            string title,
-            string description,
-            decimal pricePerNight,
-            string location,
-            double latitude,
-            double longitude,
-            int maxGuests,
-            List<string> tags,
-            Guid userId,
-            string createdBy,
-            bool isPromoted = false,
-            DateTime? promotionEndDate = null
-        )
+     string title,
+     string description,
+     decimal pricePerNight,
+     string location,
+     double latitude,
+     double longitude,
+     int maxGuests,
+     Guid userId,
+     string createdBy,
+     string mainImageUrl,
+     //bool isPromoted = false,
+     //DateTime? promotionEndDate = null,
+     List<string>? keywordNames = null)     // optional keyword names
         {
-            return new Listing
+            var listing = new Listing
             {
                 Title = title,
                 Description = description,
@@ -77,100 +77,275 @@
                 Latitude = latitude,
                 Longitude = longitude,
                 MaxGuests = maxGuests,
-                Tags = tags ?? new List<string>(),
                 UserId = userId,
-                IsPromoted = isPromoted,
-                PromotionEndDate = promotionEndDate,
-                // moderation & auditing defaults
+                //IsPromoted = isPromoted,
+                //PromotionEndDate = promotionEndDate,
+
+                // Approval workflow - new listings need review
                 IsReviewed = false,
                 IsApproved = false,
-                IsDeleted = false,
+                SubmittedForReviewAt = DateTime.UtcNow,
+
+                // Auditing
                 CreatedBy = createdBy,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                IsDeleted = false
             };
-        }
 
-        // Update existing listing
-        public bool Update(
-            string title,
-            string description,
-            decimal pricePerNight,
-            string location,
-            double latitude,
-            double longitude,
-            int maxGuests,
-            string updatedBy,
-            bool isPromoted,
-            DateTime? promotionEndDate,
-            List<string>? tags)
-        {
-            if (!IsDeleted)
+            // Attach keywords owned by this listing
+            if (keywordNames != null)
             {
-                Title = title;
-                Description = description;
-                PricePerNight = pricePerNight;
-                Location = location;
-                Latitude = latitude;
-                Longitude = longitude;
-                MaxGuests = maxGuests;
-                IsPromoted = isPromoted;
-                PromotionEndDate = promotionEndDate;
-                Tags = tags ?? new List<string>();
-
-                // auditing
-                UpdatedBy = updatedBy;
-                UpdatedOn = DateTime.UtcNow;
-
-                // moderation: re-review
-                IsReviewed = false;
-                IsApproved = false;
-                return true;
+                foreach (var name in keywordNames
+                             .Where(n => !string.IsNullOrWhiteSpace(n))
+                             .Select(n => n.Trim()))
+                {
+                    var kw = Amenity.Create(name, listing);
+                    listing.Amenities.Add(kw);
+                }
             }
 
-            return false;
+            if (!string.IsNullOrWhiteSpace(mainImageUrl))
+            {
+                var mainImage = ListingImage.CreateImage(listing, mainImageUrl, createdBy);
+                listing.Images.Add(mainImage);
+                // no SetMainImage call here
+            }
+
+            return listing;
         }
 
-        public bool SoftDelete(string deletedBy)
+        internal void AddImage(string imageUrl, string createdBy)
+        {
+            if (IsDeleted)
+                throw new InvalidOperationException("Cannot add image to deleted listing");
+
+            var image = ListingImage.CreateImage(this, imageUrl, createdBy);
+            Images.Add(image);
+        }
+
+        internal bool Update(
+    string title,
+    string description,
+    decimal pricePerNight,
+    string location,
+    double latitude,
+    double longitude,
+    int maxGuests,
+    string updatedBy,
+    //bool isPromoted,
+    //DateTime? promotionEndDate,
+    IEnumerable<string>? keywordNames = null,
+    string? newMainImageUrl = null)
         {
             if (IsDeleted)
                 return false;
+
+            Title = title;
+            Description = description;
+            PricePerNight = pricePerNight;
+            Location = location;
+            Latitude = latitude;
+            Longitude = longitude;
+            MaxGuests = maxGuests;
+            //IsPromoted = isPromoted;
+            //PromotionEndDate = promotionEndDate;
+
+            // Replace keywords: easiest approach — clear then add new owned keywords
+            if (keywordNames != null)
+            {
+                // Remove existing keywords (they will be deleted on SaveChanges if tracked)
+                // We clear the collection so EF removes them from the database on SaveChanges (cascade)
+                Amenities.Clear();
+
+                foreach (var name in keywordNames
+                             .Where(n => !string.IsNullOrWhiteSpace(n))
+                             .Select(n => n.Trim()))
+                {
+                    var kw = Amenity.Create(name, this);
+                    Amenities.Add(kw);
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(newMainImageUrl))
+            {
+                var newMainImage = ListingImage.CreateImage(this, newMainImageUrl, updatedBy);
+                Images.Add(newMainImage);
+                SetMainImage(newMainImage, updatedBy);
+            }
+
+            UpdatedBy = updatedBy;
+            UpdatedOn = DateTime.UtcNow;
+
+            if (IsReviewed)
+            {
+                MarkForReReview();
+            }
+
+            return true;
+        }
+        // Mark for re-review when host makes changes
+        internal void MarkForReReview()
+        {
+            if (IsDeleted) return;
+
+            IsReviewed = false;
+            IsApproved = false;
+            SubmittedForReviewAt = DateTime.UtcNow;
+            ReviewNotes = null;
+            ReviewedBy = null;
+            ReviewedAt = null;
+        }
+
+        // Admin approval
+        internal void Approve(string approver, string? notes = null)
+        {
+            if (IsDeleted)
+                throw new InvalidOperationException("Cannot approve a deleted listing.");
+            if (IsReviewed && IsApproved)
+                throw new InvalidOperationException("Listing is already approved.");
+
+            IsReviewed = true;
+            IsApproved = true;
+            ReviewedBy = approver;
+            ReviewedAt = DateTime.UtcNow;
+            ReviewNotes = notes;
+            UpdatedBy = approver;
+            UpdatedOn = DateTime.UtcNow;
+        }
+
+        // Admin rejection
+        internal void Reject(string rejectedBy, string? notes = null)
+        {
+            if (IsDeleted)
+                throw new InvalidOperationException("Cannot reject a deleted listing.");
+            if(!IsApproved)
+                throw new InvalidOperationException("listing is already rejected.");
+
+
+            IsReviewed = true;
+            IsApproved = false;
+            ReviewedBy = rejectedBy;
+            ReviewedAt = DateTime.UtcNow;
+            ReviewNotes = notes;
+            UpdatedBy = rejectedBy;
+            UpdatedOn = DateTime.UtcNow;
+        }
+
+        // Soft delete
+        internal bool SoftDelete(string deletedBy)
+        {
+            if (IsDeleted)
+                throw new InvalidOperationException("listing is already deleted.");
+
             IsDeleted = true;
             DeletedBy = deletedBy;
             DeletedOn = DateTime.UtcNow;
             return true;
         }
 
-        public void Approve(string approver, string? note = null)
+        // Set main image
+        public void SetMainImage(ListingImage image, string performedBy)
         {
-            if (IsDeleted) throw new InvalidOperationException("Cannot approve a deleted listing.");
-            IsReviewed = true;
-            IsApproved = true;
-            UpdatedBy = approver;
+            if (image == null) throw new ArgumentNullException(nameof(image));
+            if (IsDeleted) throw new InvalidOperationException("Cannot change main image...");
+
+            // Ensure the image belongs to this listing and is not deleted
+            if (!ReferenceEquals(image.Listing, this) && image.ListingId != this.Id)
+                throw new InvalidOperationException("Image does not belong to this listing.");
+
+            if (image.IsDeleted)
+                throw new InvalidOperationException("Cannot set a deleted image as main.");
+
+            // If image.Id is 0 (not persisted yet) that's OK — EF will set the PK when saved.
+            MainImageId = image.Id;
+            MainImage = image;
+            UpdatedBy = performedBy;
             UpdatedOn = DateTime.UtcNow;
         }
 
-        public void Reject(Guid adminId, string? note = null)
+        // Sets or updates the promotion status of a listing.
+        // Promoted listings appear at the top of search results.
+        // Validates that promotion end date is in the future.
+        // Prevents promoting already promoted listings.
+        internal void SetPromotion(bool isPromoted, DateTime? promotionEndDate, string performedBy)
         {
-            IsReviewed = true;
-            IsApproved = false;
+            if (IsDeleted)
+                throw new InvalidOperationException("Cannot promote a deleted listing.");
+
+            //  Check if already promoted
+            if (IsPromoted && isPromoted)
+                throw new InvalidOperationException($"Listing is already promoted until {PromotionEndDate?.ToString("yyyy-MM-dd HH:mm")}.");
+
+            // Validate promotion end date is in the future
+            if (isPromoted && promotionEndDate.HasValue)
+            {
+                if (promotionEndDate.Value <= DateTime.UtcNow)
+                    throw new InvalidOperationException("Promotion end date must be in the future.");
+            }
+
+            //  If unpromoting, clear the end date
+            if (!isPromoted)
+            {
+                IsPromoted = false;
+                PromotionEndDate = null;
+            }
+            else
+            {
+                IsPromoted = true;
+                PromotionEndDate = promotionEndDate;
+            }
+
+            UpdatedBy = performedBy;
+            UpdatedOn = DateTime.UtcNow;
+        }
+    
+        // Checks if the promotion has expired and automatically unpromotes if needed.
+        // Should be called when retrieving listings for public display
+        public bool CheckAndExpirePromotion()
+        {
+            if (IsPromoted && PromotionEndDate.HasValue && PromotionEndDate.Value <= DateTime.UtcNow)
+            {
+                IsPromoted = false;
+                PromotionEndDate = null;
+                return true;
+            }
+            return false;
         }
 
-        
-        public void SetMainImage(int imageId, string performedBy)
+        // Extends the current promotion to a new end date.
+        // Validates that listing is currently promoted and new date is valid.
+        // Can only be called by Admin.
+        internal void ExtendPromotion(DateTime newPromotionEndDate, string performedBy)
         {
-            if (IsDeleted) throw new InvalidOperationException("Cannot change main image of a deleted listing.");
+            if (IsDeleted)
+                throw new InvalidOperationException("Cannot extend promotion of a deleted listing.");
+
+            if (!IsPromoted || !PromotionEndDate.HasValue)
+                throw new InvalidOperationException("Listing is not currently promoted.");
+
+            if (newPromotionEndDate <= PromotionEndDate.Value)
+                throw new InvalidOperationException("New promotion end date must be after the current end date.");
+
+            if (newPromotionEndDate <= DateTime.UtcNow)
+                throw new InvalidOperationException("New promotion end date must be in the future.");
+
+            PromotionEndDate = newPromotionEndDate;
+            UpdatedBy = performedBy;
+            UpdatedOn = DateTime.UtcNow;
+        }
+    
+
+// Set main image for seedings
+public void SetMainImage(int imageId, string performedBy) 
+        { if (IsDeleted)
+                throw new InvalidOperationException("Cannot change main image..."); 
+            if (!Images.Any(img => img.Id == imageId && !img.IsDeleted)) 
+                throw new InvalidOperationException("Image not found in listing"); 
             MainImageId = imageId;
-            UpdatedBy = performedBy ?? "System";
+            UpdatedBy = performedBy;
             UpdatedOn = DateTime.UtcNow;
         }
 
-        public void SetPromotion(bool isPromoted, DateTime? promotionEndDate, string performedBy)
-        {
-            if (IsDeleted) throw new InvalidOperationException("Cannot promote a deleted listing.");
-            IsPromoted = isPromoted;
-            PromotionEndDate = promotionEndDate;
-            UpdatedBy = performedBy ?? "System";
-            UpdatedOn = DateTime.UtcNow;
-        }
+
     }
 }

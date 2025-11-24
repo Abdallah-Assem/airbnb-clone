@@ -1,0 +1,34 @@
+<div class="chat-container">
+  <div class="left">
+    <div class="new-conv">
+      <input [(ngModel)]="newReceiverId" placeholder="Enter receiver username" />
+      <button (click)="startNewConversation()">Start</button>
+    </div>
+    <div class="conversations">
+      <div *ngFor="let c of conversations" class="conv-item" [class.selected]="c.otherUserId === selectedUserId" (click)="selectConversation(c.otherUserId)">
+        <div class="conv-id">{{ c.otherUserName }}</div>
+        <div class="conv-snippet">{{ c.lastMessage | slice:0:40 }}</div>
+        <div class="conv-time">{{ c.lastSentAt | date:'short' }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right" *ngIf="selectedUserId">
+    <div class="header">Chat with {{ selectedUserDisplayName }}</div>
+    <div class="messages" #messagesContainer>
+      <div *ngFor="let m of selectedMessages" class="message-item" [class.me]="m.senderId === currentUserId">
+        <div class="msg-content">{{ m.content }}
+          <span *ngIf="m.senderId === currentUserId" class="tick" [class.read]="m.isRead" aria-hidden="true"></span>
+        </div>
+        <div class="msg-meta">{{ m.senderDisplayName }} • {{ m.sentAt | date:'short' }}</div>
+      </div>
+    </div>
+
+    <form class="send-form" (ngSubmit)="send()">
+      <input [(ngModel)]="newMessage" name="message" placeholder="Type a message..." />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <div class="right empty" *ngIf="!selectedUserId">Select or start a conversation</div>
+</div>
