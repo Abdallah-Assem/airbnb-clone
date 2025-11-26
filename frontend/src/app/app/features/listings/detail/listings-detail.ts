@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ListingService } from '../../../core/services/listings/listing.service';
@@ -16,6 +16,7 @@ export class ListingsDetail implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private listingService = inject(ListingService);
+  private cdr = inject(ChangeDetectorRef);
   private sub: Subscription | null = null;
 
   listing?: ListingDetailVM;
@@ -52,10 +53,13 @@ export class ListingsDetail implements OnInit, OnDestroy {
           this.error = response.message || 'Failed to load listing';
         }
         this.loading = false;
+        // ensure view updates after async data arrival
+        try { this.cdr.detectChanges(); } catch { /* ignore */ }
       },
       (err) => {
         this.error = 'Error loading listing details';
         this.loading = false;
+        try { this.cdr.detectChanges(); } catch { /* ignore */ }
       }
     );
   }
@@ -83,7 +87,7 @@ export class ListingsDetail implements OnInit, OnDestroy {
 
   editListing(): void {
     if (this.listing) {
-      this.router.navigate(['/listings', 'edit', this.listing.id]);
+      this.router.navigate(['/listings', this.listing.id, 'edit']);
     }
   }
 }

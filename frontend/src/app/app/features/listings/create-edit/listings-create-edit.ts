@@ -176,7 +176,7 @@ export class ListingsCreateEdit implements OnInit {
           if (!response.isError) {
             this.successMessage = 'Listing updated successfully!';
             setTimeout(() => {
-              this.router.navigate(['/listings', 'detail', this.currentId]);
+              this.router.navigate(['/listings', this.currentId]);
             }, 1500);
           } else {
             this.error = response.message || 'Failed to update listing';
@@ -206,7 +206,8 @@ export class ListingsCreateEdit implements OnInit {
           if (!response.isError) {
             this.successMessage = 'Listing created successfully!';
             setTimeout(() => {
-              this.router.navigate(['/listings', 'detail', response.data]);
+                // after create, redirect to listings overview
+                this.router.navigate(['/listings']);
             }, 1500);
           } else {
             this.error = response.message || 'Failed to create listing';

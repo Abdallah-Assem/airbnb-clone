@@ -24,13 +24,8 @@ export class App implements OnInit {
     private auth: AuthService,
     private router: Router
   ) {
-    // helpful debug logs for navigation
-    console.log('ROUTER CONFIG:', this.router.config);
-    this.router.events.subscribe((e: Event) => {
-      if (e instanceof NavigationStart) console.log('NAV START ->', e.url);
-      if (e instanceof NavigationEnd) console.log('NAV END   ->', e.url);
-      if (e instanceof NavigationError) console.error('NAV ERROR ->', e.error);
-    });
+    // Navigation logging removed for cleaner console; keep subscription for potential future use
+    this.router.events.subscribe(() => {});
   }
 
   ngOnInit(): void {

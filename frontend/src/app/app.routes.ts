@@ -30,8 +30,8 @@ export const routes: Routes = [
       { path: 'create', component: ListingsCreateEdit, canActivate: [AuthGuard] },
 
       // listing detail/edit routes
-      { path: ':id/edit', component: ListingsCreateEdit, canActivate: [listingExistsGuard] },
-      { path: ':id', component: ListingsDetail, canActivate: [listingExistsGuard] },
+      { path: ':id/edit', component: ListingsCreateEdit},
+      { path: ':id', component: ListingsDetail,  },
     ],
   },
 
@@ -47,4 +47,4 @@ export const routes: Routes = [
   // Optional:
   // { path: '**', redirectTo: 'home' },
 ];
-];
+
