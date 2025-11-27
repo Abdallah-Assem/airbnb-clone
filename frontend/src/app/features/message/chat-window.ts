@@ -55,8 +55,8 @@ export class ChatWindow implements OnInit {
     const payload = this.auth.getPayload();
     this.currentUserId = payload?.sub || payload?.id || payload?.nameid || null;
 
-    // ensure global message store is populated (unread counter)
-    try { this.store.loadInitial(); } catch {}
+    // Load all conversations for chat window (not just unread)
+    try { this.store.loadConversations(); } catch {}
 
     // load conversations for current user from API
     this.loadConversations();

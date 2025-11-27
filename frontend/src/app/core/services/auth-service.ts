@@ -3,12 +3,12 @@ import { BehaviorSubject, from, Observable, switchMap, tap } from 'rxjs';
 import { AuthResponse, LoginCredentials, RegisterData, User, UserRole } from '../../features/auth/authModels';
 import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { initializeApp } from 'firebase/app';
-import { 
-  getAuth, 
-  signInWithPopup, 
-  GoogleAuthProvider, 
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
   FacebookAuthProvider,
   UserCredential,
   signOut as firebaseSignOut
@@ -20,10 +20,10 @@ import {
 export class AuthService {
   private readonly TOKEN_KEY = 'auth_token';
   private readonly USER_KEY = 'user_data';
-  
+
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
-  
+
   private firebaseApp: any;
   private firebaseAuth: any;
 
@@ -51,7 +51,7 @@ export class AuthService {
     if (isPlatformBrowser(this.platformId)) {
       const token = localStorage.getItem(this.TOKEN_KEY);
       const userData = localStorage.getItem(this.USER_KEY);
-      
+
       if (token && userData) {
         try {
           const user: User = JSON.parse(userData);

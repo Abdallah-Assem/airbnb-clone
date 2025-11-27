@@ -29,11 +29,33 @@ export class Navbar implements OnInit, OnDestroy {
   notificationOpen = false;
   messageOpen = false;
 
+  isAuthenticated = false;
+
   private docClickUnlisten?: () => void;
 
   constructor(private store: NotificationStoreService, private cdr: ChangeDetectorRef, private messageStore: MessageStoreService, public auth: AuthService, private router: Router, private el: ElementRef, private renderer: Renderer2) {}
 
   ngOnInit() {
+    // Subscribe to authentication state changes
+    this.sub.add(this.auth.isAuthenticated$.subscribe(isAuth => {
+      Promise.resolve().then(() => {
+        this.isAuthenticated = isAuth;
+        // Load notifications and messages when user logs in
+        if (isAuth) {
+          console.log('User authenticated, loading unread notifications and messages');
+          this.store.loadUnread();
+          this.messageStore.loadUnread();
+        } else {
+          // Clear data when logged out
+          this.notifications = [];
+          this.messages = [];
+          this.unreadCount = 0;
+          this.unreadMsgCount = 0;
+        }
+        this.cdr.detectChanges();
+      });
+    }));
+
     this.sub.add(this.store.notifications$.subscribe(list => {
       // schedule update in microtask to avoid ExpressionChangedAfterItHasBeenCheckedError
       Promise.resolve().then(() => {
@@ -98,17 +120,37 @@ export class Navbar implements OnInit, OnDestroy {
     if (this.notificationOpen) this.messageOpen = false;
   }
 
+  openNotifications() {
+    // Close dropdown first
+    this.notificationOpen = false;
+    // Navigate to notifications page
+    console.log('Navigating to notifications, current URL:', this.router.url);
+    this.router.navigate(['/notifications']).then(success => {
+      console.log('Navigation to notifications:', success ? 'SUCCESS' : 'FAILED');
+    });
+  }
+
   toggleMessages() {
     this.messageOpen = !this.messageOpen;
     if (this.messageOpen) this.notificationOpen = false;
   }
 
   openChat() {
-    // navigate to the chat route
-    this.router.navigate(['/messages']);
+    // Close dropdown first
+    this.messageOpen = false;
+    // Navigate to messages page
+    console.log('Navigating to messages, current URL:', this.router.url);
+    this.router.navigate(['/messages']).then(success => {
+      console.log('Navigation to messages:', success ? 'SUCCESS' : 'FAILED');
+    });
   }
 
   markAll() { this.store.markAllAsRead().subscribe(); }
+
+  markAllMessagesRead() {
+    // Mark all messages as read in the message store
+    this.messageStore.markAllAsRead();
+  }
 
   markAsRead(id: number, event?: Event) {
     event?.stopPropagation();

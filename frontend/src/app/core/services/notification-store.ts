@@ -24,20 +24,43 @@ export class NotificationStoreService {
     this.hub.notificationReceived.subscribe(n => this.prependNotification(n));
   }
 
-  // initial load
-  loadInitial() {
+  // Load unread notifications for navbar dropdown
+  loadUnread() {
+    this.api.getUnread()
+      .pipe(
+        map((res: any) => Array.isArray(res.result) ? res.result : []),
+        tap((list: NotificationDto[]) => {
+          this.notificationsSubject.next(list);
+          this.unreadCountSubject.next(list.length);
+          console.log('Unread notifications loaded:', list.length);
+        })
+      )
+      .subscribe({
+        next: (list: NotificationDto[]) => console.log('Unread notifications:', list),
+        error: err => console.error('Failed to load unread notifications', err)
+      });
+  }
+
+  // Load all notifications for notification window page
+  loadAll() {
     this.api.getForCurrentUser()
       .pipe(
         map((res: any) => Array.isArray(res.result) ? res.result : []),
         tap((list: NotificationDto[]) => {
           this.notificationsSubject.next(list);
           this.unreadCountSubject.next(list.filter((x: NotificationDto) => !x.isRead).length);
+          console.log('All notifications loaded:', list.length);
         })
       )
       .subscribe({
-        next: (list: NotificationDto[]) => console.log('notifications loaded', list),
-        error: err => console.error('Failed to load notifications', err)
+        next: (list: NotificationDto[]) => console.log('All notifications:', list),
+        error: err => console.error('Failed to load all notifications', err)
       });
+  }
+
+  // Backward compatibility - loads unread by default
+  loadInitial() {
+    this.loadUnread();
   }
 
   private prependNotification(n: NotificationDto) {
