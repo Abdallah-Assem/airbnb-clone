@@ -1,10 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Inject, PLATFORM_ID, ChangeDetectorRef, NgZone, afterNextRender } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {  FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListingService } from '../../../core/services/listings/listing.service';
 import { ListingCreateVM, ListingUpdateVM, ListingDetailVM } from '../../../core/models/listing.model';
+import { isPlatformBrowser } from '@angular/common';
+import { MapService } from '../../../core/services/map/map';
 
 @Component({
   selector: 'app-listings-create-edit',
@@ -32,6 +34,18 @@ export class ListingsCreateEdit {
   error = '';
   successMessage = '';
 
+  // Map picker state (for choosing lat/lng on a map)
+  showMapPicker = false;
+  private leaflet: any;
+  private pickerMap: any | null = null;
+  private pickerMarker: any | null = null;
+  private platformId = inject(PLATFORM_ID);
+  private cdr = inject(ChangeDetectorRef);
+  private ngZone = inject(NgZone);
+  private mapService = inject(MapService);
+  private tempLatitude: number | null = null;
+  private tempLongitude: number | null = null;
+
   amenitiesList = [
     'Wi-Fi', 'Pool', 'Air Conditioning', 'Kitchen', 
     'Washer', 'Dryer', 'TV', 'Heating', 'Parking' , 'hire'
@@ -55,33 +69,154 @@ export class ListingsCreateEdit {
   }
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
-      this.editMode = true;
-      this.currentId = +idParam;
-      this.loadListing(this.currentId);
+    this.route.paramMap.subscribe(paramMap => {
+      const idParam = paramMap.get('id');
+      if (idParam) {
+        // Defer changing edit-mode/currentId and starting load to avoid
+        // ExpressionChangedAfterItHasBeenCheckedError when bindings depend on them.
+        afterNextRender(() => {
+          this.editMode = true;
+          this.currentId = +idParam;
+          this.loadListing(this.currentId);
+        });
+      } else {
+        // Creating new listing: reset edit mode and init the blank form
+        afterNextRender(() => {
+          this.editMode = false;
+          this.currentId = undefined;
+          this.initForm();
+        });
+      }
+    });
+  }
+
+  // Note: component handles both Create and Edit cases. On init, if an ID
+  // is present we load the existing listing into the form (edit mode).
+
+  toggleMapPicker(): void {
+    this.showMapPicker = !this.showMapPicker;
+    if (this.showMapPicker) {
+      void this.initPickerMap();
+    } else {
+      if (this.pickerMap) {
+        try { this.pickerMap.remove(); } catch {}
+        this.pickerMap = null;
+        this.pickerMarker = null;
+      }
     }
   }
 
+  private async initPickerMap(): Promise<void> {
+    if (!isPlatformBrowser(this.platformId)) return;
+    if (this.pickerMap) return;
+    try {
+      this.leaflet = await import('leaflet');
+      // create map in container
+      const el = document.getElementById('picker-map');
+      if (!el) return;
+
+      this.pickerMap = this.leaflet.map(el, { center: [30.0444, 31.2357], zoom: 6 });
+      this.leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(this.pickerMap);
+
+      // use inline SVG icon as in other maps
+      const svgPin = `
+        <svg width="30" height="42" viewBox="0 0 30 42" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 0C9.477 0 5 4.477 5 10c0 7.5 10 22 10 22s10-14.5 10-22c0-5.523-4.477-10-10-10z" fill="#007bff"/>
+          <circle cx="15" cy="11" r="4" fill="#fff"/>
+        </svg>
+      `;
+      const customIcon = this.leaflet.divIcon({ html: svgPin, className: 'custom-leaflet-icon', iconSize: [30,42], iconAnchor: [15,42] });
+
+      // place initial marker if form already has coords
+      const lat = Number(this.form.get('latitude')?.value);
+      const lng = Number(this.form.get('longitude')?.value);
+      if (isFinite(lat) && isFinite(lng) && (lat !== 0 || lng !== 0)) {
+        this.pickerMarker = this.leaflet.marker([lat, lng], { icon: customIcon }).addTo(this.pickerMap);
+        this.pickerMap.setView([lat, lng], 14);
+      }
+
+      // click to place marker (tentative selection)
+      this.pickerMap.on('click', (e: any) => {
+        const { lat: clickedLat, lng: clickedLng } = e.latlng || {};
+        if (!isFinite(clickedLat) || !isFinite(clickedLng)) return;
+        if (this.pickerMarker) {
+          try { this.pickerMarker.setLatLng([clickedLat, clickedLng]); } catch { this.pickerMarker = null; }
+        }
+        if (!this.pickerMarker) {
+          this.pickerMarker = this.leaflet.marker([clickedLat, clickedLng], { icon: customIcon }).addTo(this.pickerMap);
+        }
+        // store coords temporarily (do not patch form until confirmed)
+        this.tempLatitude = Number(clickedLat.toFixed(6));
+        this.tempLongitude = Number(clickedLng.toFixed(6));
+        // ensure form inputs reflect tentative coords immediately
+        this.ngZone.run(() => {
+          this.form.patchValue({ latitude: this.tempLatitude, longitude: this.tempLongitude });
+          try { this.cdr.detectChanges(); } catch {}
+        });
+      });
+    } catch (err) {
+      console.warn('Picker map init failed', err);
+    }
+  }
+
+  confirmPickedLocation(): void {
+    // Apply the tentative coordinates to the form and optionally reverse-geocode
+    if (this.tempLatitude !== null && this.tempLongitude !== null) {
+      this.form.patchValue({ latitude: this.tempLatitude, longitude: this.tempLongitude });
+      // call backend to reverse-geocode and fill location if available
+      try {
+        // Call frontend reverse geocode (Nominatim) to get a human-readable address
+        this.mapService.reverseGeocode(this.tempLatitude, this.tempLongitude).subscribe((g: any) => {
+          if (g && g.formattedAddress) {
+            this.ngZone.run(() => {
+              this.form.patchValue({ location: g.formattedAddress });
+              try { this.cdr.detectChanges(); } catch {}
+            });
+          }
+        }, () => {/* ignore geocode errors */});
+      } catch {}
+    }
+    this.showMapPicker = false;
+    if (this.pickerMap) { try { this.pickerMap.remove(); } catch {} this.pickerMap = null; this.pickerMarker = null; }
+    // clear temporary coords
+    this.tempLatitude = null;
+    this.tempLongitude = null;
+  }
+
   private loadListing(id: number): void {
+    // Set loading quickly (no error) — this is before any async callback
     this.loading = true;
     this.listingService.getById(id).subscribe(
       (response) => {
         if (!response.isError && response.data) {
-          this.populateForm(response.data);
-          this.existingImages = (response.data.images || []).map(img => ({
-            id: img.id,
-            url: img.imageUrl
-          }));
+          // Update form and existing images inside the Angular zone
+          // Use afterNextRender for final flags that are bound in template
+          this.ngZone.run(() => {
+            this.populateForm(response.data);
+            // update existing images
+            this.existingImages = (response.data.images || []).map((img: any) => ({
+              id: img.id,
+              url: img.imageUrl
+            }));
+            try { this.cdr.detectChanges(); } catch {}
+          });
+          // Defer setting loading = false to next tick so change detection stays stable
+          afterNextRender(() => {
+            this.loading = false;
+          });
         } else {
-          this.error = response.message || 'Failed to load listing';
+          afterNextRender(() => {
+            this.error = response.message || 'Failed to load listing';
+            this.loading = false;
+          });
           setTimeout(() => this.router.navigate(['/listings']), 2000);
         }
-        this.loading = false;
       },
       (err) => {
-        this.error = 'Error loading listing';
-        this.loading = false;
+        afterNextRender(() => {
+          this.error = 'Error loading listing';
+          this.loading = false;
+        });
         setTimeout(() => this.router.navigate(['/listings']), 2000);
       }
     );
@@ -113,21 +248,30 @@ export class ListingsCreateEdit {
       const file = files[i];
       const reader = new FileReader();
       reader.onload = () => {
-        this.imagePreviews.push(reader.result as string);
-        this.selectedFiles.push(file);
+        this.ngZone.run(() => {
+          this.imagePreviews.push(reader.result as string);
+          this.selectedFiles.push(file);
+          try { this.cdr.detectChanges(); } catch {}
+        });
       };
       reader.readAsDataURL(file);
     }
   }
 
   removeNewImage(index: number): void {
-    this.imagePreviews.splice(index, 1);
-    this.selectedFiles.splice(index, 1);
+    this.ngZone.run(() => {
+      this.imagePreviews.splice(index, 1);
+      this.selectedFiles.splice(index, 1);
+      try { this.cdr.detectChanges(); } catch {}
+    });
   }
 
   removeExistingImage(imageId: number): void {
-    this.removeImageIds.push(imageId);
-    this.existingImages = this.existingImages.filter(img => img.id !== imageId);
+    this.ngZone.run(() => {
+      this.removeImageIds.push(imageId);
+      this.existingImages = this.existingImages.filter(img => img.id !== imageId);
+      try { this.cdr.detectChanges(); } catch {}
+    });
   }
 
   toggleAmenity(amenity: string): void {
@@ -176,18 +320,25 @@ export class ListingsCreateEdit {
       this.listingService.update(this.currentId, updateVM).subscribe(
         (response) => {
           if (!response.isError) {
-            this.successMessage = 'Listing updated successfully!';
+            afterNextRender(() => {
+              this.successMessage = 'Listing updated successfully!';
+              this.loading = false;
+            });
             setTimeout(() => {
               this.router.navigate(['/listings', this.currentId]);
             }, 1500);
           } else {
-            this.error = response.message || 'Failed to update listing';
+            afterNextRender(() => {
+              this.error = response.message || 'Failed to update listing';
+              this.loading = false;
+            });
           }
-          this.loading = false;
         },
         (err) => {
-          this.error = err.error?.message || 'Error updating listing';
-          this.loading = false;
+          afterNextRender(() => {
+            this.error = err.error?.message || 'Error updating listing';
+            this.loading = false;
+          });
         }
       );
     } else {
@@ -206,19 +357,26 @@ export class ListingsCreateEdit {
       this.listingService.create(createVM).subscribe(
         (response) => {
           if (!response.isError) {
-            this.successMessage = 'Listing created successfully!';
+            afterNextRender(() => {
+              this.successMessage = 'Listing created successfully!';
+              this.loading = false;
+            });
             setTimeout(() => {
                 // after create, redirect to listings overview
                 this.router.navigate(['/listings']);
             }, 1500);
           } else {
-            this.error = response.message || 'Failed to create listing';
+            afterNextRender(() => {
+              this.error = response.message || 'Failed to create listing';
+              this.loading = false;
+            });
           }
-          this.loading = false;
         },
         (err) => {
-          this.error = err.error?.message || 'Error creating listing';
-          this.loading = false;
+          afterNextRender(() => {
+            this.error = err.error?.message || 'Error creating listing';
+            this.loading = false;
+          });
         }
       );
     }
@@ -232,18 +390,25 @@ export class ListingsCreateEdit {
     this.listingService.delete(this.currentId).subscribe(
       (response) => {
         if (!response.isError) {
-          this.successMessage = 'Listing deleted successfully!';
+          afterNextRender(() => {
+            this.successMessage = 'Listing deleted successfully!';
+            this.loading = false;
+          });
           setTimeout(() => {
             this.router.navigate(['/listings']);
           }, 1500);
         } else {
-          this.error = response.message || 'Failed to delete listing';
+          afterNextRender(() => {
+            this.error = response.message || 'Failed to delete listing';
+            this.loading = false;
+          });
         }
-        this.loading = false;
       },
       (err) => {
-        this.error = err.error?.message || 'Error deleting listing';
-        this.loading = false;
+        afterNextRender(() => {
+          this.error = err.error?.message || 'Error deleting listing';
+          this.loading = false;
+        });
       }
     );
   }

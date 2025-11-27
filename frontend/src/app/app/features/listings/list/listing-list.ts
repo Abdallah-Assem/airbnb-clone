@@ -20,51 +20,110 @@ export class ListingsList implements OnInit {
   loading = signal<boolean>(false);
   error = signal<string>('');
   currentPage = signal<number>(1);
-  pageSize = 12;
+  pageSize = 14;
   totalCount = signal<number>(0);
 
   // search + filters
   search = signal<string>('');
   location = signal<string>('');
-  minPrice = signal<number | null>(null);
   maxPrice = signal<number | null>(null);
   minRating = signal<number | null>(null);
+  isApproved = signal<string>(''); // '', approved, not-approved
 
   // computed
   totalPages = computed(() => Math.ceil(this.totalCount() / this.pageSize));
 
   locations = computed<string[]>(() => {
-    const data = this.listings();
-    if (!data || !Array.isArray(data)) return [];
-    const set = new Set(data.map(l => (l.location || '').trim()).filter(Boolean));
-    return Array.from(set).sort((a, b) => a.localeCompare(b));
+    return [
+      'Cairo',
+      'Giza',
+      'Alexandria',
+      'Luxor',
+      'Aswan',
+      'Sharm El Sheikh',
+      'Hurghada',
+      'Mansoura',
+      'Tanta',
+      'Fayoum',
+      'Ismailia',
+      'Port Said',
+      'Suez',
+      'Zagazig',
+      'Qena',
+      'Sohag',
+      'Assiut',
+      'Bani Suef',
+      'Minya',
+      'Damanhour',
+      'Kafr El Sheikh',
+      'Damietta',
+      'Marsa Matruh',
+      'North Sinai',
+      'South Sinai',
+      'Red Sea',
+      'New Cairo',
+      'Obour',
+      'Sheikh Zayed',
+      '6th of October City'
+    ].sort((a, b) => a.localeCompare(b));
   });
+
+  private normalize(input?: string): string {
+    if (!input) return '';
+    let s = String(input).trim().toLowerCase();
+
+    s = s.replace(/[\u0610-\u061A\u064B-\u065F\u06D6-\u06ED]/g, '');
+    s = s.replace(/أ|إ|آ/g, 'ا');
+    s = s.replace(/ة/g, 'ه');
+    s = s.replace(/ى/g, 'ي');
+    s = s.replace(/ؤ/g, 'و');
+    s = s.replace(/ئ/g, 'ي');
+    s = s.replace(/ک/g, 'ك').replace(/ی/g, 'ي');
+    s = s.replace(/[^0-9a-z\u0600-\u06FF\s]/g, '');
+    s = s.replace(/\s+/g, ' ').trim();
+
+    return s;
+  }
 
   filtered = computed<ListingOverviewVM[]>(() => {
     const data = this.listings();
     if (!data || !Array.isArray(data) || data.length === 0) return [];
-    
-    const term = this.search().trim().toLowerCase();
-    const loc = this.location().trim().toLowerCase();
-    const minP = this.minPrice();
+
+    const rawQuery = this.search().trim();
+    const rawLoc = this.location().trim();
+    const approvedFilter = this.isApproved();
     const maxP = this.maxPrice();
     const minR = this.minRating();
 
-    return data.filter(l => {
-      const matchesSearch =
-        !term ||
-        (l.title ?? '').toLowerCase().includes(term) ||
-        (l.location ?? '').toLowerCase().includes(term);
+    const q = this.normalize(rawQuery);
+    const locNormalized = this.normalize(rawLoc);
 
-      const matchesLocation = !loc || (l.location ?? '').toLowerCase() === loc;
+    return data.filter(l => {
+      const title = this.normalize(l.title);
+      const locationVal = this.normalize(l.location);
+      const description = this.normalize(l.description ?? '');
+
+      const matchesSearch =
+        !q ||
+        title.includes(q) ||
+        locationVal.includes(q) ||
+        description.includes(q);
+
+      const matchesLocation =
+        !locNormalized || locationVal.includes(locNormalized);
+
+      const matchesApproval =
+        approvedFilter === '' ||
+        (approvedFilter === 'approved' && l.isApproved === true) ||
+        (approvedFilter === 'not-approved' && l.isApproved === false);
 
       const priceOk =
-        (minP === null || l.pricePerNight >= minP) &&
         (maxP === null || l.pricePerNight <= maxP);
 
-      const ratingOk = (minR === null || (l.averageRating ?? 0) >= minR);
+      const ratingOk =
+        (minR === null || (l.averageRating ?? 0) >= minR);
 
-      return matchesSearch && matchesLocation && priceOk && ratingOk;
+      return matchesSearch && matchesLocation && matchesApproval && priceOk && ratingOk;
     });
   });
 
@@ -75,23 +134,19 @@ export class ListingsList implements OnInit {
   loadListings() {
     this.loading.set(true);
     this.error.set('');
-    console.log('📍 Loading listings from API...');
 
-    this.listingService.getPaged(this.currentPage(), this.pageSize).subscribe({
+    this.listingService.getHostListings(this.currentPage(), this.pageSize).subscribe({
       next: (response) => {
-        console.log('✅ API Response:', response);
         if (!response.isError) {
-          console.log('📋 Listings count:', response.data?.length || 0);
           this.listings.set(response.data || []);
           this.totalCount.set(response.totalCount || 0);
         } else {
-          this.error.set(response.message || 'Failed to load listings');
+          this.error.set(response.message || 'Failed to load your listings');
         }
         this.loading.set(false);
       },
       error: (err) => {
-        console.error('❌ API Error:', err);
-        this.error.set('Error loading listings: ' + (err.message || 'Unknown error'));
+        this.error.set('Error loading your listings: ' + (err.message || 'Unknown error'));
         this.loading.set(false);
       }
     });
@@ -99,7 +154,7 @@ export class ListingsList implements OnInit {
 
   onDelete(id: number) {
     if (!confirm('Delete this listing?')) return;
-    
+
     this.listingService.delete(id).subscribe({
       next: (response) => {
         if (!response.isError) {
@@ -117,9 +172,9 @@ export class ListingsList implements OnInit {
   resetFilters() {
     this.search.set('');
     this.location.set('');
-    this.minPrice.set(null);
     this.maxPrice.set(null);
     this.minRating.set(null);
+    this.isApproved.set('');
     this.currentPage.set(1);
   }
 

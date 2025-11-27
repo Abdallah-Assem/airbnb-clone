@@ -18,6 +18,7 @@ export class MapComponent implements OnInit {
   isLoading = false;
 
   private leaflet: any;
+  private customIcon: any;
   constructor(private mapService: MapService, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   async ngOnInit(): Promise<void> {
@@ -38,6 +39,20 @@ export class MapComponent implements OnInit {
         console.error('Map container element not found!');
         return;
       }
+      // Create a lightweight inline SVG DivIcon to avoid external image requests
+      const svgPin = `
+        <svg width="30" height="42" viewBox="0 0 30 42" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 0C9.477 0 5 4.477 5 10c0 7.5 10 22 10 22s10-14.5 10-22c0-5.523-4.477-10-10-10z" fill="#d00"/>
+          <circle cx="15" cy="11" r="4" fill="#fff"/>
+        </svg>
+      `;
+      this.customIcon = this.leaflet.divIcon({
+        className: 'custom-leaflet-icon',
+        html: svgPin,
+        iconSize: [30, 42],
+        iconAnchor: [15, 42],
+        popupAnchor: [0, -40]
+      });
 
       this.map = this.leaflet.map('map', {
         center: [30.0444, 31.2357], // Cairo
@@ -117,19 +132,20 @@ export class MapComponent implements OnInit {
       // Add new markers
       this.properties.forEach((p) => {
         try {
-          if (!p.latitude || !p.longitude) {
+          const lat = Number(p.latitude);
+          const lng = Number(p.longitude);
+          if (!isFinite(lat) || !isFinite(lng)) {
             console.warn(`Property ${p.id} has invalid coordinates:`, p.latitude, p.longitude);
             return;
           }
 
           const marker = this.leaflet
-            .marker([p.latitude, p.longitude])
+            .marker([lat, lng], { icon: this.customIcon })
             .addTo(this.map)
             .bindPopup(`
               <b>${p.title}</b><br>
               ${p.pricePerNight} EGP/night<br>
               ${p.averageRating ? `Rating: ${p.averageRating.toFixed(1)} (${p.reviewCount} reviews)` : 'No reviews yet'}
-              ${p.mainImageUrl ? `<br><img src="${p.mainImageUrl}" width="150" style="border-radius: 4px;">` : ''}
             `);
 
           marker.on('click', () => {

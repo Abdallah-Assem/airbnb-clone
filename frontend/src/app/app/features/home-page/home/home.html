@@ -22,12 +22,10 @@
             </h5>
 
             <div class="cards-list d-flex flex-nowrap gap-4">
-                <app-home-listing-card></app-home-listing-card>
-                <app-home-listing-card></app-home-listing-card>
-                <app-home-listing-card></app-home-listing-card>
-                <app-home-listing-card></app-home-listing-card>
-                <app-home-listing-card></app-home-listing-card>
-                <app-home-listing-card></app-home-listing-card>
+                <app-home-listing-card
+                  *ngFor="let listing of listings.slice(0, 6)"
+                  [listing]="listing">
+                </app-home-listing-card>
             </div>
         </div>
         <div class="col-12 my-3">
@@ -38,12 +36,10 @@
             </h5>
 
             <div class="cards-list d-flex flex-nowrap gap-4">
-                <app-home-listing-card></app-home-listing-card>
-                <app-home-listing-card></app-home-listing-card>
-                <app-home-listing-card></app-home-listing-card>
-                <app-home-listing-card></app-home-listing-card>
-                <app-home-listing-card></app-home-listing-card>
-                <app-home-listing-card></app-home-listing-card>
+                <app-home-listing-card
+                  *ngFor="let listing of listings.slice(0, 6)"
+                  [listing]="listing">
+                </app-home-listing-card>
             </div>
 
         </div>
@@ -55,12 +51,10 @@
             </h5>
 
             <div class="cards-list d-flex flex-nowrap gap-4">
-                <app-home-listing-card></app-home-listing-card>
-                <app-home-listing-card></app-home-listing-card>
-                <app-home-listing-card></app-home-listing-card>
-                <app-home-listing-card></app-home-listing-card>
-                <app-home-listing-card></app-home-listing-card>
-                <app-home-listing-card></app-home-listing-card>
+                <app-home-listing-card
+                  *ngFor="let listing of listings.slice(0, 6)"
+                  [listing]="listing">
+                </app-home-listing-card>
             </div>
         </div>
 

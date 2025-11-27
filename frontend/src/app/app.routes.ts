@@ -23,10 +23,13 @@ export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: 'auth/login', component: Login },
   { path: 'auth/register', component: Register },
+  { path: 'listings/:id/edit', component: ListingsCreateEdit, canActivate: [AuthGuard] },
+  { path: 'listings/:id', component: ListingsDetail },
   { path: 'listings', component: Listings},
   // { path: '**', redirectTo: 'home' },
   {
     path: 'host',
+    canActivate: [AuthGuard],
     children: [
       { path: '', component: ListingsList },
       { path: 'create', component: ListingsCreateEdit, canActivate: [AuthGuard] },

@@ -21,7 +21,7 @@ export class PaymentComponent implements OnInit {
   ngOnInit() {
     this.bookingId = this.route.snapshot.paramMap.get('id');
     // auto-open: in this component we can trigger logic to show payment UI
-  }
+}
 
   done() {
     this.router.navigate(['/']);

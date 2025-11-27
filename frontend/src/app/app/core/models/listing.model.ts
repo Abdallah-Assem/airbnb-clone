@@ -77,6 +77,7 @@ export interface ListingOverviewVM {
   averageRating?: number;
   reviewCount: number;
   isApproved: boolean;
+  description?: string;
 }
 
 export interface ListingsResponse<T> {

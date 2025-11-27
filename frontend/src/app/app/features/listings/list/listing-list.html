@@ -1,123 +1,101 @@
-  <div class="container py-4">
+<div class="row m-5">
 
-  <div class="d-flex align-items-center justify-content-between mb-3">
-    <h2 class="mb-0">Property Listings</h2>
-    <a class="btn btn-success" [routerLink]="['/host/create']">+ Add Listing</a>
+  <!-- LISTINGS (10 columns) -->
+  <div class="col-10">
+    <div class="row listings-row p-3 py-4">
+      <div class="cards-list">
+        <div class="glass-card p-2" *ngFor="let l of filtered(); trackBy: trackById">
+
+          <img [src]="l.mainImageUrl 
+              ? (l.mainImageUrl.indexOf('http') === 0 
+                ? l.mainImageUrl 
+                : 'http://localhost:5235' + l.mainImageUrl)
+              : 'assets/default-listing.svg'" class="listing-img" />
+
+          <div class="px-2 py-3 d-flex flex-column">
+
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <h5 class="text-white mb-0">{{ l.title }}</h5>
+              <span *ngIf="!l.isApproved" class="badge bg-warning text-dark">Pending</span>
+              <span *ngIf="l.isApproved" class="badge bg-success">Approved</span>
+            </div>
+
+            <p class="text-muted small mb-1">{{ l.location }}</p>
+            <p class="text-muted small mb-2">★ {{ l.averageRating || 0 }} / 5 ({{ l.reviewCount }} reviews)</p>
+
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <span class="badge bg-primary">${{ l.pricePerNight }}/night</span>
+
+              <div class="btn-group btn-group-sm">
+                <a class="btn btn-outline-light" [routerLink]="['/listings', l.id]">
+                  <i class="bi bi-eye"></i>
+                </a>
+                <a class="btn btn-outline-primary" [routerLink]="['/listings', l.id, 'edit']">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <button class="btn btn-outline-danger" (click)="onDelete(l.id)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+  <div class="col-2 d-flex flex-column">
 
-  <!-- Loading -->
-  <div *ngIf="loading()" class="alert alert-info">
-    <strong>Loading listings...</strong>
-  </div>
-
-  <!-- Error -->
-  <div *ngIf="error() && !loading()" class="alert alert-danger">
-    <strong>Error:</strong> {{ error() }}
-  </div>
-
-  <!-- Filters -->
-  <div class="card mb-3">
-    <div class="card-body">
-      <div class="row g-3 align-items-end">
-
-        <div class="col-12 col-md-4">
-          <label class="form-label">Search</label>
-          <input type="text" class="form-control"
-                 placeholder="Search..."
-                 [ngModel]="search()"
-                 (ngModelChange)="search.set($event)" />
+    <!-- Sidebar -->
+    <div class="filters-sidebar glass-card p-4 d-flex flex-column">
+      <div class="sidebar-content flex-grow-1">
+        <!-- Search -->
+        <div class="search-wrap mb-3">
+          <i class="bi bi-search"></i>
+          <input class="search-input" type="text" placeholder="Search..." [ngModel]="search()"
+            (ngModelChange)="search.set($event)" />
         </div>
 
-        <div class="col-6 col-md-2">
-          <label class="form-label">Location</label>
-          <select class="form-select"
-                  [ngModel]="location()"
-                  (ngModelChange)="location.set($event)">
-            <option value="">All</option>
-            <option *ngFor="let loc of locations()" [value]="loc">
-              {{ loc }}
-            </option>
+        <div class="filter-block mb-3">
+          <select class="form-select fancy-input" [ngModel]="location()" (ngModelChange)="location.set($event)">
+            <option value="">All Locations</option>
+            <option *ngFor="let loc of locations()" [value]="loc">{{ loc }}</option>
           </select>
         </div>
 
-        <div class="col-6 col-md-2">
-          <label class="form-label">Min Price</label>
-          <input type="number" class="form-control"
-                 [ngModel]="minPrice()"
-                 (ngModelChange)="minPrice.set($event === '' ? null : +$event)">
+        <div class="filter-block mb-3">
+          <select class="form-select fancy-input" [ngModel]="isApproved()" (ngModelChange)="isApproved.set($event)">
+            <option value="">Status</option>
+            <option value="approved">Approved</option>
+            <option value="not-approved">Not Approved</option>
+          </select>
         </div>
 
-        <div class="col-6 col-md-2">
-          <label class="form-label">Max Price</label>
-          <input type="number" class="form-control"
-                 [ngModel]="maxPrice()"
-                 (ngModelChange)="maxPrice.set($event === '' ? null : +$event)">
+        <div class="filter-block mb-3">
+          <input type="number" placeholder="Max Price" class="form-control fancy-input" [ngModel]="maxPrice()"
+            (ngModelChange)="maxPrice.set($event === '' ? null : +$event)">
         </div>
 
-        <div class="col-6 col-md-2">
-          <label class="form-label">Min Rating</label>
-          <input type="number" class="form-control"
-                 [ngModel]="minRating()"
-                 (ngModelChange)="minRating.set($event === '' ? null : +$event)"
-                 min="0" max="5" step="0.5">
+        <div class="filter-block">
+          <input type="number" placeholder="Min Rate" class="form-control fancy-input" min="0" max="5" step="0.5" [ngModel]="minRating()"
+            (ngModelChange)="minRating.set($event === '' ? null : +$event)">
         </div>
 
-      </div>
-
-      <div class="d-flex mt-3">
-        <button class="btn btn-outline-secondary btn-sm" (click)="resetFilters()">Reset</button>
-        <div class="ms-auto text-muted">{{ filtered().length }} results</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Empty -->
-  <div *ngIf="filtered().length === 0" class="alert alert-light border">
-    No listings found.
-  </div>
-
-  <!-- Results -->
-  <div class="row g-3" *ngIf="filtered().length > 0">
-
-    <div class="col-12 col-sm-6 col-lg-4" *ngFor="let l of filtered(); trackBy: trackById">
-      <div class="card h-100 shadow-sm">
-
-        <img [src]="l.mainImageUrl ? (l.mainImageUrl.indexOf('http') === 0 ? l.mainImageUrl : 'http://localhost:5235' + l.mainImageUrl) : 'assets/default-listing.svg'"
-             class="card-img-top"
-             style="height: 180px; object-fit: cover" />
-
-        <div class="card-body d-flex flex-column">
-
-          <h5 class="card-title">{{ l.title }}</h5>
-          <p class="text-muted small mb-2">{{ l.location }}</p>
-
-          <p class="text-muted small">
-            ★ {{ l.averageRating || 0 }} / 5 ({{ l.reviewCount }} reviews)
-          </p>
-
-          <div class="mt-auto d-flex justify-content-between align-items-center">
-            <span class="badge bg-primary">${{ l.pricePerNight }}/night</span>
-
-            <div class="btn-group btn-group-sm">
-
-              <!-- ⭐ DETAILS ROUTE ⭐ -->
-              <a class="btn btn-outline-secondary" [routerLink]="['/listings', l.id]">View</a>
-
-              <!-- ⭐ EDIT ROUTE ⭐ -->
-              <a class="btn btn-outline-primary" [routerLink]="['/listings', l.id, 'edit']">Edit</a>
-
-              <button class="btn btn-outline-danger" (click)="onDelete(l.id)">
-                Delete
-              </button>
-
-            </div>
-          </div>
-
+        <div class="text-center text-white-50 small mt-2">
+          {{ filtered().length }} results
         </div>
 
+        <!-- Reset at bottom -->
+        <button class="btn btn-outline-light w-100 mt-auto mb-2" (click)="resetFilters()">Reset</button>
       </div>
     </div>
 
-  </div>
+    <!-- Add Listing OUTSIDE the sidebar -->
+    <div class="mt-4">
+      <button class="search-wrap btn-outline-light w-100" [routerLink]="['/host/create']">
+        + Add Listing
+      </button>
+    </div>
 
+  </div>
 </div>

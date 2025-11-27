@@ -67,42 +67,44 @@ export class ListingService {
 
   // Get paginated listings (for public view)
   getPaged(page: number = 1, pageSize: number = 12, filter?: any): Observable<ListingsPagedResponse<ListingOverviewVM>> {
-    let params = new HttpParams()
-      .set('page', page.toString())
-      .set('pageSize', pageSize.toString());
+  let params = new HttpParams()
+    .set('page', page.toString())
+    .set('pageSize', pageSize.toString());
 
-    if (filter) {
-      if (filter.location) params = params.set('location', filter.location);
-      if (filter.minPrice) params = params.set('minPrice', filter.minPrice);
-      if (filter.maxPrice) params = params.set('maxPrice', filter.maxPrice);
-      if (filter.minBedrooms) params = params.set('minBedrooms', filter.minBedrooms);
-    }
-
-    return this.http.get<any>(`${this.apiUrl}`, { params }).pipe(
-      // Map backend response to our expected format and normalize item ids
-      map(response => {
-        const raw = response.result || [];
-        const normalized = raw.map((item: any) => ({
-          // ensure `id` exists regardless of backend casing or naming
-          id: Number(item.id ?? item.Id ?? item.listingId ?? item.ListingId ?? 0),
-          ...item
-        }));
-
-        // Normalize main image urls for overview items
-        normalized.forEach((it: any) => {
-          if (it.mainImageUrl) it.mainImageUrl = this.normalizeImageUrl(it.mainImageUrl || it.MainImageUrl);
-        });
-
-        return {
-          data: normalized,
-          totalCount: normalized.length || 0,
-          message: response.errorMessage,
-          isError: response.isHaveErrorOrNo || false
-        };
-      })
-    );
+  if (filter) {
+    if (filter.location) params = params.set('location', filter.location);
+    if (filter.minPrice) params = params.set('minPrice', filter.minPrice);
+    if (filter.maxPrice) params = params.set('maxPrice', filter.maxPrice);
+    if (filter.minBedrooms) params = params.set('minBedrooms', filter.minBedrooms);
   }
 
+  return this.http.get<any>(`${this.apiUrl}`, { params }).pipe(
+    map(response => {
+      // Accept either `result` or `data` or the raw array
+      const raw = response?.result ?? response?.data ?? response ?? [];
+      const arr = Array.isArray(raw) ? raw : [];
+
+      const normalized = arr.map((item: any) => ({
+        id: Number(item.id ?? item.Id ?? item.listingId ?? item.ListingId ?? 0),
+        title: item.title ?? item.Title ?? '',
+        pricePerNight: item.pricePerNight ?? item.price ?? 0,
+        location: item.location ?? item.Location ?? '',
+        mainImageUrl: this.normalizeImageUrl(item.mainImageUrl ?? item.MainImageUrl ?? item.imageUrl ?? item.ImageUrl),
+        averageRating: item.averageRating ?? item.averageRating ?? item.rating ?? 0,
+        reviewCount: item.reviewCount ?? 0,
+        isApproved: !!item.isApproved,
+        description: item.description ?? item.Description ?? ''
+      }));
+
+      return {
+        data: normalized as ListingOverviewVM[],
+        totalCount: (response?.totalCount ?? normalized.length) || 0,
+        message: response?.errorMessage ?? response?.message,
+        isError: response?.isHaveErrorOrNo || response?.isError || false
+      } as ListingsPagedResponse<ListingOverviewVM>;
+    })
+  );
+}
   // Get user's listings
   getUserListings(userId: string, page: number = 1, pageSize: number = 12): Observable<ListingsPagedResponse<ListingOverviewVM>> {
     const params = new HttpParams()
@@ -110,6 +112,46 @@ export class ListingService {
       .set('pageSize', pageSize.toString());
 
     return this.http.get<ListingsPagedResponse<ListingOverviewVM>>(`${this.apiUrl}/my-listings`, { params });
+  }
+
+  // Get host's listings (including non-approved)
+  getHostListings(page: number = 1, pageSize: number = 12): Observable<ListingsPagedResponse<ListingOverviewVM>> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('pageSize', pageSize.toString());
+
+    return this.http.get<any>(`${this.apiUrl}/my-listings`, { params }).pipe(
+      map(response => {
+        console.log('Raw backend response:', response);
+        const raw = response?.result ?? response?.data ?? response ?? [];
+        console.log('Raw array:', raw);
+        const arr = Array.isArray(raw) ? raw : [];
+
+        const normalized = arr.map((item: any) => {
+          console.log('Item before normalization:', item);
+          const normalized = {
+            id: Number(item.id ?? item.Id ?? item.listingId ?? item.ListingId ?? 0),
+            title: item.title ?? item.Title ?? '',
+            pricePerNight: item.pricePerNight ?? item.price ?? 0,
+            location: item.location ?? item.Location ?? '',
+            mainImageUrl: this.normalizeImageUrl(item.mainImageUrl ?? item.MainImageUrl ?? item.imageUrl ?? item.ImageUrl),
+            averageRating: item.averageRating ?? item.averageRating ?? item.rating ?? 0,
+            reviewCount: item.reviewCount ?? 0,
+            isApproved: item.isApproved ?? item.IsApproved ?? false,
+            description: item.description ?? item.Description ?? ''
+          };
+          console.log('Item after normalization:', normalized);
+          return normalized;
+        });
+
+        return {
+          data: normalized as ListingOverviewVM[],
+          totalCount: (response?.totalCount ?? normalized.length) || 0,
+          message: response?.errorMessage ?? response?.message,
+          isError: response?.isHaveErrorOrNo || response?.isError || false
+        } as ListingsPagedResponse<ListingOverviewVM>;
+      })
+    );
   }
 
   // Update listing

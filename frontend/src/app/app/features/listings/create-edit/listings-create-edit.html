@@ -121,6 +121,20 @@
                     </small>
                 </div>
             </div>
+
+            <div class="form-group">
+                <button type="button" class="btn btn-outline-primary" (click)="toggleMapPicker()">
+                    {{ showMapPicker ? 'Close map' : 'Pick location on map' }}
+                </button>
+            </div>
+
+            <div *ngIf="showMapPicker" class="map-picker">
+                <div id="picker-map" style="height: 320px; width: 100%; border: 1px solid #ddd; margin-bottom:8px;"></div>
+                <div class="picker-actions">
+                    <button type="button" class="btn btn-primary" (click)="confirmPickedLocation()">Confirm location</button>
+                    <button type="button" class="btn btn-secondary" (click)="toggleMapPicker()">Cancel</button>
+                </div>
+            </div>
         </div>
 
         <!-- Amenities -->
@@ -170,12 +184,12 @@
                     accept="image/*"
                     (change)="onFileChange($event)"
                 />
-                <small class="help-text">You can upload multiple images. The first will be set as main.</small>
+                <!-- <small class="help-text">You can upload multiple images. The first will be set as main.</small> -->
             </div>
 
             <!-- Image Previews -->
             <div *ngIf="imagePreviews.length > 0" class="image-section">
-                <h4>New Images Preview</h4>
+                <!-- <h4>New Images Preview</h4> -->
                 <div class="images-grid">
                     <div *ngFor="let preview of imagePreviews; let i = index" class="image-item">
                         <img [src]="preview" [alt]="'Preview ' + (i + 1)" />

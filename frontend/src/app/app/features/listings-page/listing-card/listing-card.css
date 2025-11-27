@@ -1,65 +1,74 @@
 .listing-card {
-    width: 280px;
-    height: 350px;
-    padding: 0.35rem;
-    background: rgba(245, 232, 194, 0.219);
-    border-radius: 1.2rem;
-    backdrop-filter: blur(12px);
-    overflow: hidden;
-    transition: transform 0.2s ease;
+  width: 280px;
+  height: 340px;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 1.2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  transition: .3s;
 }
 
 .listing-card:hover {
-    transform: translateY(-3px);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
 }
 
+/* ⬇ Image wrapper always reserves space */
+.image-wrapper {
+  height: 180px;
+  width: 100%;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  background: #fceded3a;
+  /* visible even when no image loads */
+}
+
+/* ⬇ Image always fits inside reserved space */
 .card-img-top {
-    height: 180px;
-    object-fit: cover;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .title,
 .price {
-    color: #333333;
+  color: #333333;
 }
 
 p {
-    margin: 5px 0;
+  margin: 5px 0;
 }
 
 .badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.5em 1em;
-    font-size: 0.75em;
-    color: #333333;
-    background: hsla(48, 27%, 63%, 0.322);
-    border-radius: 0.6vw;
-    backdrop-filter: blur(6px);
-    box-shadow: 0 0.2em 0.5em rgba(0, 0, 0, 0.4);
-    width: fit-content;
-    white-space: nowrap;
+  display: inline-flex;
+  padding: 0.5em 1em;
+  background: rgba(231, 230, 226, 0.3);
+  color: #333;
+  border-radius: 0.6vw;
+  backdrop-filter: blur(6px);
 }
 
 .rate {
-    font-size: 0.85em;
-    padding: 0.2em 0.3em;
-    color: rgb(255, 253, 240);
-}
-
-.bi-star-fill {
-    font-size: 0.8em;
-    margin-right: 0.4em;
+  font-size: 0.85em;
+  color: rgb(255, 253, 240);
 }
 
 .bi-arrow-up-right-circle-fill {
-    font-size: 2em;
-    color: rgb(255, 253, 240, 0.76);
+  font-size: 2em;
+  color: rgba(255, 253, 240, 0.76);
 }
 
-/* Responsive */
+.bottom {
+  margin-bottom: -10px;
+}
+
 @media (max-width: 576px) {
-    .listing-card {
-        width: 60%;
-    }
+  .listing-card {
+    width: 60%;
+  }
 }
