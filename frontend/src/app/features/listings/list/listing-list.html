@@ -27,10 +27,10 @@
               <span class="badge bg-primary">${{ l.pricePerNight }}/night</span>
 
               <div class="btn-group btn-group-sm">
-                <a class="btn btn-outline-light" [routerLink]="['/listings', l.id]">
+                <a class="btn btn-outline-light" [routerLink]="['/host', l.id]">
                   <i class="bi bi-eye"></i>
                 </a>
-                <a class="btn btn-outline-primary" [routerLink]="['/listings', l.id, 'edit']">
+                <a class="btn btn-outline-primary" [routerLink]="['/host', l.id, 'edit']">
                   <i class="bi bi-pencil"></i>
                 </a>
                 <button class="btn btn-outline-danger" (click)="onDelete(l.id)">

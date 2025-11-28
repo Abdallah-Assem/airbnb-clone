@@ -1,4 +1,4 @@
-import { Component, inject, Inject, PLATFORM_ID, ChangeDetectorRef, NgZone, afterNextRender } from '@angular/core';
+import { Component, inject, Inject, PLATFORM_ID, ChangeDetectorRef, NgZone } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {  FormGroup } from '@angular/forms';
@@ -72,20 +72,13 @@ export class ListingsCreateEdit {
     this.route.paramMap.subscribe(paramMap => {
       const idParam = paramMap.get('id');
       if (idParam) {
-        // Defer changing edit-mode/currentId and starting load to avoid
-        // ExpressionChangedAfterItHasBeenCheckedError when bindings depend on them.
-        afterNextRender(() => {
-          this.editMode = true;
-          this.currentId = +idParam;
-          this.loadListing(this.currentId);
-        });
+        this.editMode = true;
+        this.currentId = +idParam;
+        this.loadListing(this.currentId);
       } else {
-        // Creating new listing: reset edit mode and init the blank form
-        afterNextRender(() => {
-          this.editMode = false;
-          this.currentId = undefined;
-          this.initForm();
-        });
+        this.editMode = false;
+        this.currentId = undefined;
+        this.initForm();
       }
     });
   }
@@ -184,40 +177,32 @@ export class ListingsCreateEdit {
   }
 
   private loadListing(id: number): void {
-    // Set loading quickly (no error) — this is before any async callback
     this.loading = true;
     this.listingService.getById(id).subscribe(
       (response) => {
         if (!response.isError && response.data) {
           // Update form and existing images inside the Angular zone
-          // Use afterNextRender for final flags that are bound in template
+          // and trigger change detection immediately to avoid
+          // ExpressionChangedAfterItHasBeenCheckedError when bindings
+          // (like `disabled`) change as a result of populating the form.
           this.ngZone.run(() => {
             this.populateForm(response.data);
-            // update existing images
             this.existingImages = (response.data.images || []).map((img: any) => ({
               id: img.id,
               url: img.imageUrl
             }));
             try { this.cdr.detectChanges(); } catch {}
           });
-          // Defer setting loading = false to next tick so change detection stays stable
-          afterNextRender(() => {
-            this.loading = false;
-          });
         } else {
-          afterNextRender(() => {
-            this.error = response.message || 'Failed to load listing';
-            this.loading = false;
-          });
-          setTimeout(() => this.router.navigate(['/listings']), 2000);
+          this.error = response.message || 'Failed to load listing';
+          setTimeout(() => this.router.navigate(['/host']), 2000);
         }
+        this.loading = false;
       },
       (err) => {
-        afterNextRender(() => {
-          this.error = 'Error loading listing';
-          this.loading = false;
-        });
-        setTimeout(() => this.router.navigate(['/listings']), 2000);
+        this.error = 'Error loading listing';
+        this.loading = false;
+        setTimeout(() => this.router.navigate(['/host']), 2000);
       }
     );
   }
@@ -320,25 +305,18 @@ export class ListingsCreateEdit {
       this.listingService.update(this.currentId, updateVM).subscribe(
         (response) => {
           if (!response.isError) {
-            afterNextRender(() => {
-              this.successMessage = 'Listing updated successfully!';
-              this.loading = false;
-            });
+            this.successMessage = 'Listing updated successfully!';
             setTimeout(() => {
-              this.router.navigate(['/listings', this.currentId]);
+              this.router.navigate(['/host', this.currentId]);
             }, 1500);
           } else {
-            afterNextRender(() => {
-              this.error = response.message || 'Failed to update listing';
-              this.loading = false;
-            });
+            this.error = response.message || 'Failed to update listing';
           }
+          this.loading = false;
         },
         (err) => {
-          afterNextRender(() => {
-            this.error = err.error?.message || 'Error updating listing';
-            this.loading = false;
-          });
+          this.error = err.error?.message || 'Error updating listing';
+          this.loading = false;
         }
       );
     } else {
@@ -357,26 +335,19 @@ export class ListingsCreateEdit {
       this.listingService.create(createVM).subscribe(
         (response) => {
           if (!response.isError) {
-            afterNextRender(() => {
-              this.successMessage = 'Listing created successfully!';
-              this.loading = false;
-            });
+            this.successMessage = 'Listing created successfully!';
             setTimeout(() => {
                 // after create, redirect to listings overview
-                this.router.navigate(['/listings']);
+                this.router.navigate(['/host']);
             }, 1500);
           } else {
-            afterNextRender(() => {
-              this.error = response.message || 'Failed to create listing';
-              this.loading = false;
-            });
+            this.error = response.message || 'Failed to create listing';
           }
+          this.loading = false;
         },
         (err) => {
-          afterNextRender(() => {
-            this.error = err.error?.message || 'Error creating listing';
-            this.loading = false;
-          });
+          this.error = err.error?.message || 'Error creating listing';
+          this.loading = false;
         }
       );
     }
@@ -390,30 +361,23 @@ export class ListingsCreateEdit {
     this.listingService.delete(this.currentId).subscribe(
       (response) => {
         if (!response.isError) {
-          afterNextRender(() => {
-            this.successMessage = 'Listing deleted successfully!';
-            this.loading = false;
-          });
+          this.successMessage = 'Listing deleted successfully!';
           setTimeout(() => {
-            this.router.navigate(['/listings']);
+            this.router.navigate(['/host']);
           }, 1500);
         } else {
-          afterNextRender(() => {
-            this.error = response.message || 'Failed to delete listing';
-            this.loading = false;
-          });
+          this.error = response.message || 'Failed to delete listing';
         }
+        this.loading = false;
       },
       (err) => {
-        afterNextRender(() => {
-          this.error = err.error?.message || 'Error deleting listing';
-          this.loading = false;
-        });
+        this.error = err.error?.message || 'Error deleting listing';
+        this.loading = false;
       }
     );
   }
 
   goBack(): void {
-    this.router.navigate(['/listings']);
+    this.router.navigate(['/host']);
   }
 }
