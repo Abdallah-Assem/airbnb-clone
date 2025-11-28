@@ -68,9 +68,9 @@ export class ListingService {
 
   // Get paginated listings (for public view)
   getPaged(page: number = 1, pageSize: number = 12, filter?: any): Observable<ListingsPagedResponse<ListingOverviewVM>> {
-    let params = new HttpParams()
-      .set('page', page.toString())
-      .set('pageSize', pageSize.toString());
+  let params = new HttpParams()
+    .set('page', page.toString())
+    .set('pageSize', pageSize.toString());
 
     if (filter) {
       if (filter.location) params = params.set('location', filter.location);
