@@ -36,6 +36,16 @@ namespace PL.Helpers
                     await roleManager.CreateAsync(new IdentityRole<Guid>(r));
             }
 
+            //create system user with static id
+            //var systemUserId = Guid.Parse("00000000-0000-0000-0000-000000000001");
+            var systemUser = User.Create("System", DAL.Enum.UserRole.Admin);
+            systemUser.Email = "system@airbnb.com";
+            systemUser.UserName = "system";
+            await userManager.CreateAsync(systemUser, "system123");
+            await userManager.AddToRoleAsync(systemUser, "Admin");
+            //systemUser.Id = systemUserId;
+            
+
             // create admins
             var admin1 = User.Create("Admin One", DAL.Enum.UserRole.Admin);
             admin1.Email = admin1Email;

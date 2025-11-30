@@ -9,7 +9,7 @@ namespace BLL.Services.Impelementation
         public PaymentService(IUnitOfWork uow,
                               INotificationService notificationService,
                               IOptions<StripeSettings> stripeSettings)
-        {
+        { 
             _uow = uow;
             _notificationService = notificationService;
             _stripeSettings = stripeSettings;

@@ -1,16 +1,20 @@
 ﻿using BLL.ModelVM.LIstingVM;
+using DAL.Entities;
+using Stripe.V2;
 
 public class ListingService : IListingService
 {
     private readonly IUnitOfWork unitOfWork;
     private readonly IMapper mapper;
     private readonly UserManager<User> userManager;
+    private readonly INotificationService notificationService;
 
-    public ListingService(IUnitOfWork uow, IMapper mapper, UserManager<User> userManager)
+    public ListingService(IUnitOfWork uow, IMapper mapper, UserManager<User> userManager, INotificationService notificationService)
     {
         unitOfWork = uow;
         this.mapper = mapper;
         this.userManager = userManager;
+        this.notificationService = notificationService;
     }
 
     private async Task<string> ResolveFullNameAsync(Guid userId, CancellationToken ct = default)
@@ -80,6 +84,11 @@ public class ListingService : IListingService
                 parsedAmenities, // amenities
                 hostId,
                 ct);
+
+            //create notification for the host after creation
+            await notificationService.CreateAsync(new BLL.ModelVM.Notification.CreateNotificationVM 
+            { UserId = hostId, Title = "Listing created", Body = "Your listing created succefully ", CreatedAt = DateTime.UtcNow });
+
 
             return new Response<int>(id, null, false);
         }
@@ -285,6 +294,11 @@ public class ListingService : IListingService
             var finalListing = await unitOfWork.Listings.GetListingByIdAsync(listingId, ct);
             var vmOut = mapper.Map<ListingUpdateVM>(finalListing);
 
+            //create notification for the host after edited
+            await notificationService.CreateAsync(new BLL.ModelVM.Notification.CreateNotificationVM
+            { UserId = hostId, Title = "Listing created", Body = "Your listing edited succefully ", CreatedAt = DateTime.UtcNow });
+
+
             return new Response<ListingUpdateVM>(vmOut, null, false);
         }
         catch (Exception ex)
@@ -318,6 +332,10 @@ public class ListingService : IListingService
     // Records who approved it and when for audit trail.
     public async Task<Response<bool>> ApproveAsync(int id, Guid approverUserId, CancellationToken ct = default)
     {
+        //check if the listing exists
+        var exist = await unitOfWork.Listings.GetByIdAsync(id, ct);
+        if (exist == null) return new Response<bool>(false, "Listing not found", true);
+        
         var approver = await userManager.FindByIdAsync(approverUserId.ToString());
         if (approver == null) return new Response<bool>(false, "Not found", true);
 
@@ -327,6 +345,10 @@ public class ListingService : IListingService
         try
         {
             var ok = await unitOfWork.Listings.ApproveAsync(id, approverUserId, ct);
+            //create notification for the host after approve
+            await notificationService.CreateAsync(new BLL.ModelVM.Notification.CreateNotificationVM
+            { UserId = exist.UserId , Title = "Listing created", Body = "Admin has approve your listing", CreatedAt = DateTime.UtcNow });
+
             return new Response<bool>(ok, ok ? null : "Approve failed", !ok);
         }
         catch (Exception ex)
@@ -341,6 +363,10 @@ public class ListingService : IListingService
     // Records who rejected it, when, and why for audit trail.
     public async Task<Response<bool>> RejectAsync(int id, Guid approverUserId, string? note, CancellationToken ct = default)
     {
+        //check if the listing exists
+        var exist = await unitOfWork.Listings.GetByIdAsync(id, ct);
+        if (exist == null) return new Response<bool>(false, "Listing not found", true);
+
         var approver = await userManager.FindByIdAsync(approverUserId.ToString());
         if (approver == null) return new Response<bool>(false, "Not found", true);
 
@@ -350,6 +376,10 @@ public class ListingService : IListingService
         try
         {
             var ok = await unitOfWork.Listings.RejectAsync(id, approverUserId, note, ct);
+            //create notification for the host after rejection
+            await notificationService.CreateAsync(new BLL.ModelVM.Notification.CreateNotificationVM
+            { UserId = exist.UserId, Title = "Listing created", Body = "Admin has reject your listing", CreatedAt = DateTime.UtcNow });
+
             return new Response<bool>(ok, ok ? null : "Reject failed", !ok);
         }
         catch (Exception ex)
@@ -369,6 +399,10 @@ public class ListingService : IListingService
         {
             var performer = await ResolveFullNameAsync(hostId, ct);
             var ok = await unitOfWork.ListingImages.SetMainImageAsync(listingId, imageId, performer, ct);
+            //create notification for the host after update
+            await notificationService.CreateAsync(new BLL.ModelVM.Notification.CreateNotificationVM
+            { UserId = hostId, Title = "Listing created", Body = "Your listing main image updated succefully", CreatedAt = DateTime.UtcNow });
+
             return new Response<bool>(ok, ok ? null : "Set main image failed", !ok);
         }
         catch (Exception ex)
@@ -389,6 +423,10 @@ public class ListingService : IListingService
     {
         try
         {
+            //check if the listing exists
+            var exist = await unitOfWork.Listings.GetByIdAsync(id, ct);
+            if (exist == null) return new Response<bool>(false, "Listing not found", true);
+
             //  Get and validate user exists
             var performer = await userManager.FindByIdAsync(performedByUserId.ToString());
             if (performer == null)
@@ -408,6 +446,11 @@ public class ListingService : IListingService
 
             // Call repository to promote
             var ok = await unitOfWork.Listings.PromoteAsync(id, promotionEndDate, performedByUserId, ct);
+
+            //create notification for the host after promotted
+            await notificationService.CreateAsync(new BLL.ModelVM.Notification.CreateNotificationVM
+            { UserId = exist.UserId, Title = "Listing created", Body = "Admin has approve your promotion", CreatedAt = DateTime.UtcNow });
+
             return new Response<bool>(ok, null, false);
         }
        

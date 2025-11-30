@@ -1,6 +1,3 @@
-using BLL.ModelVM.Auth;
-using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
 
 namespace PL.Controllers
 {
@@ -9,10 +6,12 @@ namespace PL.Controllers
     public class AuthController : BaseController
     {
         private readonly IIdentityService _identityService;
+        private readonly IMessageService _messageService;
 
-        public AuthController(IIdentityService identityService)
+        public AuthController(IIdentityService identityService, IMessageService messageService)
         {
             _identityService = identityService;
+            _messageService = messageService;
         }
         //any user regester as a guest
         [HttpPost("register")]
@@ -20,6 +19,13 @@ namespace PL.Controllers
         {
             var res = await _identityService.RegisterAsync(vm.Email, vm.Password, vm.FullName, vm.UserName, vm.FirebaseUid, "Guest");
             if (!res.Success) return BadRequest(res);
+            //send welcome message 
+            
+            var temp = await _messageService.CreateAsync(
+                new CreateMessageVM { ReceiverUserName = vm.UserName, 
+                    Content="Welcome to our platform! We're excited to have you here. If you have any questions or need assistance, feel free to reach out. Enjoy your experience!" },
+                Guid.Parse("c07c7cc9-55b3-4076-f767-08de2f6a002c")
+                );
             return Ok(res);
         }
 
