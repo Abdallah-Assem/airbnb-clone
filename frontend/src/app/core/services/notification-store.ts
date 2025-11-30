@@ -20,10 +20,22 @@ export class NotificationStoreService {
     private api: NotificationService,
     private hub: NotificationHub
   ) {
-    // كل ما يجي notification من الـ hub نحدّث الستيت محليًا
+    // When a new notification arrives, add it to the top of the list
     this.hub.notificationReceived.subscribe(n => {
       console.log('NotificationStore: Received notification from hub', n);
       this.prependNotification(n);
+    });
+
+    // When a notification is read, update its state in the list
+    this.hub.notificationRead.subscribe(payload => {
+      console.log('NotificationStore: Received read confirmation from hub', payload);
+      const notifications = this.notificationsSubject.value;
+      const index = notifications.findIndex(n => n.id === payload.notificationId);
+      if (index > -1 && !notifications[index].isRead) {
+        notifications[index] = { ...notifications[index], isRead: true };
+        this.notificationsSubject.next([...notifications]);
+        this.unreadCountSubject.next(this.unreadCountSubject.value - 1);
+      }
     });
   }
 
@@ -90,24 +102,54 @@ export class NotificationStoreService {
   }
 
   markAsRead(id: number) {
-    return this.api.markAsRead(id).pipe(
-      tap(() => {
-        const list = this.notificationsSubject.value.map(x => x.id === id ? { ...x, isRead: true } : x);
-        this.notificationsSubject.next(list);
-        // Reload count from server to ensure accuracy
-        this.loadUnreadCount();
-      })
-    );
+    // Update local state immediately
+    const notifications = this.notificationsSubject.value.slice();
+    let changed = false;
+    for (let i = 0; i < notifications.length; i++) {
+      if (notifications[i].id === id && !notifications[i].isRead) {
+        notifications[i] = { ...notifications[i], isRead: true };
+        changed = true;
+        break;
+      }
+    }
+    if (changed) {
+      this.notificationsSubject.next(notifications);
+    }
+
+    // Call backend API to mark as read and reload count
+    if (id > 0) {
+      this.api.markAsRead(id).subscribe({
+        next: () => {
+          console.log('Notification marked as read on backend:', id);
+          this.loadUnreadCount(); // Reload count from server
+        },
+        error: (err) => console.error('Failed to mark notification as read on backend:', err)
+      });
+    }
   }
 
   markAllAsRead() {
-    return this.api.markAllAsRead().pipe(
-      tap(() => {
-        const list = this.notificationsSubject.value.map(x => ({ ...x, isRead: true }));
-        this.notificationsSubject.next(list);
-        // Set count to 0 immediately
-        this.unreadCountSubject.next(0);
-      })
-    );
+    // Update local state immediately
+    const notifications = this.notificationsSubject.value.slice();
+    let changed = false;
+    for (let i = 0; i < notifications.length; i++) {
+      if (!notifications[i].isRead) {
+        notifications[i] = { ...notifications[i], isRead: true };
+        changed = true;
+      }
+    }
+    if (changed) {
+      this.notificationsSubject.next(notifications);
+      this.unreadCountSubject.next(0); // Immediate UI update
+    }
+
+    // Call backend API to mark all as read
+    this.api.markAllAsRead().subscribe({
+      next: () => {
+        console.log('All notifications marked as read on backend');
+        this.loadUnreadCount(); // Reload count to confirm
+      },
+      error: (err) => console.error('Failed to mark all notifications as read on backend:', err)
+    });
   }
 }

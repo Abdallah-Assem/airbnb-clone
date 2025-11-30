@@ -16,7 +16,7 @@
         Task<Notification> UpdateAsync(Notification notification);
         Task <bool> DeleteAsync(Notification notification);
 
-        Task<bool> MarkAsReadAsync(int notificationId);
+        Task<Notification?> MarkAsReadAsync(int notificationId);
         Task<bool> MarkAllAsReadAsync(Guid userId);
         Task<bool> MarkAsSentAsync(int notificationId);
     }

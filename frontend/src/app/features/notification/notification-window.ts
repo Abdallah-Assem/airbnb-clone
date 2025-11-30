@@ -69,14 +69,14 @@ export class NotificationWindow implements OnInit, OnDestroy {
   }
 
   markAll() {
-    this.store.markAllAsRead().subscribe();
+    this.store.markAllAsRead();
   }
 
   markAsRead(id: number, event?: Event) {
     event?.stopPropagation();
     // Remove from newIds immediately
     this.newIds.delete(id);
-    this.store.markAsRead(id).subscribe();
+    this.store.markAsRead(id);
   }
 
   handleAction(url: string, event?: Event) {

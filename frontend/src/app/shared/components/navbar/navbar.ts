@@ -171,7 +171,7 @@ export class Navbar implements OnInit, OnDestroy {
     });
   }
 
-  markAll() { this.store.markAllAsRead().subscribe(); }
+  markAll() { this.store.markAllAsRead(); }
 
   markAllMessagesRead() {
     // Mark all messages as read in the message store
@@ -182,7 +182,7 @@ export class Navbar implements OnInit, OnDestroy {
     event?.stopPropagation();
     // Mark as read and remove from newIds
     this.newIds.delete(id);
-    this.store.markAsRead(id).subscribe();
+    this.store.markAsRead(id);
     // Close dropdown and navigate to notifications page
     this.notificationOpen = false;
     this.router.navigate(['/notifications']);
@@ -198,7 +198,7 @@ export class Navbar implements OnInit, OnDestroy {
     event?.stopPropagation();
     // if user marks it as read, remove from newIds immediately
     this.newIds.delete(id);
-    this.store.markAsRead(id).subscribe();
+    this.store.markAsRead(id);
   }
 
   trackById(_index: number, item: NotificationDto) { return item.id; }

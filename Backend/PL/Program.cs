@@ -173,6 +173,9 @@ namespace PL
             builder.Services.AddControllers();
             builder.Services.AddSignalR();
 
+            // Notification publisher (sends SignalR messages from BLL)
+            builder.Services.AddSingleton<BLL.Services.Abstractions.INotificationPublisher, PL.Services.NotificationPublisher>();
+
             // Swagger
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

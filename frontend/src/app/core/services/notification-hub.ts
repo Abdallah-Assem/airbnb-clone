@@ -8,6 +8,7 @@ import { AuthService } from './auth.service';
 export class NotificationHub {
   private hubConnection!: signalR.HubConnection;
   public notificationReceived = new Subject<NotificationDto>();
+  public notificationRead = new Subject<{ notificationId: number; readerId: string }>();
   private isConnecting = false;
 
   constructor(private auth: AuthService) { }
@@ -57,6 +58,10 @@ export class NotificationHub {
     this.hubConnection.on('ReceiveNotification', (notification: NotificationDto) => {
       console.log('Notification received from hub', notification);
       this.notificationReceived.next(notification);
+    });
+    this.hubConnection.on('NotificationRead', (payload: any) => {
+      console.log('NotificationRead event from hub', payload);
+      this.notificationRead.next({ notificationId: payload.notificationId, readerId: String(payload.readerId) });
     });
 
     // Handle reconnection events
