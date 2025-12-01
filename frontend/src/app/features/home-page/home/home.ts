@@ -1,4 +1,4 @@
-import { Component, HostListener, ElementRef, AfterViewInit, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, HostListener, ElementRef, AfterViewInit, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeroCard } from "../hero-card/hero-card";
 import { HomeListingCard } from "../home-listing-card/home-listing-card";
@@ -8,6 +8,7 @@ import { ListingService } from '../../../core/services/listings/listing.service'
 import { Router } from '@angular/router';
 import { NavigationEnd } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { LanguageService } from '../../../core/services/language.service';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,8 @@ export class Home implements OnInit {
   listings: ListingOverviewVM[] = [];
   loading = false;
   error: string | null = null;
+  private languageService = inject(LanguageService);
+  currentLang: string = 'en';
 
   constructor(
     private listingService: ListingService,
@@ -28,6 +31,11 @@ export class Home implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.currentLang = this.languageService.getCurrentLanguage();
+    this.languageService.currentLanguage$.subscribe(lang => {
+      this.currentLang = lang;
+    });
+
     this.loadListings();
 
     this.router.events.subscribe(event => {

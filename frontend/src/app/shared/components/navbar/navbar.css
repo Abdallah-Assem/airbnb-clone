@@ -13,12 +13,12 @@
 .broker-logo {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     text-decoration: none;
 }
 
 .broker-character {
-    height: 50px;
+    height: 80px;
     width: auto;
     object-fit: contain;
     transition: transform 0.3s ease;
@@ -34,18 +34,42 @@
     line-height: 1.2;
 }
 
-.brand-name {
+.brand-name,
+.brand-name-ar {
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+    display: block;
+}
+
+.brand-name.primary {
     font-size: 1.4rem;
     font-weight: 800;
     color: #1a1a1a;
     letter-spacing: -0.5px;
+    order: 1;
 }
 
-.brand-name-ar {
+.brand-name.secondary {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    order: 2;
+}
+
+.brand-name-ar.primary {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #DC143C;
+    font-family: 'Cairo', sans-serif !important;
+    letter-spacing: 1px;
+    order: 1;
+}
+
+.brand-name-ar.secondary {
     font-size: 0.95rem;
     font-weight: 600;
     color: #DC143C;
     font-family: 'Cairo', sans-serif !important;
+    order: 2;
 }
 
 .nav-item {
@@ -115,6 +139,40 @@
     background: white;
 }
 
+.right.favorites-bell {
+    width: 45px;
+    min-width: 45px;
+    padding: 0;
+    border-radius: 50%;
+    background: white;
+    text-decoration: none;
+}
+
+.right.favorites-bell:hover {
+    background: #DC143C;
+    border-color: #DC143C;
+}
+
+.right.favorites-bell:hover .bell-btn {
+    color: white;
+}
+
+.favorites-bell .bell-btn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
 .right.notification-bell:hover,
 .right.message-bell:hover {
     background: #DC143C;
@@ -130,6 +188,13 @@
     width: auto;
     min-width: auto;
     padding: 0 1em;
+    background: white;
+    border: 1px solid #E0E0E0;
+}
+
+.right.dropdown.user-dropdown:hover {
+    background: rgba(220, 20, 60, 0.05);
+    border-color: #DC143C;
 }
 
 .right.dropdown:not(.user-dropdown) {
@@ -447,42 +512,22 @@
 .user-menu {
     display: flex;
     align-items: center;
-    gap: 0.5em;
-    white-space: nowrap;
-}
-
-.user-menu .user-name {
-    font-size: 0.95em;
-    font-weight: 500;
-    max-width: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.user-menu i {
-    font-size: 1.3em;
-}
-
-/* ===========================
-   USER MENU STYLE
-=========================== */
-.user-menu {
-    display: flex;
-    align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem !important;
     border-radius: 50px;
     transition: all 0.3s ease;
+    color: #1a1a1a !important;
 }
 
 .user-menu:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(220, 20, 60, 0.05);
+    color: #DC143C !important;
 }
 
 .user-menu .user-name {
     font-size: 0.95rem;
-    font-weight: 500;
-    color: rgb(255, 253, 240);
+    font-weight: 600;
+    color: #DC143C !important;
     max-width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -491,6 +536,7 @@
 
 .user-menu i {
     font-size: 1.5rem;
+    color: #DC143C !important;
 }
 
 .dropdown-header {
@@ -511,6 +557,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 0.5rem;
+    box-shadow: none !important;
+    border: none !important;
 }
 
 .language-switcher-container app-language-switcher {

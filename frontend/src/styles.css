@@ -65,9 +65,9 @@ body::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
+    background:
         linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%),
-        url("../public/bg.png") center/cover no-repeat;
+        url("/bg1.png") center/cover no-repeat;
     z-index: -2;
 }
 
@@ -79,7 +79,7 @@ body::after {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: 
+    background-image:
         repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(220,20,60,.02) 35px, rgba(220,20,60,.02) 70px);
     z-index: -1;
     pointer-events: none;

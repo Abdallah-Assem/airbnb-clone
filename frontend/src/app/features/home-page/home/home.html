@@ -5,10 +5,10 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 hero-content">
                     <div class="hero-text">
-                        <h1 class="hero-title">
-                            <span class="title-main">Welcome to</span>
-                            <span class="title-broker">The Broker</span>
-                            <span class="title-ar">السمسارة</span>
+                        <h1 class="hero-title" [attr.dir]="currentLang">
+                            <span class="title-main">{{ 'home.welcomeTo' | translate }}</span>
+                            <span class="title-broker" [class.primary-title]="currentLang === 'en'" [class.secondary-title]="currentLang === 'ar'">The Broker</span>
+                            <span class="title-ar" [class.primary-title]="currentLang === 'ar'" [class.secondary-title]="currentLang === 'en'">السمسارة</span>
                         </h1>
                         <p class="hero-subtitle">
                             {{ 'home.discoverEgypt' | translate }}
@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-lg-6 hero-image">
                     <div class="broker-character-container">
-                        <img src="3.png" alt="The Broker Character" class="broker-character-main">
+                        <img src="/3.png" alt="The Broker Character" class="broker-character-main">
                         <div class="character-accent-circle"></div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                     <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
-            
+
             <div class="cards-list">
                 <app-home-listing-card
                   *ngFor="let listing of listings.slice(0, 6)"
@@ -79,7 +79,7 @@
                     <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
-            
+
             <div class="cards-list">
                 <app-home-listing-card
                   *ngFor="let listing of listings.slice(6, 12)"
@@ -102,7 +102,7 @@
                     <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
-            
+
             <div class="cards-list">
                 <app-home-listing-card
                   *ngFor="let listing of listings.slice(12, 18)"
