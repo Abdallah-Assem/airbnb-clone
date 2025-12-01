@@ -5,7 +5,7 @@ import { HomeListingCard } from "../home-listing-card/home-listing-card";
 import { StackedCards } from "../stacked-cards/stacked-cards";
 import { ListingOverviewVM } from '../../../core/models/listing.model';
 import { ListingService } from '../../../core/services/listings/listing.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NavigationEnd } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../../core/services/language.service';
@@ -13,7 +13,7 @@ import { LanguageService } from '../../../core/services/language.service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, HeroCard, HomeListingCard, StackedCards, TranslateModule],
+  imports: [CommonModule, HeroCard, HomeListingCard, StackedCards, TranslateModule, RouterModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
