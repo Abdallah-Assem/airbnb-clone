@@ -47,13 +47,13 @@ export class FavoriteStoreService {
             if (res.result) {
               const current = this.favoritesSubject.value;
               this.favoritesSubject.next([...current, res.result]);
+            }
           }
-        }
         }
       })
     );
   }
-   // Remove from favorites
+  // Remove from favorites
   removeFavorite(listingId: number): Observable<any> {
     return this.api.removeFavorite(listingId).pipe(
       tap({
@@ -71,7 +71,7 @@ export class FavoriteStoreService {
       })
     );
   }
-   // Toggle favorite
+  // Toggle favorite
   toggleFavorite(listingId: number): Observable<any> {
     return this.api.toggleFavorite(listingId).pipe(
       tap({
@@ -81,14 +81,15 @@ export class FavoriteStoreService {
             // overwriting optimistic UI changes. The favorites list can be synced
             // explicitly elsewhere if needed.
             this.updateFavoriteState(listingId, res.result);
-            }
-            this.loadFavorites();
+            // Consider whether you want to call loadFavorites() here
+            // this.loadFavorites();
           }
-        }
+        },
+        error: (err) => console.error('Failed to toggle favorite', err)
       })
     );
   }
- // Check if listing is favorited (from cache)
+  // Check if listing is favorited (from cache)
   isFavorited(listingId: number): boolean {
     return this.favoriteListingIds.has(listingId);
   }
@@ -106,29 +107,28 @@ export class FavoriteStoreService {
       })
     );
   }
-
   // Apply an optimistic clear locally (UI-level only) - does not call the API
   setOptimisticClearAll(): void {
     this.favoritesSubject.next([]);
     this.favoriteCountSubject.next(0);
     this.favoriteListingIds.clear();
   }
-updateFavoriteState(listingId: number, isFavorited: boolean): void {
-  if (isFavorited) {
-    // Mark id as favorited and increment count
-    if (!this.favoriteListingIds.has(listingId)) {
-      this.favoriteListingIds.add(listingId);
-      this.favoriteCountSubject.next(this.favoriteCountSubject.value + 1);
+  updateFavoriteState(listingId: number, isFavorited: boolean): void {
+    if (isFavorited) {
+      // Mark id as favorited and increment count
+      if (!this.favoriteListingIds.has(listingId)) {
+        this.favoriteListingIds.add(listingId);
+        this.favoriteCountSubject.next(this.favoriteCountSubject.value + 1);
+      }
+    } else {
+      if (this.favoriteListingIds.has(listingId)) {
+        this.favoriteListingIds.delete(listingId);
+      }
+      const currentFavorites = this.favoritesSubject.value;
+      const updatedFavorites = currentFavorites.filter(f => f.listingId !== listingId);
+
+      this.favoritesSubject.next(updatedFavorites);
+      this.favoriteCountSubject.next(updatedFavorites.length);
     }
-  } else {
-    if (this.favoriteListingIds.has(listingId)) {
-      this.favoriteListingIds.delete(listingId);
-    }
-    const currentFavorites = this.favoritesSubject.value;
-    const updatedFavorites = currentFavorites.filter(f => f.listingId !== listingId);
-    
-    this.favoritesSubject.next(updatedFavorites);
-    this.favoriteCountSubject.next(updatedFavorites.length);
-  }
   }
 }
