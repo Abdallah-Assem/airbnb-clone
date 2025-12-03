@@ -86,7 +86,11 @@
             <div class="broker-view-map-section">
               <button class="btn-broker-map" (click)="viewOnMap()">
                 <i class="bi bi-map"></i>
-                <span>View All Listings on Map</span>
+                <span>{{ 'listings.viewOnMap' | translate }}</span>
+              </button>
+              <button class="btn-broker-create" routerLink="/listings/create">
+                <i class="bi bi-plus-circle"></i>
+                <span>{{ 'listings.createListing' | translate }}</span>
               </button>
             </div>
           </div>

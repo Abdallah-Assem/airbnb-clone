@@ -261,6 +261,8 @@
     "pending": "Pending Review",
     "reviews": "reviews",
     "noReviewsYet": "No reviews yet",
+    "viewOnMap": "View All on Map",
+    "createListing": "Create New Listing",
     "edit": "Edit",
     "perNight": "per night",
     "propertyType": "Property Type",
@@ -638,5 +640,28 @@
       "description": "Located in the heart of Cairo, our office is open for meetings and consultations.",
       "mapPlaceholder": "Interactive Map Coming Soon"
     }
+  },
+  "map": {
+    "exploreProperties": "Explore Properties",
+    "discoverProperties": "Discover amazing places to stay around the world",
+    "mapControls": "Map Controls",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "resetView": "Reset View",
+    "loadingProperties": "Loading properties...",
+    "theBrokerSearching": "The Broker is finding properties for you...",
+    "propertiesFound": "properties found",
+    "brokerChoice": "Broker's Choice",
+    "availableProperty": "Available Property",
+    "premiumProperty": "Premium Property",
+    "mapLegend": "Map Legend",
+    "bedrooms": "bedrooms",
+    "bathrooms": "bathrooms",
+    "rating": "rating",
+    "reviews": "reviews",
+    "perNight": "per night",
+    "viewDetails": "View Details",
+    "currency": "EGP",
+    "noReviews": "No reviews yet"
   }
 }

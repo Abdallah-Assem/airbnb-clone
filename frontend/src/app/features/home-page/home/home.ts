@@ -36,6 +36,10 @@ export class Home implements OnInit {
     private cdr: ChangeDetectorRef
   ) {}
 
+  viewOnMap() {
+    this.router.navigate(['/map']);
+  }
+
   get topPriorityListings(): ListingOverviewVM[] {
     const sorted = this.listings
       .sort((a, b) => (b.priority || 0) - (a.priority || 0));

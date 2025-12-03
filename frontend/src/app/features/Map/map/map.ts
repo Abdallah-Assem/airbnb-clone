@@ -1,28 +1,36 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { MapService } from '../../../core/services/map/map';
 import { PropertyMap } from '../../../core/models/map.model';
+import { FavoriteButton } from '../../favorites/favorite-button/favorite-button';
+import { FavoriteStoreService } from '../../../core/services/favoriteService/favorite-store-service';
 
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule, FavoriteButton],
   templateUrl: './map.html',
   styleUrls: ['./map.css'],
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnDestroy {
   private map: any;
   private markers: any[] = [];
   properties: PropertyMap[] = [];
   selectedProperty: PropertyMap | null = null;
   isLoading = false;
+  private langChangeSubscription?: Subscription;
+  isFavorited = false;
 
   private leaflet: any;
   private customIcon: any;
   constructor(
-    private mapService: MapService, 
+    private mapService: MapService,
     private router: Router,
+    private translate: TranslateService,
+    private favoriteStore: FavoriteStoreService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -33,6 +41,19 @@ export class MapComponent implements OnInit {
       setTimeout(() => {
         this.initMap();
       }, 100);
+
+      // Subscribe to language changes and refresh markers
+      this.langChangeSubscription = this.translate.onLangChange.subscribe(() => {
+        if (this.properties.length > 0) {
+          this.updateMarkers();
+        }
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.langChangeSubscription) {
+      this.langChangeSubscription.unsubscribe();
     }
   }
 
@@ -138,7 +159,7 @@ export class MapComponent implements OnInit {
           // Determine if property is premium based on price
           const isPremium = p.pricePerNight > 200;
           const iconColor = isPremium ? '#f39c12' : '#DC143C';
-          
+
           // Create dynamic icon
           const dynamicIcon = this.leaflet.divIcon({
             className: 'custom-leaflet-icon',
@@ -148,20 +169,27 @@ export class MapComponent implements OnInit {
             popupAnchor: [0, -40]
           });
 
+          const currency = this.translate.instant('map.currency');
+          const perNight = this.translate.instant('map.perNight');
+          const reviews = this.translate.instant('map.reviews');
+          const noReviews = this.translate.instant('map.noReviews');
+          const premiumLabel = this.translate.instant('map.premiumProperty');
+
           const marker = this.leaflet
             .marker([lat, lng], { icon: dynamicIcon })
             .addTo(this.map)
             .bindPopup(`
               <div style="min-width: 200px;">
                 <b>${p.title}</b><br>
-                <strong>$${p.pricePerNight}</strong> per night<br>
-                ${p.averageRating ? `⭐ ${p.averageRating.toFixed(1)} (${p.reviewCount} reviews)` : 'No reviews yet'}<br>
-                ${isPremium ? '<span style="color: #f39c12; font-weight: bold;">✨ Premium Property</span>' : ''}
+                <strong>${p.pricePerNight} ${currency}</strong> ${perNight}<br>
+                ${p.averageRating ? `⭐ ${p.averageRating.toFixed(1)} (${p.reviewCount} ${reviews})` : noReviews}<br>
+                ${isPremium ? `<span style="color: #f39c12; font-weight: bold;">✨ ${premiumLabel}</span>` : ''}
               </div>
             `);
 
           marker.on('click', () => {
             this.selectedProperty = p;
+            this.checkIfFavorited();
           });
 
           this.markers.push(marker);
@@ -212,11 +240,16 @@ export class MapComponent implements OnInit {
     this.router.navigate(['/listings', propertyId]);
   }
 
-  toggleFavorite(propertyId: number): void {
-    // Implement favorite functionality
-    console.log('Toggle favorite for property:', propertyId);
-    // You can integrate with your favorite service here
-    // For now, just show a simple feedback
-    alert('Favorite feature will be implemented with your favorite service!');
+  onFavoriteChanged(isFavorited: boolean): void {
+    this.isFavorited = isFavorited;
+    if (this.selectedProperty) {
+      this.favoriteStore.updateFavoriteState(this.selectedProperty.id, isFavorited);
+    }
+  }
+
+  checkIfFavorited(): void {
+    if (this.selectedProperty) {
+      this.isFavorited = this.favoriteStore.isFavorited(this.selectedProperty.id);
+    }
   }
 }

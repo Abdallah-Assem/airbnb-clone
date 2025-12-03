@@ -30,7 +30,7 @@
   },
   "navbar": {
     "home": "الرئيسية",
-    "listings": "القوائم",
+    "listings": "عقارات",
     "myBookings": "حجوزاتي",
     "messages": "الرسائل",
     "notifications": "الإشعارات",
@@ -102,7 +102,7 @@
     "guests": "الضيوف",
     "searchButton": "بحث",
     "popularDestinations": "الوجهات الشائعة",
-    "featuredListings": "القوائم المميزة",
+    "featuredListings": "العقارات المميزة",
     "recentlyViewed": "شوهدت مؤخراً",
     "exploreNearby": "استكشف القريب",
     "featuredForYou": "مميز لك",
@@ -144,7 +144,7 @@
     "title": "قوائمي",
     "subtitle": "إدارة عقاراتك وتتبع أدائها",
     "properties": "العقارات",
-    "addNewListing": "إضافة قائمة جديدة",
+    "addNewListing": "إضافة عقار جديد",
     "statusPending": "قيد المراجعة",
     "statusApproved": "موافق عليه",
     "night": "ليلة",
@@ -157,7 +157,7 @@
     "pageOf": "الصفحة {{current}} من {{total}}",
     "filters": "المرشحات",
     "search": "بحث",
-    "searchPlaceholder": "البحث في القوائم...",
+    "searchPlaceholder": "البحث في العقارات...",
     "location": "الموقع",
     "allLocations": "جميع المواقع",
     "status": "الحالة",
@@ -170,8 +170,8 @@
     "resetFilters": "إعادة تعيين المرشحات"
   },
   "createEditListing": {
-    "editListing": "تعديل القائمة",
-    "createNewListing": "إنشاء قائمة جديدة",
+    "editListing": "تعديل العقار",
+    "createNewListing": "إنشاء عقار جديد",
     "basicInformation": "المعلومات الأساسية",
     "title": "العنوان",
     "titlePlaceholder": "مثل، شقة مريحة في وسط المدينة",
@@ -221,7 +221,7 @@
     "delete": "حذف"
   },
   "listings": {
-    "title": "القوائم المتاحة",
+    "title": "العقارات المتاحة",
     "noListingsFound": "لم يتم العثور على قوائم",
     "pricePerNight": "لكل ليلة",
     "bedrooms": "غرف النوم",
@@ -261,6 +261,8 @@
     "pending": "قيد المراجعة",
     "reviews": "مراجعة",
     "noReviewsYet": "لا توجد مراجعات بعد",
+    "viewOnMap": "عرض الكل على الخريطة",
+    "createListing": "إنشاء عقار جديد",
     "edit": "تعديل",
     "perNight": "لكل ليلة",
     "propertyType": "نوع العقار",
@@ -411,10 +413,10 @@
     "errorOccurred": "خطأ في تحميل المفضلة",
     "tryAgain": "حاول مرة أخرى",
     "noFavorites": "لا توجد مفضلة بعد",
-    "startExploring": "ابدأ الاستكشاف واحفظ القوائم المفضلة لديك هنا!",
+    "startExploring": "ابدأ الاستكشاف واحفظ العقارات المفضلة لديك هنا!",
     "yourSavedProperties": "العقارات المحفوظة",
     "gridView": "عرض الشبكة",
-    "listView": "عرض القائمة",
+    "listView": "عرض اللائحة",
     "viewProperty": "عرض العقار",
     "addedToFavorites": "تمت الإضافة للمفضلة"
   },
@@ -620,7 +622,7 @@
       },
       "cancellation": {
         "question": "ما هي سياسة الإلغاء لديكم؟",
-        "answer": "تختلف سياسات الإلغاء حسب العقار. معظم المضيفين يقدمون إلغاء مرن حتى 24 ساعة قبل تسجيل الوصول. تحقق من السياسة المحددة في كل قائمة."
+        "answer": "تختلف سياسات الإلغاء حسب العقار. معظم المضيفين يقدمون إلغاء مرن حتى 24 ساعة قبل تسجيل الوصول. تحقق من السياسة المحددة في كل عقار."
       },
       "payment": {
         "question": "ما هي طرق الدفع التي تقبلونها؟",
@@ -638,5 +640,28 @@
       "description": "يقع في قلب القاهرة، مكتبنا مفتوح للاجتماعات والاستشارات.",
       "mapPlaceholder": "الخريطة التفاعلية قريباً"
     }
+  },
+  "map": {
+    "exploreProperties": "استكشف العقارات",
+    "discoverProperties": "اكتشف أماكن رائعة للإقامة حول العالم",
+    "mapControls": "أدوات الخريطة",
+    "zoomIn": "تكبير",
+    "zoomOut": "تصغير",
+    "resetView": "البداية",
+    "loadingProperties": "تحميل العقارات...",
+    "theBrokerSearching": "السمسار يبحث لك...",
+    "propertiesFound": "عقار متاح",
+    "brokerChoice": "اختيار السمسار",
+    "availableProperty": "عقار متاح",
+    "premiumProperty": "عقار مميز",
+    "mapLegend": "دليل الخريطة",
+    "bedrooms": "غرف نوم",
+    "bathrooms": "حمام",
+    "rating": "تقييم",
+    "reviews": "مراجعة",
+    "perNight": "في الليلة",
+    "viewDetails": "عرض التفاصيل",
+    "currency": "جنيه",
+    "noReviews": "لا توجد مراجعات بعد"
   }
 }
