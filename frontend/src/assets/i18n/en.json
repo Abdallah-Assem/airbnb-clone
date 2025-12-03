@@ -290,7 +290,11 @@
     "checkAvailability": "Check availability",
     "untitledProperty": "Untitled Property",
     "locationNotSpecified": "Location not specified",
-    "untitled": "Untitled"
+    "untitled": "Untitled",
+    "personalized": "Personalized",
+    "personalizedResults": "Results personalized based on your preferences",
+    "personalizedTooltip": "We've sorted these results based on your browsing history, favorites, and filters to show you the most relevant properties first.",
+    "yourPreferences": "Your preferences"
   },
   "bookings": {
     "myBookings": "My Bookings",

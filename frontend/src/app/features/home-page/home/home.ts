@@ -9,6 +9,7 @@ import { NavigationEnd } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../../core/services/language.service';
 import { RagChatService } from '../../../core/services/chat/rag-chat.service';
+import { UserPreferencesService } from '../../../core/services/user-preferences/user-preferences.service';
 
 @Component({
   selector: 'app-home',
@@ -34,7 +35,8 @@ export class Home implements OnInit {
     private listingService: ListingService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private chatService: RagChatService
+    private chatService: RagChatService,
+    private userPreferences: UserPreferencesService
   ) {}
 
   viewOnMap() {
@@ -44,8 +46,10 @@ export class Home implements OnInit {
   get topPriorityListings(): ListingOverviewVM[] {
     const sorted = this.listings
       .sort((a, b) => (b.priority || 0) - (a.priority || 0));
+    // Apply personalized sorting to top results
+    const personalized = this.userPreferences.sortByRelevance(sorted);
     const start = (this.topPriorityPage - 1) * this.itemsPerPage;
-    return sorted.slice(start, start + this.itemsPerPage);
+    return personalized.slice(start, start + this.itemsPerPage);
   }
 
   get topPriorityTotal(): number {

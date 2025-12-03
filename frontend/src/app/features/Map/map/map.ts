@@ -7,6 +7,8 @@ import { MapService } from '../../../core/services/map/map';
 import { PropertyMap } from '../../../core/models/map.model';
 import { FavoriteButton } from '../../favorites/favorite-button/favorite-button';
 import { FavoriteStoreService } from '../../../core/services/favoriteService/favorite-store-service';
+import { UserPreferencesService } from '../../../core/services/user-preferences/user-preferences.service';
+import { ListingOverviewVM } from '../../../core/models/listing.model';
 
 @Component({
   selector: 'app-map',
@@ -31,6 +33,7 @@ export class MapComponent implements OnInit, OnDestroy {
     private router: Router,
     private translate: TranslateService,
     private favoriteStore: FavoriteStoreService,
+    private userPreferences: UserPreferencesService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -123,7 +126,62 @@ export class MapComponent implements OnInit, OnDestroy {
       this.mapService.getProperties(params).subscribe(
         (res: any) => {
           this.isLoading = false;
-          this.properties = res.properties || [];
+          let properties = res.properties || [];
+          
+          // Convert to ListingOverviewVM for personalized sorting
+          const listings: ListingOverviewVM[] = properties.map((p: PropertyMap) => ({
+            id: p.id,
+            title: p.title,
+            pricePerNight: p.pricePerNight,
+            location: p.location || '',
+            mainImageUrl: p.mainImageUrl,
+            averageRating: p.averageRating,
+            reviewCount: p.reviewCount || 0,
+            isApproved: true,
+            description: p.description || '',
+            destination: p.destination || '',
+            type: p.type || '',
+            bedrooms: p.bedrooms || 0,
+            bathrooms: p.bathrooms || 0,
+            createdAt: '',
+            priority: 0,
+            viewCount: 0,
+            favoriteCount: 0,
+            bookingCount: 0,
+            amenities: p.amenities || []
+          }));
+          
+          // Sort by user preferences
+          const sorted = this.userPreferences.sortByRelevance(listings);
+          
+          // Convert back to PropertyMap format
+          this.properties = sorted.map(l => ({
+            id: l.id,
+            title: l.title,
+            description: l.description,
+            pricePerNight: l.pricePerNight,
+            location: l.location,
+            latitude: 0, // Will be set from original data
+            longitude: 0, // Will be set from original data
+            mainImageUrl: l.mainImageUrl,
+            rating: l.averageRating || 0,
+            reviewCount: l.reviewCount,
+            destination: l.destination,
+            type: l.type,
+            bedrooms: l.bedrooms,
+            bathrooms: l.bathrooms,
+            amenities: l.amenities
+          }));
+          
+          // Restore lat/lng from original properties
+          this.properties.forEach((p, idx) => {
+            const original = properties.find((op: PropertyMap) => op.id === p.id);
+            if (original) {
+              p.latitude = original.latitude;
+              p.longitude = original.longitude;
+            }
+          });
+          
           this.updateMarkers();
         },
         (error: any) => {

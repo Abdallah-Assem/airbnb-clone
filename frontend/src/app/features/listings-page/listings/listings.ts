@@ -7,12 +7,14 @@ import { ListingOverviewVM } from '../../../core/models/listing.model';
 import { ListingService } from '../../../core/services/listings/listing.service';
 import { ListingCard } from '../listing-card/listing-card';
 import { FavoriteStoreService } from '../../../core/services/favoriteService/favorite-store-service';
+import { UserPreferencesService } from '../../../core/services/user-preferences/user-preferences.service';
+import { PersonalizationBadge } from '../../../shared/components/personalization-badge/personalization-badge';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-listings',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, ListingCard, ReactiveFormsModule, TranslateModule],
+  imports: [CommonModule, FormsModule, RouterModule, ListingCard, ReactiveFormsModule, TranslateModule, PersonalizationBadge],
   templateUrl: './listings.html',
   styleUrls: ['./listings.css']
 })
@@ -38,7 +40,8 @@ export class Listings implements OnInit {
     private listingService: ListingService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-    public favoriteStore: FavoriteStoreService
+    public favoriteStore: FavoriteStoreService,
+    private userPreferences: UserPreferencesService
   ) {}
 
   onListingFavoriteChanged(payload: { listingId: number; isFavorited: boolean }) {
@@ -48,6 +51,11 @@ export class Listings implements OnInit {
         const copy = [...this.allListings()];
         (copy[idx] as any).isFavorited = payload.isFavorited;
         this.allListings.set(copy);
+
+        // Track favorite in user preferences (if favorited)
+        if (payload.isFavorited) {
+          this.userPreferences.trackFavorite(copy[idx]);
+        }
       }
     } catch (e) { console.warn('Failed to update listing favorite state in parent', e); }
   }
@@ -69,6 +77,11 @@ export class Listings implements OnInit {
     }
 
     this.amenities.set(currentAmenities);
+
+    // Track amenity filter in user preferences
+    if (currentAmenities.length > 0) {
+      this.userPreferences.trackAmenityFilter(currentAmenities);
+    }
 
     // Reset to first page when filters change
     this.currentPage.set(1);
@@ -136,7 +149,7 @@ export class Listings implements OnInit {
     const destNormalized = this.normalize(rawDest);
     const typeNormalized = this.normalize(rawType);
 
-    return data.filter(l => {
+    const filtered = data.filter(l => {
       const title = this.normalize(l.title);
       const destinationVal = this.normalize(l.destination);
       const typeVal = this.normalize(l.type);
@@ -167,6 +180,9 @@ export class Listings implements OnInit {
 
       return matchesSearch && matchesDestination && matchesType && priceOk && ratingOk && amenitiesOk;
     });
+
+    // Apply personalized sorting based on user preferences
+    return this.userPreferences.sortByRelevance(filtered);
   });
 
   // computed paginated results from filtered data
@@ -280,6 +296,15 @@ export class Listings implements OnInit {
   // Reset to first page when filters change
   onSearchChange(): void {
     this.currentPage.set(1);
+    // Track search interaction if there's a query
+    const query = this.search().trim();
+    if (query.length > 0) {
+      // Track first few results as "searched for"
+      const topResults = this.filtered().slice(0, 3);
+      topResults.forEach(listing => {
+        this.userPreferences.trackListingInteraction(listing, 0.5);
+      });
+    }
   }
 
   onDestinationChange(): void {

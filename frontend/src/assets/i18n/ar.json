@@ -290,7 +290,11 @@
     "checkAvailability": "تحقق من التوفر",
     "untitledProperty": "عقار بدون عنوان",
     "locationNotSpecified": "لم يتم تحديد الموقع",
-    "untitled": "بدون عنوان"
+    "untitled": "بدون عنوان",
+    "personalized": "مخصص لك",
+    "personalizedResults": "النتائج مخصصة بناءً على تفضيلاتك",
+    "personalizedTooltip": "قمنا بترتيب هذه النتائج بناءً على سجل التصفح والمفضلة والمرشحات الخاصة بك لإظهار العقارات الأكثر صلة أولاً.",
+    "yourPreferences": "تفضيلاتك"
   },
   "bookings": {
     "myBookings": "حجوزاتي",

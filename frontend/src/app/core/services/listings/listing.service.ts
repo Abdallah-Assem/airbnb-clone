@@ -2,7 +2,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import {
   Listing,
   ListingCreateVM,
@@ -12,10 +12,12 @@ import {
   ListingsResponse,
   ListingsPagedResponse
 } from '../../models/listing.model';
+import { UserPreferencesService } from '../user-preferences/user-preferences.service';
 
 @Injectable({ providedIn: 'root' })
 export class ListingService {
   private http = inject(HttpClient);
+  private userPreferences = inject(UserPreferencesService);
   private apiUrl = 'http://localhost:5235/api/Listings';
   private backendOrigin = 'http://localhost:5235';
 
@@ -64,6 +66,34 @@ export class ListingService {
         }
 
         return res;
+      }),
+      tap(response => {
+        // Track user viewing this listing for personalization
+        if (response.data && !response.isError) {
+          const listing = response.data;
+          const overviewVM: ListingOverviewVM = {
+            id: listing.id,
+            title: listing.title,
+            pricePerNight: listing.pricePerNight,
+            location: listing.location,
+            mainImageUrl: listing.mainImageUrl,
+            averageRating: listing.averageRating,
+            reviewCount: listing.reviewCount,
+            isApproved: listing.isApproved,
+            description: listing.description,
+            destination: listing.destination,
+            type: listing.type,
+            bedrooms: listing.bedrooms,
+            bathrooms: listing.bathrooms,
+            createdAt: listing.createdAt,
+            priority: 0,
+            viewCount: 0,
+            favoriteCount: 0,
+            bookingCount: 0,
+            amenities: listing.amenities
+          };
+          this.userPreferences.trackListingInteraction(overviewVM, 1);
+        }
       })
     );
   }
