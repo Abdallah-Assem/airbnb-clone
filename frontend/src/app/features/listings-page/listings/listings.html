@@ -28,7 +28,7 @@
                   <div class="broker-search-group search-large">
                     <i class="bi bi-search"></i>
                     <input class="broker-search-input" type="text"
-                      [placeholder]="'listings.searchPlaceholder' | translate" [ngModel]="search()"
+                      [placeholder]="'Title, destination, or description'" [ngModel]="search()"
                       (ngModelChange)="search.set($event); onSearchChange()" />
                   </div>
                 </div>
@@ -49,7 +49,7 @@
                   <i class="bi bi-geo-alt"></i>
                   <select class="broker-search-select" [ngModel]="destination()"
                     (ngModelChange)="destination.set($event); onDestinationChange()">
-                    <option value="">{{ 'listings.allLocations' | translate }}</option>
+                    <option value="">Destination</option>
                     <option *ngFor="let dest of destinations()" [value]="dest">{{ dest }}</option>
                   </select>
                 </div>
@@ -59,7 +59,7 @@
                   <i class="bi bi-house"></i>
                   <select class="broker-search-select" [ngModel]="type()"
                     (ngModelChange)="type.set($event); onTypeChange()">
-                    <option value="">All Types</option>
+                    <option value="">Type</option>
                     <option *ngFor="let propertyType of types()" [value]="propertyType">{{ propertyType }}</option>
                   </select>
                 </div>

@@ -25,7 +25,7 @@ export class Listings implements OnInit {
   // pagination for filtered results
   currentPage = signal<number>(1);
   pageSize = signal<number>(12);
-  
+
   // filters (signals)
   search = signal<string>('');
   destination = signal<string>('');  // Changed from location to destination
@@ -74,7 +74,7 @@ export class Listings implements OnInit {
     else amenities.push(amenity);
 
     this.form.patchValue({ amenities });
-    
+
     // Reset to first page when filters change
     this.currentPage.set(1);
   }
@@ -174,13 +174,13 @@ export class Listings implements OnInit {
     const currentPage = this.currentPage();
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-    
+
     return filteredData.slice(startIndex, endIndex);
   });
 
   // computed pagination values based on filtered results
   totalFilteredCount = computed(() => this.filtered().length);
-  
+
   totalPages = computed(() => {
     const total = this.totalFilteredCount();
     const pageSize = this.pageSize();
@@ -191,7 +191,7 @@ export class Listings implements OnInit {
     const total = this.totalPages();
     const current = this.currentPage();
     const pages: (number | string)[] = [];
-   
+
     if (total <= 7) {
       for (let i = 1; i <= total; i++) {
         pages.push(i);
@@ -199,18 +199,18 @@ export class Listings implements OnInit {
     } else {
       pages.push(1);
       if (current > 3) pages.push('...');
-     
+
       const start = Math.max(2, current - 1);
       const end = Math.min(total - 1, current + 1);
-     
+
       for (let i = start; i <= end; i++) {
         pages.push(i);
       }
-     
+
       if (current < total - 2) pages.push('...');
       pages.push(total);
     }
-   
+
     return pages;
   });
 
@@ -223,6 +223,10 @@ export class Listings implements OnInit {
         this.loadAllListings();
       }
     });
+  }
+
+  viewOnMap() {
+    this.router.navigate(['/map']);
   }
 
   loadAllListings(): void {
@@ -250,7 +254,7 @@ export class Listings implements OnInit {
   goToPage(page: number | string): void {
     if (typeof page === 'string') return;
     if (page < 1 || page > this.totalPages()) return;
-   
+
     this.currentPage.set(page);
     // No need to reload data, just update the page
     window.scrollTo({ top: 0, behavior: 'smooth' });
