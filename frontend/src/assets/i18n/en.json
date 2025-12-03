@@ -664,5 +664,16 @@
     "viewDetails": "View Details",
     "currency": "EGP",
     "noReviews": "No reviews yet"
+  },
+  "chat": {
+    "theBroker": "The Broker",
+    "online": "Online - Ready to Help",
+    "clearChat": "Clear Chat",
+    "inputPlaceholder": "Ask me anything about properties...",
+    "send": "Send",
+    "poweredBy": "AI-Powered Property Assistant",
+    "errorMessage": "Sorry, I couldn't process that. Please try again.",
+    "retry": "Retry",
+    "welcome": "Hello! I'm The Broker. How can I help you find your perfect property today?"
   }
 }

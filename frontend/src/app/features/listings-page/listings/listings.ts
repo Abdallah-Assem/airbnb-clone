@@ -158,8 +158,8 @@ export class Listings implements OnInit {
         minR === null || (l.averageRating ?? 0) >= minR;
 
       // Amenities filter
-      // const amenitiesOk = selectedAmenities.length === 0 || 
-      //   selectedAmenities.every((amenity: string) => 
+      // const amenitiesOk = selectedAmenities.length === 0 ||
+      //   selectedAmenities.every((amenity: string) =>
       //     l.amenities && l.amenities.includes(amenity)
       //   );
 
@@ -233,8 +233,8 @@ export class Listings implements OnInit {
     this.loading.set(true);
     this.error.set('');
 
-    // Load all listings at once (use a large page size to get all data)
-    this.listingService.getPaged(1, 10000).subscribe({
+    // Load listings with proper pagination (backend max is 100 per page)
+    this.listingService.getPaged(1, 100).subscribe({
       next: (res) => {
         console.log('All Listings Response:', res);
         this.allListings.set(res.data || []);
