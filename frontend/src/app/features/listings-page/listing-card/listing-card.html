@@ -1,9 +1,9 @@
-<a [routerLink]="['/listings', listing?.id]" class="broker-card-link">
+<a [routerLink]="['/listings', listing.id]" class="broker-card-link">
   <div class="broker-listing-card">
 
     <!-- Property Image Section -->
     <div class="broker-image-wrapper">
-      <img [src]="imageSrc" class="broker-property-image" [alt]="listing?.title" />
+      <img [src]="imageSrc" class="broker-property-image" [alt]="listing.title" />
 
       <!-- Image Overlay -->
       <div class="broker-image-overlay"></div>
@@ -24,17 +24,24 @@
       <app-favorite-button class="broker-favorite-btn" [listingId]="listing.id" [isFavorited]="isFavorited"
         (favoriteChanged)="onFavoriteChanged($event)">
       </app-favorite-button>
+
+      <!-- Personalization Badge -->
+      <div class="personalization-badge" *ngIf="showPersonalizationBadge">
+        <i class="bi bi-stars"></i>
+        <span>{{ personalizedLabelKey | translate }}</span>
+        <!-- <div class="relevance-score">{{ relevanceScore }}%</div> -->
+      </div>
     </div>
 
     <!-- Property Details Section -->
     <div class="broker-card-content">
       <!-- Property Title -->
-      <h5 class="broker-property-title">{{ listing?.title || ('listings.untitledProperty' | translate) }}</h5>
+      <h5 class="broker-property-title">{{ listing.title || ('listings.untitledProperty' | translate) }}</h5>
 
       <!-- Location -->
       <div class="broker-location-info">
         <i class="bi bi-geo-alt"></i>
-        <span>{{ listing?.destination || ('listings.locationNotSpecified' | translate) }}</span>
+        <span>{{ listing.destination || ('listings.locationNotSpecified' | translate) }}</span>
       </div>
 
       <!-- Description -->
@@ -44,15 +51,15 @@
       <div class="broker-features-row">
         <div class="broker-feature-item">
           <i class="bi bi-house-door"></i>
-          <span>{{ listing?.type || ('listings.property' | translate) }}</span>
+          <span>{{ listing.type || ('listings.property' | translate) }}</span>
         </div>
         <div class="broker-feature-item">
           <i class="bi bi-bed"></i>
-          <span>{{ listing?.bedrooms || 0 }} {{ 'listings.beds' | translate }}</span>
+          <span>{{ listing.bedrooms || 0 }} {{ 'listings.beds' | translate }}</span>
         </div>
         <div class="broker-feature-item">
           <i class="bi bi-droplet"></i>
-          <span>{{ listing?.bathrooms || 0 }} {{ 'listings.baths' | translate }}</span>
+          <span>{{ listing.bathrooms || 0 }} {{ 'listings.baths' | translate }}</span>
         </div>
       </div>
 

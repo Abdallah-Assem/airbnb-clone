@@ -8,6 +8,17 @@ namespace PL
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Enable detailed logging for development
+            builder.Logging.ClearProviders();
+            builder.Logging.AddConsole();
+            builder.Logging.AddDebug();
+            
+            if (builder.Environment.IsDevelopment())
+            {
+                builder.Logging.SetMinimumLevel(LogLevel.Information);
+                builder.Logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.Information);
+            }
+
             // Keep original JWT claim types (don't remap sub/name, etc.)
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 

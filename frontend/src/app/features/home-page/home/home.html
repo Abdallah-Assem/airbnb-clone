@@ -29,8 +29,11 @@
                     </div>
                 </div>
                 <div class="col-lg-6 hero-image">
-                    <div class="broker-character-container">
+                    <div class="broker-character-container" (click)="openChat()" style="cursor: pointer;" title="Chat with The Broker">
                         <img src="/3.png" alt="The Broker Character" class="broker-character-main">
+                        <div class="broker-speech-bubble">
+                            <span>{{ 'home.brokerDialogue' | translate }}</span>
+                        </div>
                         <div class="character-accent-circle"></div>
                     </div>
                 </div>

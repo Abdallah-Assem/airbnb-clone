@@ -1,6 +1,5 @@
 import { Component, HostListener, ElementRef, AfterViewInit, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeroCard } from "../hero-card/hero-card";
 import { HomeListingCard } from "../home-listing-card/home-listing-card";
 import { StackedCards } from "../stacked-cards/stacked-cards";
 import { ListingOverviewVM } from '../../../core/models/listing.model';
@@ -9,11 +8,13 @@ import { Router, RouterModule } from '@angular/router';
 import { NavigationEnd } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../../core/services/language.service';
+import { RagChatService } from '../../../core/services/chat/rag-chat.service';
+import { UserPreferencesService } from '../../../core/services/user-preferences/user-preferences.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, HeroCard, HomeListingCard, StackedCards, TranslateModule, RouterModule],
+  imports: [CommonModule, HomeListingCard, StackedCards, TranslateModule, RouterModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -33,7 +34,9 @@ export class Home implements OnInit {
   constructor(
     private listingService: ListingService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private chatService: RagChatService,
+    private userPreferences: UserPreferencesService
   ) {}
 
   viewOnMap() {
@@ -43,8 +46,10 @@ export class Home implements OnInit {
   get topPriorityListings(): ListingOverviewVM[] {
     const sorted = this.listings
       .sort((a, b) => (b.priority || 0) - (a.priority || 0));
+    // Apply personalized sorting to top results
+    const personalized = this.userPreferences.sortByRelevance(sorted);
     const start = (this.topPriorityPage - 1) * this.itemsPerPage;
-    return sorted.slice(start, start + this.itemsPerPage);
+    return personalized.slice(start, start + this.itemsPerPage);
   }
 
   get topPriorityTotal(): number {
@@ -184,5 +189,9 @@ export class Home implements OnInit {
         this.router.navigate(['/host/create']);
       }
     });
+  }
+
+  openChat(): void {
+    this.chatService.openChat();
   }
 }

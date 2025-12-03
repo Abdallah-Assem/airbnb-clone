@@ -7,12 +7,14 @@ import { ListingOverviewVM } from '../../../core/models/listing.model';
 import { ListingService } from '../../../core/services/listings/listing.service';
 import { ListingCard } from '../listing-card/listing-card';
 import { FavoriteStoreService } from '../../../core/services/favoriteService/favorite-store-service';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { UserPreferencesService } from '../../../core/services/user-preferences/user-preferences.service';
+import { PersonalizationBadge } from '../../../shared/components/personalization-badge/personalization-badge';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-listings',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, ListingCard, ReactiveFormsModule, TranslateModule],
+  imports: [CommonModule, FormsModule, RouterModule, ListingCard, ReactiveFormsModule, TranslateModule, PersonalizationBadge],
   templateUrl: './listings.html',
   styleUrls: ['./listings.css']
 })
@@ -32,21 +34,15 @@ export class Listings implements OnInit {
   type = signal<string>('');
   maxPrice = signal<number | null>(null);
   minRating = signal<number | null>(null);
-
-  // amenities (form)
-  form: FormGroup;
+  amenities = signal<string[]>([]);
 
   constructor(
     private listingService: ListingService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private fb: FormBuilder,
-    public favoriteStore: FavoriteStoreService
-  ) {
-    this.form = this.fb.group({
-      amenities: [[]]
-    });
-  }
+    public favoriteStore: FavoriteStoreService,
+    private userPreferences: UserPreferencesService
+  ) {}
 
   onListingFavoriteChanged(payload: { listingId: number; isFavorited: boolean }) {
     try {
@@ -55,6 +51,11 @@ export class Listings implements OnInit {
         const copy = [...this.allListings()];
         (copy[idx] as any).isFavorited = payload.isFavorited;
         this.allListings.set(copy);
+
+        // Track favorite in user preferences (if favorited)
+        if (payload.isFavorited) {
+          this.userPreferences.trackFavorite(copy[idx]);
+        }
       }
     } catch (e) { console.warn('Failed to update listing favorite state in parent', e); }
   }
@@ -66,22 +67,28 @@ export class Listings implements OnInit {
   ];
 
   toggleAmenity(amenity: string): void {
-    const currentValue = this.form.get('amenities')?.value || [];
-    const amenities = Array.isArray(currentValue) ? [...currentValue] : [];
-    const index = amenities.indexOf(amenity);
+    const currentAmenities = [...this.amenities()];
+    const index = currentAmenities.indexOf(amenity);
 
-    if (index > -1) amenities.splice(index, 1);
-    else amenities.push(amenity);
+    if (index > -1) {
+      currentAmenities.splice(index, 1);
+    } else {
+      currentAmenities.push(amenity);
+    }
 
-    this.form.patchValue({ amenities });
+    this.amenities.set(currentAmenities);
+
+    // Track amenity filter in user preferences
+    if (currentAmenities.length > 0) {
+      this.userPreferences.trackAmenityFilter(currentAmenities);
+    }
 
     // Reset to first page when filters change
     this.currentPage.set(1);
   }
 
   isAmenitySelected(amenity: string): boolean {
-    const amenities: string[] = this.form.get('amenities')?.value || [];
-    return amenities.includes(amenity);
+    return this.amenities().includes(amenity);
   }
 
   // arabic/english normalization
@@ -106,7 +113,11 @@ export class Listings implements OnInit {
   destinations = computed(() => {
     const data = this.allListings();
     const set = new Set<string>();
-    data.forEach(l => set.add(l.destination));
+    data.forEach(l => {
+      if (l.destination && l.destination.trim()) {
+        set.add(l.destination);
+      }
+    });
     return Array.from(set).sort((a, b) => a.localeCompare(b));
   });
 
@@ -114,7 +125,11 @@ export class Listings implements OnInit {
   types = computed(() => {
     const data = this.allListings();
     const set = new Set<string>();
-    data.forEach(l => set.add(l.type));
+    data.forEach(l => {
+      if (l.type && l.type.trim()) {
+        set.add(l.type);
+      }
+    });
     return Array.from(set).sort((a, b) => a.localeCompare(b));
   });
 
@@ -128,13 +143,13 @@ export class Listings implements OnInit {
     const rawType = this.type().trim();
     const maxP = this.maxPrice();
     const minR = this.minRating();
-    const selectedAmenities = this.form.get('amenities')?.value || [];
+    const selectedAmenities = this.amenities();
 
     const q = this.normalize(rawQuery);
     const destNormalized = this.normalize(rawDest);
     const typeNormalized = this.normalize(rawType);
 
-    return data.filter(l => {
+    const filtered = data.filter(l => {
       const title = this.normalize(l.title);
       const destinationVal = this.normalize(l.destination);
       const typeVal = this.normalize(l.type);
@@ -157,14 +172,23 @@ export class Listings implements OnInit {
       const ratingOk =
         minR === null || (l.averageRating ?? 0) >= minR;
 
-      // Amenities filter
-      // const amenitiesOk = selectedAmenities.length === 0 || 
-      //   selectedAmenities.every((amenity: string) => 
-      //     l.amenities && l.amenities.includes(amenity)
-      //   );
+      // Amenities filter - case-insensitive comparison
+      const amenitiesOk = selectedAmenities.length === 0 ||
+        selectedAmenities.every((amenity: string) => {
+          const normalizedAmenity = amenity.toLowerCase().replace(/[^a-z0-9]/g, '');
+          return l.amenities && l.amenities.some((listingAmenity: string) => {
+            const normalizedListingAmenity = listingAmenity.toLowerCase().replace(/[^a-z0-9]/g, '');
+            return normalizedListingAmenity === normalizedAmenity ||
+                   normalizedListingAmenity.includes(normalizedAmenity) ||
+                   normalizedAmenity.includes(normalizedListingAmenity);
+          });
+        });
 
-      return matchesSearch && matchesDestination && matchesType && priceOk && ratingOk; // && amenitiesOk;
+      return matchesSearch && matchesDestination && matchesType && priceOk && ratingOk && amenitiesOk;
     });
+
+    // Apply personalized sorting based on user preferences
+    return this.userPreferences.sortByRelevance(filtered);
   });
 
   // computed paginated results from filtered data
@@ -233,8 +257,8 @@ export class Listings implements OnInit {
     this.loading.set(true);
     this.error.set('');
 
-    // Load all listings at once (use a large page size to get all data)
-    this.listingService.getPaged(1, 10000).subscribe({
+    // Load listings with proper pagination (backend max is 100 per page)
+    this.listingService.getPaged(1, 100).subscribe({
       next: (res) => {
         console.log('All Listings Response:', res);
         this.allListings.set(res.data || []);
@@ -278,6 +302,15 @@ export class Listings implements OnInit {
   // Reset to first page when filters change
   onSearchChange(): void {
     this.currentPage.set(1);
+    // Track search interaction if there's a query
+    const query = this.search().trim();
+    if (query.length > 0) {
+      // Track first few results as "searched for"
+      const topResults = this.filtered().slice(0, 3);
+      topResults.forEach(listing => {
+        this.userPreferences.trackListingInteraction(listing, 0.5);
+      });
+    }
   }
 
   onDestinationChange(): void {
@@ -302,9 +335,14 @@ export class Listings implements OnInit {
     this.type.set('');
     this.maxPrice.set(null);
     this.minRating.set(null);
-    this.form.patchValue({ amenities: [] });
+    this.amenities.set([]);
     this.currentPage.set(1);
     // No need to reload data, filters are applied client-side
+  }
+
+  // Get relevance score for a specific listing (0-100)
+  getRelevanceScore(listing: ListingOverviewVM): number {
+    return this.userPreferences.calculateRelevanceScore(listing);
   }
 
   trackById(index: number, item: ListingOverviewVM): number {

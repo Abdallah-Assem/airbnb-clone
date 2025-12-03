@@ -113,6 +113,7 @@
     "exploreListing": "استكشف العقارات",
     "listProperty": "أضف عقارك",
     "TopPriorityListings": "العقارات ذات الأولوية العالية",
+    "brokerDialogue": "عايز اي حاجة من السمسارة؟",
     "villas": "الفلل",
     "hero": {
       "popular": "شائع",
@@ -239,6 +240,7 @@
     "discoverProperties": "اكتشف عقارات استثنائية في جميع أنحاء مصر مع السمسارة",
     "searchPlaceholder": "العنوان أو الموقع أو الوصف",
     "allLocations": "جميع المواقع",
+    "allTypes": "جميع الأنواع",
     "maxPrice": "أقصى سعر",
     "minRating": "أدنى تقييم",
     "reset": "إعادة تعيين",
@@ -288,7 +290,15 @@
     "checkAvailability": "تحقق من التوفر",
     "untitledProperty": "عقار بدون عنوان",
     "locationNotSpecified": "لم يتم تحديد الموقع",
-    "untitled": "بدون عنوان"
+    "untitled": "بدون عنوان",
+    "personalized": "مخصص لك",
+    "personalizedResults": "النتائج مخصصة بناءً على تفضيلاتك",
+    "personalizedTooltip": "قمنا بترتيب هذه النتائج بناءً على سجل التصفح والمفضلة والمرشحات الخاصة بك لإظهار العقارات الأكثر صلة أولاً.",
+    "yourPreferences": "تفضيلاتك",
+    "perfectMatch": "تطابق مثالي",
+    "greatMatch": "تطابق رائع",
+    "goodMatch": "تطابق جيد",
+    "recommended": "موصى به"
   },
   "bookings": {
     "myBookings": "حجوزاتي",
@@ -663,5 +673,16 @@
     "viewDetails": "عرض التفاصيل",
     "currency": "جنيه",
     "noReviews": "لا توجد مراجعات بعد"
+  },
+  "chat": {
+    "theBroker": "السمسارة",
+    "online": "متصل - جاهز للمساعدة",
+    "clearChat": "مسح المحادثة",
+    "inputPlaceholder": "اسألني أي شيء عن العقارات...",
+    "send": "إرسال",
+    "poweredBy": "مساعد عقارات ذكي",
+    "errorMessage": "عذراً، لم أتمكن من معالجة ذلك. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "welcome": "مرحباً! أنا السمسارة. كيف يمكنني مساعدتك في العثور على العقار المثالي اليوم؟"
   }
 }
