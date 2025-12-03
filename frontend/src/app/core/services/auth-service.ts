@@ -40,7 +40,7 @@ export class AuthService {
    */
   private initializeFirebase(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.firebaseApp = initializeApp(environment.firebaseConfig);
+      this.firebaseApp = initializeApp(environment.firebase);
       this.firebaseAuth = getAuth(this.firebaseApp);
     }
   }

@@ -34,3 +34,7 @@ global using BLL.Helper;
 global using Stripe;
 global using Microsoft.AspNetCore.Localization;
 
+global using FirebaseAdmin;
+global using FirebaseAdmin.Auth;
+global using Google.Apis.Auth.OAuth2;
+global using BLL.ModelVM.Response;
