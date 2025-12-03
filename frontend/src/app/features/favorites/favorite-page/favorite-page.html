@@ -201,7 +201,7 @@
       <app-listing-card
         [listing]="listing"
         [isFavorited]="true"
-        (favoriteChanged)="onFavoriteChanged($event.listingId ?? listing.id, $event.isFavorited ?? true)">
+        (favoriteChanged)="onFavoriteChanged($event.listingId, $event.isFavorited)">
       </app-listing-card>
     </div>
   </div>

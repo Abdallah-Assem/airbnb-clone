@@ -1,6 +1,5 @@
 import { Component, HostListener, ElementRef, AfterViewInit, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeroCard } from "../hero-card/hero-card";
 import { HomeListingCard } from "../home-listing-card/home-listing-card";
 import { StackedCards } from "../stacked-cards/stacked-cards";
 import { ListingOverviewVM } from '../../../core/models/listing.model';
@@ -9,11 +8,12 @@ import { Router, RouterModule } from '@angular/router';
 import { NavigationEnd } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../../core/services/language.service';
+import { RagChatService } from '../../../core/services/chat/rag-chat.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, HeroCard, HomeListingCard, StackedCards, TranslateModule, RouterModule],
+  imports: [CommonModule, HomeListingCard, StackedCards, TranslateModule, RouterModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -33,7 +33,8 @@ export class Home implements OnInit {
   constructor(
     private listingService: ListingService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private chatService: RagChatService
   ) {}
 
   viewOnMap() {
@@ -184,5 +185,9 @@ export class Home implements OnInit {
         this.router.navigate(['/host/create']);
       }
     });
+  }
+
+  openChat(): void {
+    this.chatService.openChat();
   }
 }
