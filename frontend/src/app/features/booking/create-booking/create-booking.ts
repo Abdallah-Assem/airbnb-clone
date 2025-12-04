@@ -1,14 +1,11 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Input, NgZone, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookingService } from '../../../core/services/Booking/booking-service';
 import { ListingService } from '../../../core/services/listings/listing.service';
-import { PaymentService } from '../../../core/services/payment/payment-service';
 import { CreateBookingVM } from '../../../core/models/booking';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BookingStoreService } from '../../../core/services/Booking/booking-store-service';
-import { AuthService } from '../../../core/services/auth.service';
-import { catchError, map, of, switchMap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-create-booking',
@@ -20,50 +17,58 @@ export class CreateBooking implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private bookingService = inject(BookingService);
-  private paymentService = inject(PaymentService);
   private listingService = inject(ListingService);
-  private authService = inject(AuthService);
   private bookingStore = inject(BookingStoreService);
   private fb = inject(FormBuilder);
+  private cdr = inject(ChangeDetectorRef);
+  private ngZone = inject(NgZone);
+
+
   bookingForm!: FormGroup;
-  // listingId!: number;
   isLoading = false;
   errorMessage = '';
   today!: string;
+
   @Input() listingId!: number;
   @Input() listingPrice: number = 100;
   @Input() listingMaxGuests?: number;
   @Output() bookingCreated = new EventEmitter<any>();
   @Output() bookingCancelled = new EventEmitter<void>();
   ngOnInit(): void {
+    this.initForm();
+
     if (!this.listingId) {
       this.listingId = Number(this.route.snapshot.paramMap.get('id'));
     }
     this.today = new Date().toISOString().split('T')[0];
-    // (removed dev debugging of token payload) 
 
-    // If the parent did not pass prices / maxGuests (route-based), fetch listing details first
     if (!this.listingPrice || !this.listingMaxGuests) {
       if (this.listingId) {
-        this.listingService.getById(this.listingId).subscribe((res) => {
-          if (!res.isError && res.data) {
-            this.listingPrice = res.data.pricePerNight ?? this.listingPrice;
-            this.listingMaxGuests = res.data.maxGuests ?? this.listingMaxGuests;
+        this.listingService.getById(this.listingId).subscribe({
+          next: (res) => {
+            if (!res.isError && res.data) {
+              this.listingPrice = res.data.pricePerNight ?? this.listingPrice;
+              this.listingMaxGuests = res.data.maxGuests ?? this.listingMaxGuests;
+
+              // Update validators after loading listing data
+              this.bookingForm.get('guests')?.setValidators([
+                Validators.required,
+                Validators.min(1),
+                Validators.max(this.listingMaxGuests ?? 10)
+              ]);
+              this.bookingForm.get('guests')?.updateValueAndValidity();
+
+              // ✅ Trigger change detection manually
+              this.cdr.detectChanges();
+            }
+          },
+          error: (err) => {
+            console.warn('Failed to load listing details for booking', err);
           }
-          this.initForm();
-        }, (err) => {
-          // still init form with defaults
-          console.warn('Failed to load listing details for booking', err);
-          this.initForm();
         });
-      } else {
-        this.initForm();
       }
-    } else {
-      this.initForm();
     }
   }
-
   private initForm(): void {
     const today = new Date().toISOString().split('T')[0];
     const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
@@ -91,47 +96,85 @@ export class CreateBooking implements OnInit {
   }
 
 onSubmit(): void {
-  if (this.bookingForm.valid) {
-    this.isLoading = true;
-    this.errorMessage = '';
-
-    const bookingData: CreateBookingVM = {
-      listingId: this.listingId,
-      ...this.bookingForm.value
-    };
-
-    // ✅ BACKEND NOW RETURNS EVERYTHING IN ONE CALL
-    this.bookingService.createBooking(bookingData).subscribe({
-      next: (res) => {
-        if (!res.success || !res.result) {
-          this.errorMessage = res.errorMessage || 'Failed to create booking';
-          this.isLoading = false;
-          return;
-        }
-
-        const booking = res.result;
-        this.bookingStore.setCurrentBooking(booking);
-        this.bookingCreated.emit(booking);
-
-        // ✅ USE CLIENT SECRET FROM BOOKING RESPONSE
-        if (booking.clientSecret) {
-          this.bookingStore.setPaymentIntent(booking.clientSecret, booking.paymentIntentId);
-          this.router.navigate(['/booking/payment', booking.id]);
-        } else {
-          // Fallback for non-Stripe payments
-          this.router.navigate(['/booking/payment', booking.id], { 
-            queryParams: { amount: booking.totalPrice } 
-          });
-        }
-        
-        this.isLoading = false;
-      },
-      error: (error) => {
-        this.isLoading = false;
-        this.errorMessage = this.errorMessage || 'An error occurred while creating the booking.';
-      }
-    });
+  if (!this.bookingForm.valid) {
+    this.errorMessage = 'Please fill in all required fields correctly.';
+    return;
   }
+
+  this.isLoading = true;
+  this.errorMessage = '';
+
+  const bookingData: CreateBookingVM = {
+    listingId: this.listingId,
+    checkInDate: this.bookingForm.get('checkInDate')?.value,
+    checkOutDate: this.bookingForm.get('checkOutDate')?.value,
+    guests: this.bookingForm.get('guests')?.value,
+    paymentMethod: this.bookingForm.get('paymentMethod')?.value || 'stripe'
+  };
+
+  console.log('📤 Submitting booking:', bookingData);
+
+  this.bookingService.createBooking(bookingData).subscribe({
+    next: (res) => {
+      console.log('✅ Booking response:', res);
+
+      this.isLoading = false;
+
+      if (!res || !res.success || !res.result) {
+        this.errorMessage = res?.errorMessage || 'Failed to create booking';
+        this.cdr.detectChanges();
+        return;
+      }
+
+      const booking = res.result;
+      console.log('✅ Booking created:', booking);
+
+      // Store booking in state
+      this.bookingStore.setCurrentBooking(booking);
+      this.bookingCreated.emit(booking);
+
+      // Store PaymentIntent if present
+      if (booking.clientSecret && booking.paymentIntentId) {
+        console.log('💳 Storing payment intent:', booking.paymentIntentId);
+        this.bookingStore.setPaymentIntent(
+          booking.clientSecret,
+          booking.paymentIntentId
+        );
+      }
+
+      // ✅ Navigate using NgZone to ensure it happens within Angular context
+      this.ngZone.run(() => {
+        console.log('🔀 Navigating to payment for booking:', booking.id);
+        this.router.navigate(['/booking/payment', booking.id]).then(
+          (success) => {
+            if (success) {
+              console.log('✅ Navigation successful');
+            } else {
+              console.error('❌ Navigation returned false');
+              this.errorMessage = 'Navigation failed. Please check your bookings.';
+              this.cdr.detectChanges();
+            }
+          },
+          (err) => {
+            console.error('❌ Navigation failed:', err);
+            this.errorMessage = 'Navigation failed. Please check your bookings.';
+            this.cdr.detectChanges();
+          }
+        );
+      });
+    },
+    error: (err) => {
+      console.error('❌ Booking creation error:', err);
+      this.isLoading = false;
+
+      this.errorMessage = err?.errorMessage || 
+                          err?.error?.errorMessage || 
+                          err?.message || 
+                          'An unexpected error occurred';
+      
+      this.cdr.detectChanges();
+    }
+  });
 }
   onCancel(): void {
     this.bookingCancelled.emit();

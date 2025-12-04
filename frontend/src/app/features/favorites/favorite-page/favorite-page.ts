@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { ListingCard } from '../../listings-page/listing-card/listing-card';
 import { FavoriteStoreService } from '../../../core/services/favoriteService/favorite-store-service';
+import { FavoriteService } from '../../../core/services/favoriteService/favorite-service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { FavoriteListingVM, FavoriteVM } from '../../../core/models/favorite';
@@ -18,12 +19,14 @@ import { ListingOverviewVM } from '../../../core/models/listing.model';
 export class FavoritePage implements OnInit {
   private store = inject(FavoriteStoreService);
   private router = inject(Router);
+  private api = inject(FavoriteService);
 
   favorites: FavoriteVM[] = [];
   listings: ListingOverviewVM[] = [];
   favoriteCount = 0;
   loading = true;
   error = '';
+  listingFavoriteCounts: Map<number, number> = new Map();
 
   ngOnInit(): void {
     this.loadFavorites();
@@ -36,6 +39,21 @@ export class FavoritePage implements OnInit {
         this.listings = favorites
           .filter(fav => fav.listing)
           .map(fav => this.convertToListingOverview(fav.listing!));
+        
+        // Fetch favorite count for each listing
+        this.listings.forEach(listing => {
+          this.api.getListingFavoritesCount(listing.id).subscribe({
+            next: (res) => {
+              if (!res.isError && res.result !== undefined) {
+                this.listingFavoriteCounts.set(listing.id, res.result);
+                // Update the listing's favoriteCount
+                listing.favoriteCount = res.result;
+              }
+            },
+            error: (err) => console.warn('Failed to get favorite count for listing', listing.id, err)
+          });
+        });
+        
         this.loading = false;
       },
       error: (err) => {
@@ -87,33 +105,75 @@ export class FavoritePage implements OnInit {
   removeFavorite(listingId: number, event: Event): void {
     event.stopPropagation();
 
-    if (!confirm('Remove this listing from your favorites?')) return;
+    // Find listing title for the alert
+    const listing = this.listings.find(l => l.id === listingId);
+    const listingTitle = listing?.title || 'this listing';
 
-    // Optimistic UI update: remove from view immediately, then call API.
-    const backupFavorites = [...this.favorites];
-    const backupListings = [...this.listings];
-    const backupCount = this.favoriteCount;
-
-    // remove locally for instant feedback
-    this.favorites = this.favorites.filter(f => f.listingId !== listingId);
-    this.listings = this.listings.filter(l => l.id !== listingId);
-    this.favoriteCount = Math.max(0, this.favoriteCount - 1);
-
-    // update store's local cache so other parts of the app react quickly
-    try { this.store.updateFavoriteState(listingId, false); } catch (e) { /* safe */ }
-
-    this.store.removeFavorite(listingId).subscribe({
-      next: () => {
-        console.log('Removed from favorites');
+    Swal.fire({
+      title: 'Remove from Favorites?',
+      html: `
+        <div style="display:flex;align-items:center;gap:12px;">
+          <img src="/3.png" alt="hero" style="width:100px;height:100px;border-radius:50%;object-fit:cover;" />
+          <div style="text-align:left;">
+            <div style="font-weight:600;font-size:0.95rem;">Are you sure?</div>
+            <div style="color:#6c757d;margin-top:6px;font-size:0.9rem;">You are about to remove <strong>${listingTitle}</strong> from your favorites.</div>
+          </div>
+        </div>
+      `,
+      showCancelButton: true,
+      cancelButtonText: 'Keep it',
+      confirmButtonText: 'Yes, remove',
+      icon: 'warning',
+      customClass: {
+        popup: 'swal-custom-popup',
+        confirmButton: 'btn btn-danger',
+        cancelButton: 'btn btn-outline-secondary'
       },
-      error: (err) => {
-        // rollback UI on error
-        this.favorites = backupFavorites;
-        this.listings = backupListings;
-        this.favoriteCount = backupCount;
-        this.error = 'Failed to remove favorite';
-        console.error(err);
-      }
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then(res => {
+      if (!res.isConfirmed) return;
+
+      // Optimistic UI update: remove from view immediately, then call API.
+      const backupFavorites = [...this.favorites];
+      const backupListings = [...this.listings];
+      const backupCount = this.favoriteCount;
+
+      // remove locally for instant feedback
+      this.favorites = this.favorites.filter(f => f.listingId !== listingId);
+      this.listings = this.listings.filter(l => l.id !== listingId);
+      this.favoriteCount = Math.max(0, this.favoriteCount - 1);
+
+      // update store's local cache so other parts of the app react quickly
+      try { this.store.updateFavoriteState(listingId, false); } catch (e) { /* safe */ }
+
+      this.store.removeFavorite(listingId).subscribe({
+        next: () => {
+          Swal.fire({
+            title: 'Removed!',
+            text: `${listingTitle} was removed from your favorites.`,
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1600,
+            toast: true,
+            position: 'top-end'
+          });
+        },
+        error: (err) => {
+          // rollback UI on error
+          this.favorites = backupFavorites;
+          this.listings = backupListings;
+          this.favoriteCount = backupCount;
+          this.error = 'Failed to remove favorite';
+          Swal.fire({
+            title: 'Error',
+            text: 'Could not remove from favorites. Please try again.',
+            icon: 'error',
+            customClass: { popup: 'swal-custom-popup' }
+          });
+          console.error(err);
+        }
+      });
     });
   }
 

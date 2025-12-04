@@ -13,7 +13,7 @@ namespace BLL.Services.Impelementation
                               INotificationService notificationService,
                               IOptions<StripeSettings> stripeSettings,
                               ILogger<PaymentService> logger)
-        { 
+        {
             _uow = uow;
             _notificationService = notificationService;
             _stripeSettings = stripeSettings;
@@ -144,17 +144,39 @@ namespace BLL.Services.Impelementation
         {
             try
             {
-            try { _logger?.LogInformation("CreateStripePaymentIntentAsync requested by {UserId} for booking {BookingId}, amount {Amount}", userId, model.BookingId, model.Amount); } catch {}
+                try { _logger?.LogInformation("CreateStripePaymentIntentAsync requested by {UserId} for booking {BookingId}, amount {Amount}", userId, model.BookingId, model.Amount); } catch { }
                 var booking = await _uow.Bookings.GetByIdAsync(model.BookingId);
                 if (booking == null)
                     return Response<CreatePaymentIntentVm>.FailResponse("Booking not found");
                 if (booking.GuestId != userId)
                     return Response<CreatePaymentIntentVm>.FailResponse("Unauthorized");
+                var existingPayment = (await _uow.Payments.GetPaymentsByBookingAsync(model.BookingId))
+                                                          .FirstOrDefault(p => p.TransactionId != null);
+
+                if (existingPayment != null)
+                {
+                    // Payment already exists, return existing PaymentIntent
+                    if (!string.IsNullOrEmpty(booking.PaymentIntentId))
+                    {
+                        _logger?.LogInformation("Payment already exists for booking {BookingId}, returning existing PaymentIntent", model.BookingId);
+
+                        var existingIntent = await new PaymentIntentService()
+                            .GetAsync(booking.PaymentIntentId);
+
+                        return Response<CreatePaymentIntentVm>.SuccessResponse(new CreatePaymentIntentVm
+                        {
+                            ClientSecret = existingIntent.ClientSecret,
+                            PaymentIntentId = existingIntent.Id,
+                            Amount = existingPayment.Amount,
+                            Currency = "egp" // Default or store in payment
+                        });
+                    }
+                }
 
                 // Validate amount to avoid creating 0-valued PaymentIntents
                 if (model.Amount <= 0)
                 {
-                    try { _logger?.LogWarning("CreateStripePaymentIntentAsync called with invalid amount {Amount} for booking {BookingId}", model.Amount, model.BookingId); } catch {}
+                    try { _logger?.LogWarning("CreateStripePaymentIntentAsync called with invalid amount {Amount} for booking {BookingId}", model.Amount, model.BookingId); } catch { }
                     return Response<CreatePaymentIntentVm>.FailResponse("Invalid amount");
                 }
 
@@ -179,11 +201,12 @@ namespace BLL.Services.Impelementation
                     booking.Id,
                     model.Amount,
                     "Stripe",
-                    paymentIntent.Id,  // correct
+                    paymentIntent.Id,
                     PaymentStatus.Pending,
                     DateTime.UtcNow
-                ); await _uow.Payments.AddAsync(payment);
-                booking.Update(booking.CheckInDate, booking.CheckOutDate, booking.TotalPrice, BookingPaymentStatus.Pending, booking.BookingStatus);
+                );
+                await _uow.Payments.AddAsync(payment);
+                booking.SetPaymentIntentId(paymentIntent.Id);
                 _uow.Bookings.Update(booking);
                 await _uow.SaveChangesAsync();
 
@@ -205,12 +228,12 @@ namespace BLL.Services.Impelementation
             }
             catch (StripeException ex)
             {
-                try { _logger?.LogWarning("Stripe error creating intent: {Message}", ex.Message); } catch {}
+                try { _logger?.LogWarning("Stripe error creating intent: {Message}", ex.Message); } catch { }
                 return Response<CreatePaymentIntentVm>.FailResponse($"Stripe error: {ex.Message}");
             }
             catch (Exception ex)
             {
-                try { _logger?.LogError(ex, "CreateStripePaymentIntentAsync general error"); } catch {}
+                try { _logger?.LogError(ex, "CreateStripePaymentIntentAsync general error"); } catch { }
                 return Response<CreatePaymentIntentVm>.FailResponse(ex.Message);
             }
         }
@@ -219,7 +242,31 @@ namespace BLL.Services.Impelementation
         {
             try
             {
-                var stripeEvent = EventUtility.ConstructEvent(payload, signature, _stripeSettings.Value.WebhookSecret, throwOnApiVersionMismatch: false);
+                _logger?.LogInformation("Stripe Webhook Handler Started");
+                _logger?.LogInformation("Payload length: {Length}", payload?.Length ?? 0);
+                _logger?.LogInformation("Signature present: {HasSignature}", !string.IsNullOrEmpty(signature));
+
+                //Stripe events
+                Event stripeEvent;
+                try
+                {
+                    stripeEvent = EventUtility.ConstructEvent(
+                        payload,
+                        signature,
+                        _stripeSettings.Value.WebhookSecret,
+                        throwOnApiVersionMismatch: false
+                    );
+                    _logger?.LogInformation(
+                        "Stripe event constructed successfully: Type={EventType}, Id={EventId}",
+                        stripeEvent.Type,
+                        stripeEvent.Id
+                    );
+                }
+                catch (StripeException stripeEx)
+                {
+                    _logger?.LogError(stripeEx, "Stripe signature verification failed");
+                    throw;
+                }
                 switch (stripeEvent.Type)
                 {
                     case "payment_intent.succeeded":
@@ -235,18 +282,16 @@ namespace BLL.Services.Impelementation
                         break;
 
                     default:
-                        Console.WriteLine($"Unhandled event type: {stripeEvent.Type}");
+                        _logger?.LogInformation("Unhandled webhook event type: {EventType}", stripeEvent.Type);
                         break;
                 }
 
+                _logger?.LogInformation(" Stripe Webhook Handler Completed Successfully");
                 return Response<bool>.SuccessResponse(true);
-            }
-            catch (StripeException ex)
-            {
-                return Response<bool>.FailResponse($"Webhook error: {ex.Message}");
             }
             catch (Exception ex)
             {
+                _logger?.LogError(ex, "Fatal error processing Stripe webhook");
                 return Response<bool>.FailResponse($"Error processing webhook: {ex.Message}");
             }
         }
@@ -265,134 +310,283 @@ namespace BLL.Services.Impelementation
             }
         }
         #endregion
-        #region Private Methods For Stripe Integration
-
+        #region Stripe Private Methods
         private async Task HandlePaymentSucceededAsync(Event stripeEvent)
         {
-            var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
-            if (paymentIntent == null) return;
-
-            var bookingId = int.Parse(paymentIntent.Metadata["booking_id"]);
-
-            var payments = await _uow.Payments.GetPaymentsByBookingAsync(bookingId);
-            var payment = payments.FirstOrDefault(p => p.TransactionId == paymentIntent.Id);
-
-            if (payment == null) return;
-
-            // Update payment status
-            payment.Update(
-                payment.Amount,
-                "stripe",
-                paymentIntent.Id,
-                PaymentStatus.Success,
-                DateTime.UtcNow
-            );
-            _uow.Payments.Update(payment);
-
-            // Update booking
-            var booking = await _uow.Bookings.GetByIdAsync(bookingId);
-            if (booking == null) return;
-
-            // manually load related listing
-            var listing = await _uow.Listings.GetByIdAsync(booking.ListingId);
-            if (listing != null)
+            try
             {
-                // assign manually so later code works
-                booking.GetType()
-                    .GetProperty("Listing")!
-                    .SetValue(booking, listing);
-            }
-            {
+                _logger?.LogInformation("Processing Payment Success Event ");
+
+                // 1. Extract PaymentIntent from event
+                var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
+                if (paymentIntent == null)
+                {
+                    _logger?.LogWarning("PaymentIntent is null in webhook event");
+                    return;
+                }
+
+                _logger?.LogInformation(
+                    "PaymentIntent details: Id={PaymentIntentId}, Amount={Amount}, Status={Status}",
+                    paymentIntent.Id,
+                    paymentIntent.Amount,
+                    paymentIntent.Status
+                );
+                if (!paymentIntent.Metadata.TryGetValue("booking_id", out var bookingIdStr))
+                {
+                    _logger?.LogWarning("No booking_id found in PaymentIntent metadata");
+                    return;
+                }
+                if (!int.TryParse(bookingIdStr, out var bookingId))
+                {
+                    _logger?.LogWarning("Invalid booking_id in metadata: {BookingIdStr}", bookingIdStr);
+                    return;
+                }
+                _logger?.LogInformation("Processing payment for booking ID: {BookingId}", bookingId);
+                var payments = await _uow.Payments.GetPaymentsByBookingAsync(bookingId);
+                var payment = payments.FirstOrDefault(p => p.TransactionId == paymentIntent.Id);
+
+                if (payment == null)
+                {
+                    _logger?.LogWarning(
+                        "No payment found with TransactionId={PaymentIntentId} for BookingId={BookingId}",
+                        paymentIntent.Id,
+                        bookingId
+                    );
+                    return;
+                }
+
+                _logger?.LogInformation("Found payment record: PaymentId={PaymentId}", payment.Id);
+
+                //Update payment 
+                payment.Update(
+                    payment.Amount,
+                    "stripe",
+                    paymentIntent.Id,
+                    PaymentStatus.Success,
+                    DateTime.UtcNow
+                );
+                _uow.Payments.Update(payment);
+                _logger?.LogInformation("Payment status updated to Success");
+                //Retrieve booking with related entities
+                var booking = await _uow.Bookings.GetByIdAsync(bookingId);
+                if (booking == null)
+                {
+                    _logger?.LogWarning("Booking not found: BookingId={BookingId}", bookingId);
+                    await _uow.SaveChangesAsync(); // Still save payment update
+                    return;
+                }
+
+                _logger?.LogInformation(
+                    "Found booking: BookingId={BookingId}, ListingId={ListingId}, GuestId={GuestId}",
+                    booking.Id,
+                    booking.ListingId,
+                    booking.GuestId
+                );
+
+                // Load related listing
+                var listing = await _uow.Listings.GetByIdAsync(booking.ListingId);
+                if (listing == null)
+                {
+                    _logger?.LogWarning("Listing not found: ListingId={ListingId}", booking.ListingId);
+                    await _uow.SaveChangesAsync(); // Still save payment update
+                    return;
+                }
+
+                _logger?.LogInformation(
+                    "Found listing: ListingId={ListingId}, HostId={HostId}",
+                    listing.Id,
+                    listing.UserId
+                );
+                //Update booking
                 booking.Update(
-                booking.CheckInDate,
-                booking.CheckOutDate,
-                booking.TotalPrice,
-                BookingPaymentStatus.Paid,
-                BookingStatus.Confirmed);
+                    booking.CheckInDate,
+                    booking.CheckOutDate,
+                    booking.TotalPrice,
+                    BookingPaymentStatus.Paid,
+                    BookingStatus.Confirmed
+                );
                 _uow.Bookings.Update(booking);
 
-                // Notify guest and host
-                await _notificationService.CreateAsync(new CreateNotificationVM
-                {
-                    UserId = booking.GuestId,
-                    Title = "Payment Confirmed",
-                    Body = $"Your payment for booking #{booking.Id} was successful",
-                    Type = NotificationType.System,
-                    CreatedAt = DateTime.UtcNow
-                });
+                _logger?.LogInformation("Booking status updated to Confirmed/Paid");
 
-                await _notificationService.CreateAsync(new CreateNotificationVM
+                await _uow.SaveChangesAsync();
+
+                _logger?.LogInformation("All changes saved to database");
+                try
                 {
-                    UserId = booking.Listing.UserId,
-                    Title = "New Booking Confirmed",
-                    Body = $"You have a new confirmed booking #{booking.Id}",
-                    Type = NotificationType.System,
-                    CreatedAt = DateTime.UtcNow
-                });
+                    await _notificationService.CreateAsync(new CreateNotificationVM
+                    {
+                        UserId = booking.GuestId,
+                        Title = "Payment Confirmed",
+                        Body = $"Your payment for booking #{booking.Id} was successful! Get ready for your stay.",
+                        Type = NotificationType.System,
+                        CreatedAt = DateTime.UtcNow,
+                        ActionUrl = $"/bookings/{booking.Id}",
+                        ActionLabel = "View Booking"
+                    });
+
+                    _logger?.LogInformation("Guest notification sent: GuestId={GuestId}", booking.GuestId);
+                }
+                catch (Exception notifEx)
+                {
+                    _logger?.LogError(
+                        notifEx,
+                        "Failed to send guest notification for BookingId={BookingId}",
+                        booking.Id
+                    );
+                }
+                try
+                {
+                    await _notificationService.CreateAsync(new CreateNotificationVM
+                    {
+                        UserId = listing.UserId,
+                        Title = "New Booking Confirmed",
+                        Body = $"You have a new confirmed booking for {listing.Title}. Check-in: {booking.CheckInDate:MMM dd, yyyy}",
+                        Type = NotificationType.System,
+                        CreatedAt = DateTime.UtcNow,
+                        ActionUrl = $"/listings/{listing.Id}",
+                        ActionLabel = "View Listing"
+                    });
+                    _logger?.LogInformation("Host notification sent: HostId={HostId}", listing.UserId);
+                }
+                catch (Exception notifEx)
+                {
+                    _logger?.LogError(
+                        notifEx,
+                        "Failed to send host notification for ListingId={ListingId}",
+                        listing.Id
+                    );
+                }
+
+                _logger?.LogInformation("Payment Success Event Processed Successfully");
             }
-
-            await _uow.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, "Error handling payment succeeded event");
+                throw; 
+            }
         }
+
         private async Task HandlePaymentFailedAsync(Event stripeEvent)
         {
-            var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
-            if (paymentIntent == null) return;
-
-            var bookingId = int.Parse(paymentIntent.Metadata["booking_id"]);
-
-            var payments = await _uow.Payments.GetPaymentsByBookingAsync(bookingId);
-            var payment = payments.FirstOrDefault(p => p.TransactionId == paymentIntent.Id);
-
-            if (payment == null) return;
-
-            payment.Update(
-                payment.Amount,
-                "stripe",
-                paymentIntent.Id,
-                PaymentStatus.Failed,
-                DateTime.UtcNow
-            );
-            _uow.Payments.Update(payment);
-
-            var booking = await _uow.Bookings.GetByIdAsync(bookingId);
-            if (booking != null)
+            try
             {
-                await _notificationService.CreateAsync(new CreateNotificationVM
-                {
-                    UserId = booking.GuestId,
-                    Title = "Payment Failed",
-                    Body = $"Payment for booking #{booking.Id} failed. Please try again.",
-                    Type = NotificationType.System,
-                    CreatedAt = DateTime.UtcNow
-                });
-            }
+                _logger?.LogInformation("Processing Payment Failed Event");
 
-            await _uow.SaveChangesAsync();
+                var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
+                if (paymentIntent == null)
+                {
+                    _logger?.LogWarning("PaymentIntent is null in failed event");
+                    return;
+                }
+
+                _logger?.LogWarning(
+                    "Payment failed: PaymentIntentId={PaymentIntentId}, LastPaymentError={Error}",
+                    paymentIntent.Id,
+                    paymentIntent.LastPaymentError?.Message ?? "Unknown error"
+                );
+
+                if (!paymentIntent.Metadata.TryGetValue("booking_id", out var bookingIdStr) ||
+                    !int.TryParse(bookingIdStr, out var bookingId))
+                {
+                    _logger?.LogWarning("Invalid or missing booking_id in failed payment");
+                    return;
+                }
+
+                var payments = await _uow.Payments.GetPaymentsByBookingAsync(bookingId);
+                var payment = payments.FirstOrDefault(p => p.TransactionId == paymentIntent.Id);
+
+                if (payment != null)
+                {
+                    payment.Update(
+                        payment.Amount,
+                        "stripe",
+                        paymentIntent.Id,
+                        PaymentStatus.Failed,
+                        DateTime.UtcNow
+                    );
+                    _uow.Payments.Update(payment);
+
+                    var booking = await _uow.Bookings.GetByIdAsync(bookingId);
+                    if (booking != null)
+                    {
+                        // Notify guest about payment failure
+                        try
+                        {
+                            await _notificationService.CreateAsync(new CreateNotificationVM
+                            {
+                                UserId = booking.GuestId,
+                                Title = "Payment Failed",
+                                Body = $"Your payment for booking #{booking.Id} failed. Please try again or contact support.",
+                                Type = NotificationType.System,
+                                CreatedAt = DateTime.UtcNow,
+                                ActionUrl = $"/bookings/{booking.Id}",
+                                ActionLabel = "Retry Payment"
+                            });
+                        }
+                        catch (Exception notifEx)
+                        {
+                            _logger?.LogError(notifEx, "Failed to send payment failure notification");
+                        }
+                    }
+
+                    await _uow.SaveChangesAsync();
+                    _logger?.LogInformation("Payment marked as failed: PaymentId={PaymentId}", payment.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, "Error handling payment failed event");
+                throw;
+            }
         }
 
         private async Task HandlePaymentCanceledAsync(Event stripeEvent)
         {
-            var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
-            if (paymentIntent == null) return;
+            try
+            {
+                _logger?.LogInformation("=== Processing Payment Canceled Event ===");
 
-            var bookingId = int.Parse(paymentIntent.Metadata["booking_id"]);
+                var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
+                if (paymentIntent == null)
+                {
+                    _logger?.LogWarning("PaymentIntent is null in canceled event");
+                    return;
+                }
 
-            var payments = await _uow.Payments.GetPaymentsByBookingAsync(bookingId);
-            var payment = payments.FirstOrDefault(p => p.TransactionId == paymentIntent.Id);
+                _logger?.LogInformation("Payment canceled: PaymentIntentId={PaymentIntentId}", paymentIntent.Id);
 
-            if (payment == null) return;
+                if (!paymentIntent.Metadata.TryGetValue("booking_id", out var bookingIdStr) ||
+                    !int.TryParse(bookingIdStr, out var bookingId))
+                {
+                    _logger?.LogWarning("Invalid or missing booking_id in canceled payment");
+                    return;
+                }
 
-            payment.Update(
-                payment.Amount,
-                "stripe",
-                paymentIntent.Id,
-                PaymentStatus.Failed,
-                DateTime.UtcNow
-            );
-            _uow.Payments.Update(payment);
-            await _uow.SaveChangesAsync();
+                var payments = await _uow.Payments.GetPaymentsByBookingAsync(bookingId);
+                var payment = payments.FirstOrDefault(p => p.TransactionId == paymentIntent.Id);
+
+                if (payment != null)
+                {
+                    payment.Update(
+                        payment.Amount,
+                        "stripe",
+                        paymentIntent.Id,
+                        PaymentStatus.Failed,
+                        DateTime.UtcNow
+                    );
+                    _uow.Payments.Update(payment);
+                    await _uow.SaveChangesAsync();
+
+                    _logger?.LogInformation("Payment marked as canceled: PaymentId={PaymentId}", payment.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, "Error handling payment canceled event");
+                throw;
+            }
         }
-
         #endregion
 
     }

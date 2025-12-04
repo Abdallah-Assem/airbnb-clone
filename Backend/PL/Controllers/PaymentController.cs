@@ -63,19 +63,34 @@ namespace PL.Controllers
         // Stripe webhook endpoint - handles payment events from Stripe
         [HttpPost("stripe/webhook")]
         [AllowAnonymous]
-        public async Task<IActionResult> StripeWebhook()
-        {
-            var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
-            var signature = Request.Headers["Stripe-Signature"].ToString();
-
-            // Process async WITHOUT blocking Stripe
-            _ = Task.Run(async () =>
+        [IgnoreAntiforgeryToken]
+            public async Task<IActionResult> StripeWebhook()
             {
-                await _paymentService.HandleStripeWebhookAsync(json, signature);
-            });
+                var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
+                var signature = Request.Headers["Stripe-Signature"].ToString();
 
-            return Ok(); // Respond immediately
-        }
+                try
+                {
+                    _logger?.LogInformation("Stripe webhook received.");
+                    var result = await _paymentService.HandleStripeWebhookAsync(json, signature);
+                    if (result == null || !result.Success)
+                    {
+                        _logger?.LogWarning("Stripe webhook handler failed: {Message}", result?.errorMessage);
+                        return BadRequest(new { error = result?.errorMessage ?? "Webhook processing failed" });
+                    }
+                    return Ok();
+                }
+                catch (StripeException ex)
+                {
+                    _logger?.LogError(ex, "Stripe signature error.");
+                    return BadRequest(new { error = "Invalid stripe signature" });
+                }
+                catch (Exception ex)
+                {
+                    _logger?.LogError(ex, "Internal webhook handling error.");
+                    return StatusCode(500, new { error = "Internal webhook error" });
+                }
+            }
         // Cancel a Stripe payment intent
         [HttpPost("stripe/cancel/{paymentIntentId}")]
         [Authorize]
