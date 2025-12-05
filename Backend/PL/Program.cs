@@ -151,6 +151,8 @@ namespace PL
                 Console.WriteLine($"Firebase initialization failed: {ex.Message}");
             }
 
+            // Email reminder related service
+            builder.Services.AddHostedService<BookingReminderService>();
 
             // --------------------------------------------------------------------
             // DAL/BLL registrations
