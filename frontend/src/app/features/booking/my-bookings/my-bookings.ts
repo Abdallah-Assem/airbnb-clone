@@ -27,7 +27,7 @@ export class MyBookings implements OnInit {
     const now = new Date();
 
     if (f === 'all') return all;
-    if (f === 'cancelled') return all.filter(b => b.bookingStatus === 'cancelled');
+    if (f === 'cancelled') return all.filter(b => b.bookingStatus.toLowerCase() === 'cancelled');
     if (f === 'upcoming') return all.filter(b => new Date(b.checkInDate) >= now);
     if (f === 'past') return all.filter(b => new Date(b.checkOutDate) < now);
 
