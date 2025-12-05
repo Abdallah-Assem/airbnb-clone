@@ -29,7 +29,7 @@ export class Register {
     private router: Router,
     private translate: TranslateService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
@@ -141,7 +141,32 @@ export class Register {
     }
 
     this.cdr.detectChanges();
-  }  submit(form?: NgForm) {
+  }
+
+  signUpWithGoogle() {
+    this.isLoading = true;
+    this.auth.googleLogin().subscribe({
+      next: res => {
+        this.isLoading = false;
+        console.log('Google login response:', res);
+
+        // Navigate after login
+        if (this.auth.isAdmin()) {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/']);
+        }
+      },
+      error: err => {
+        this.isLoading = false;
+        console.error('Google login failed', err);
+        this.errorMessage = this.translate.instant('auth.loginError');
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  submit(form?: NgForm) {
     // Reset previous errors
     this.errorMessage = '';
     this.fieldErrors = {};

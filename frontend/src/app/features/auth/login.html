@@ -27,17 +27,9 @@
         <!-- Email Field -->
         <div class="input-group" [class.has-error]="fieldErrors['email']">
           <i class="bi bi-envelope"></i>
-          <input
-            name="email"
-            [(ngModel)]="email"
-            (blur)="validateField('email', email)"
-            (input)="fieldErrors['email'] = ''"
-            placeholder="{{ 'auth.email' | translate }}"
-            class="broker-input"
-            type="email"
-            [class.invalid]="fieldErrors['email']"
-            #emailInput="ngModel"
-            required />
+          <input name="email" [(ngModel)]="email" (blur)="validateField('email', email)"
+            (input)="fieldErrors['email'] = ''" placeholder="{{ 'auth.email' | translate }}" class="broker-input"
+            type="email" [class.invalid]="fieldErrors['email']" #emailInput="ngModel" required />
         </div>
         <div *ngIf="fieldErrors['email']" class="field-error">
           <i class="bi bi-exclamation-circle"></i>
@@ -47,17 +39,10 @@
         <!-- Password Field -->
         <div class="input-group password-group" [class.has-error]="fieldErrors['password']">
           <i class="bi bi-lock"></i>
-          <input
-            name="password"
-            [(ngModel)]="password"
-            (blur)="validateField('password', password)"
-            (input)="fieldErrors['password'] = ''"
-            [type]="showPassword ? 'text' : 'password'"
-            placeholder="{{ 'auth.password' | translate }}"
-            class="broker-input"
-            [class.invalid]="fieldErrors['password']"
-            #passwordInput="ngModel"
-            required />
+          <input name="password" [(ngModel)]="password" (blur)="validateField('password', password)"
+            (input)="fieldErrors['password'] = ''" [type]="showPassword ? 'text' : 'password'"
+            placeholder="{{ 'auth.password' | translate }}" class="broker-input"
+            [class.invalid]="fieldErrors['password']" #passwordInput="ngModel" required />
           <button type="button" class="password-toggle" (click)="togglePasswordVisibility()">
             <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
           </button>
@@ -72,10 +57,17 @@
           {{ isLoading ? ('auth.loggingIn' | translate) : ('navbar.logIn' | translate) }}
         </button>
       </form>
+
+      <button type="button" class="btn-google" (click)="loginWithGoogle()" [disabled]="isLoading">
+        <i class="bi bi-google"></i>
+        Login with Google
+      </button>
+
       <div class="auth-links">
         {{ 'auth.dontHaveAccount' | translate }}
         <a routerLink="/auth/register" class="broker-link">{{ 'navbar.signUp' | translate }}</a>
       </div>
+
     </div>
   </div>
 </div>

@@ -27,15 +27,9 @@
         <!-- Full Name Field -->
         <div class="input-group" [class.has-error]="fieldErrors['fullname']">
           <i class="bi bi-person"></i>
-          <input
-            name="fullname"
-            [(ngModel)]="fullname"
-            (blur)="validateField('fullname', fullname)"
-            (input)="fieldErrors['fullname'] = ''"
-            placeholder="{{ 'auth.fullName' | translate }}"
-            class="broker-input"
-            [class.invalid]="fieldErrors['fullname']"
-            required />
+          <input name="fullname" [(ngModel)]="fullname" (blur)="validateField('fullname', fullname)"
+            (input)="fieldErrors['fullname'] = ''" placeholder="{{ 'auth.fullName' | translate }}" class="broker-input"
+            [class.invalid]="fieldErrors['fullname']" required />
         </div>
         <div *ngIf="fieldErrors['fullname']" class="field-error">
           <i class="bi bi-exclamation-circle"></i>
@@ -45,15 +39,9 @@
         <!-- Username Field -->
         <div class="input-group" [class.has-error]="fieldErrors['userName']">
           <i class="bi bi-at"></i>
-          <input
-            name="userName"
-            [(ngModel)]="userName"
-            (blur)="validateField('userName', userName)"
-            (input)="fieldErrors['userName'] = ''"
-            placeholder="Username"
-            class="broker-input"
-            [class.invalid]="fieldErrors['userName']"
-            required />
+          <input name="userName" [(ngModel)]="userName" (blur)="validateField('userName', userName)"
+            (input)="fieldErrors['userName'] = ''" placeholder="Username" class="broker-input"
+            [class.invalid]="fieldErrors['userName']" required />
         </div>
         <div *ngIf="fieldErrors['userName']" class="field-error">
           <i class="bi bi-exclamation-circle"></i>
@@ -63,16 +51,9 @@
         <!-- Email Field -->
         <div class="input-group" [class.has-error]="fieldErrors['email']">
           <i class="bi bi-envelope"></i>
-          <input
-            name="email"
-            [(ngModel)]="email"
-            (blur)="validateField('email', email)"
-            (input)="fieldErrors['email'] = ''"
-            placeholder="{{ 'auth.email' | translate }}"
-            class="broker-input"
-            type="email"
-            [class.invalid]="fieldErrors['email']"
-            required />
+          <input name="email" [(ngModel)]="email" (blur)="validateField('email', email)"
+            (input)="fieldErrors['email'] = ''" placeholder="{{ 'auth.email' | translate }}" class="broker-input"
+            type="email" [class.invalid]="fieldErrors['email']" required />
         </div>
         <div *ngIf="fieldErrors['email']" class="field-error">
           <i class="bi bi-exclamation-circle"></i>
@@ -82,16 +63,10 @@
         <!-- Password Field -->
         <div class="input-group password-group" [class.has-error]="fieldErrors['password']">
           <i class="bi bi-lock"></i>
-          <input
-            name="password"
-            [(ngModel)]="password"
-            (blur)="validateField('password', password)"
-            (input)="fieldErrors['password'] = ''"
-            [type]="showPassword ? 'text' : 'password'"
-            placeholder="{{ 'auth.password' | translate }}"
-            class="broker-input"
-            [class.invalid]="fieldErrors['password']"
-            required />
+          <input name="password" [(ngModel)]="password" (blur)="validateField('password', password)"
+            (input)="fieldErrors['password'] = ''" [type]="showPassword ? 'text' : 'password'"
+            placeholder="{{ 'auth.password' | translate }}" class="broker-input"
+            [class.invalid]="fieldErrors['password']" required />
           <button type="button" class="password-toggle" (click)="togglePasswordVisibility()">
             <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
           </button>
@@ -104,16 +79,10 @@
         <!-- Confirm Password Field -->
         <div class="input-group password-group" [class.has-error]="fieldErrors['confirmPassword']">
           <i class="bi bi-shield-check"></i>
-          <input
-            name="confirmPassword"
-            [(ngModel)]="confirmPassword"
-            (blur)="validateField('confirmPassword', confirmPassword)"
-            (input)="fieldErrors['confirmPassword'] = ''"
-            [type]="showConfirmPassword ? 'text' : 'password'"
-            placeholder="{{ 'auth.confirmPassword' | translate }}"
-            class="broker-input"
-            [class.invalid]="fieldErrors['confirmPassword']"
-            required />
+          <input name="confirmPassword" [(ngModel)]="confirmPassword"
+            (blur)="validateField('confirmPassword', confirmPassword)" (input)="fieldErrors['confirmPassword'] = ''"
+            [type]="showConfirmPassword ? 'text' : 'password'" placeholder="{{ 'auth.confirmPassword' | translate }}"
+            class="broker-input" [class.invalid]="fieldErrors['confirmPassword']" required />
           <button type="button" class="password-toggle" (click)="toggleConfirmPasswordVisibility()">
             <i [class]="showConfirmPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
           </button>
@@ -128,6 +97,12 @@
           {{ isLoading ? ('auth.creatingAccount' | translate) : ('navbar.signUp' | translate) }}
         </button>
       </form>
+
+      <button type="button" class="btn-google" (click)="signUpWithGoogle()" [disabled]="isLoading">
+        <i class="bi bi-google"></i>
+        Sign up with Google
+      </button>
+
       <div class="auth-links">
         {{ 'auth.alreadyHaveAccount' | translate }}
         <a routerLink="/auth/login" class="broker-link">{{ 'navbar.logIn' | translate }}</a>
