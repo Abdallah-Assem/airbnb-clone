@@ -30,8 +30,13 @@ export class ListingCard implements OnInit {
     });
   }
 
+  imageError = false;
+
   get imageSrc(): string {
-    return this.listing?.mainImageUrl || 'assets/images/placeholder-listing.jpg';
+    if (this.imageError) {
+      return '/assets/images/placeholder-listing.jpg';
+    }
+    return this.listing?.mainImageUrl || '/assets/images/placeholder-listing.jpg';
   }
 
   get rating(): number {
@@ -46,6 +51,14 @@ export class ListingCard implements OnInit {
   get price(): number {
     return this.listing?.pricePerNight ?? 0;
   }
+
+  onImageError(event: Event): void {
+    console.log('Image failed to load:', this.listing?.mainImageUrl);
+    this.imageError = true;
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = '/assets/images/placeholder-listing.jpg';
+  }
+
   onFavoriteChanged(isFavorited: boolean): void {
     console.log('Listing card favorite changed:', this.listing.id, isFavorited);
     this.isFavorited = isFavorited;
@@ -57,4 +70,4 @@ export class ListingCard implements OnInit {
       this.favoriteStore.updateFavoriteState(this.listing.id, isFavorited);
     }
   }
-} 
+}

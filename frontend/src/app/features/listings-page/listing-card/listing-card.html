@@ -3,7 +3,11 @@
 
     <!-- Property Image Section -->
     <div class="broker-image-wrapper">
-      <img [src]="imageSrc" class="broker-property-image" [alt]="listing?.title" />
+      <img
+        [src]="imageSrc"
+        class="broker-property-image"
+        [alt]="listing?.title"
+        (error)="onImageError($event)" />
 
       <!-- Image Overlay -->
       <div class="broker-image-overlay"></div>

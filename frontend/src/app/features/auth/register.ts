@@ -230,30 +230,38 @@ export class Register {
       error: err => {
         // Log full error for debugging
         console.error('Register failed', err);
+        console.log('Error status:', err.status);
+        console.log('Error response body:', err.error);
+        console.log('Error message:', err.message);
+
         this.isLoading = false;
 
-        // Try to extract useful message from backend response
-        let msg = '';
-        try {
-          if (err?.error == null) {
-            msg = err?.message || '';
-          } else if (typeof err.error === 'string') {
-            msg = err.error;
-          } else if (err.error.message) {
-            msg = err.error.message;
-          } else if (err.error.errorMessage) {
-            msg = err.error.errorMessage;
-          } else if (err.error.errors) {
-            // some responses may return errors object or array
-            msg = JSON.stringify(err.error.errors);
+        // Handle the backend response structure
+        if (err.error && typeof err.error === 'object') {
+          // Backend returns { result, errorMessage, IsHaveErrorOrNo }
+          const errorMsg = err.error.errorMessage || err.error.message;
+
+          if (errorMsg) {
+            // Check for specific error types
+            if (errorMsg.toLowerCase().includes('email')) {
+              this.fieldErrors['email'] = errorMsg;
+            } else if (errorMsg.toLowerCase().includes('username')) {
+              this.fieldErrors['userName'] = errorMsg;
+            } else if (errorMsg.toLowerCase().includes('password')) {
+              this.fieldErrors['password'] = errorMsg;
+            } else {
+              this.errorMessage = errorMsg;
+            }
           } else {
-            msg = JSON.stringify(err.error);
+            this.errorMessage = this.translate.instant('auth.registerFailed') || 'Registration failed';
           }
-        } catch (e) {
-          msg = err?.message || 'Registration failed';
+        } else if (typeof err.error === 'string') {
+          this.errorMessage = err.error;
+        } else {
+          this.errorMessage = err.message || this.translate.instant('auth.registerFailed') || 'Registration failed';
         }
 
-        this.errorMessage = msg || this.translate.instant('auth.registerFailed') || 'Registration failed';
+        this.cdr.detectChanges();
       }
     });
   }

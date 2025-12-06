@@ -5,6 +5,7 @@ import { catchError, map, retry, tap, debounceTime } from 'rxjs/operators';
 import { ChatMessage, ChatSession, AIResponse, ChatAction, RetrievedContext } from '../../models/chat.model';
 import { ListingService } from '../listings/listing.service';
 import { LanguageService } from '../language.service';
+import { SiteInfoService } from './site-info.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class RagChatService {
   private http = inject(HttpClient);
   private listingService = inject(ListingService);
   private languageService = inject(LanguageService);
+  private siteInfoService = inject(SiteInfoService);
 
   // Chat state
   private chatSessionSubject = new BehaviorSubject<ChatSession>(this.createNewSession());
@@ -101,7 +103,7 @@ export class RagChatService {
 
     // Use advanced semantic extraction
     const semanticData = this.extractSemanticIntent(lowerQuery);
-    
+
     // Detect intent with confidence scoring
     const intent = this.detectIntentWithConfidence(lowerQuery, semanticData);
 
@@ -260,15 +262,15 @@ Be concise, helpful. Suggest clear actions.`;
   private getFallbackResponse(userMessage: string): string {
     const lang = this.currentLang;
     const lower = userMessage.toLowerCase();
-    
+
     // Advanced semantic extraction
     const semanticData = this.extractSemanticIntent(lower);
-    
+
     // Detect intent with confidence scoring
     const intent = this.detectIntentWithConfidence(lower, semanticData);
-    
+
     console.log('🧠 Semantic Analysis:', { intent, semanticData });
-    
+
     return this.generateIntelligentResponse(intent, semanticData, lang);
   }
 
@@ -284,7 +286,8 @@ Be concise, helpful. Suggest clear actions.`;
       propertyTypes: [],
       amenities: [],
       timeframe: null,
-      action: null
+      action: null,
+      originalQuery: text  // Store original query for site info detection
     };
 
     // Location extraction - comprehensive patterns
@@ -410,7 +413,8 @@ Be concise, helpful. Suggest clear actions.`;
       booking: 0,
       listing: 0,
       question: 0,
-      greeting: 0
+      greeting: 0,
+      site_info: 0
     };
 
     // Search intent signals
@@ -460,6 +464,17 @@ Be concise, helpful. Suggest clear actions.`;
       scores.greeting = 10;
     }
 
+    // Site information intent signals
+    const siteInfoSignals: (RegExp | number)[] = [
+      /(?:what is|tell me about|info about|explain|describe|about|ما هو|اخبرني|معلومات|شرح|وصف|عن)/gi,
+      /(?:platform|site|website|service|المنصة|الموقع|الخدمة)/gi,
+      /(?:feature|capability|offer|provide|how it works|ميزات|خصائص|تقدم|كيف تعمل)/gi,
+      /(?:can you|do you|does this|هل يمكن|هل تقدم|هل يوجد)/gi.test(text) ? 1 : 0
+    ];
+    scores.site_info = siteInfoSignals.reduce((sum: number, signal) => {
+      return sum + (typeof signal === 'number' ? signal : signal.test(text) ? 2 : 0);
+    }, 0);
+
     // Get highest scoring intent
     const maxScore = Math.max(...Object.values(scores));
     const intent = Object.entries(scores).find(([_, score]) => score === maxScore)?.[0] || 'general';
@@ -473,6 +488,11 @@ Be concise, helpful. Suggest clear actions.`;
    * Generate intelligent response based on intent and semantic data
    */
   private generateIntelligentResponse(intent: string, data: any, lang: 'en' | 'ar'): string {
+    // SITE INFO INTENT
+    if (intent === 'site_info') {
+      return this.generateSiteInfoResponse(data, lang);
+    }
+
     // SEARCH INTENT
     if (intent === 'search') {
       return this.generateSearchResponse(data, lang);
@@ -496,12 +516,49 @@ Be concise, helpful. Suggest clear actions.`;
     // GREETING
     if (intent === 'greeting') {
       return lang === 'ar'
-        ? 'مرحباً! 👋 أنا السمسارة. ماذا تبحث عن؟\n• "ابحث عن شقة"\n• "أحجز فيلا"\n• "أضف عقاري"'
-        : 'Hello! 👋 I\'m The Broker. What are you looking for?\n• "Search for apartment"\n• "Book a villa"\n• "List my property"';
+        ? 'مرحباً! 👋 أنا السمسارة - مساعدك العقاري الذكي.\n\n💡 **يمكنني مساعدتك في:**\n• البحث عن عقارات\n• حجز إقامتك\n• إضافة عقارك\n• معلومات عن المنصة\n\nجرب أن تقول: "ما هي ميزات المنصة؟" أو "ابحث عن شقة"'
+        : 'Hello! 👋 I\'m The Broker - your smart property assistant.\n\n💡 **I can help you with:**\n• Searching for properties\n• Booking your stay\n• Listing your property\n• Platform information\n\nTry saying: "What features does the platform offer?" or "Search for apartment"';
     }
 
     // GENERAL - try to be helpful
     return this.generateGeneralResponse(data, lang);
+  }
+
+  /**
+   * Generate site information response
+   */
+  private generateSiteInfoResponse(data: any, lang: 'en' | 'ar'): string {
+    const lowerQuery = data.originalQuery || data.action || '';
+
+    // Check if asking for specific section
+    const section = this.siteInfoService.detectSection(lowerQuery, lang);
+
+    if (section) {
+      return this.siteInfoService.getSectionResponse(section, lang);
+    }
+
+    // Check for comprehensive description request
+    if (/(?:full|complete|everything|all|comprehensive|كامل|شامل|كل شيء)/i.test(lowerQuery)) {
+      return this.siteInfoService.getFullDescription(lang);
+    }
+
+    // Check for features list
+    if (/(?:feature|capability|what.*do|what.*offer|ميزات|خصائص|ماذا تقدم)/i.test(lowerQuery)) {
+      return this.siteInfoService.getSectionResponse('features', lang);
+    }
+
+    // Check for sections overview
+    if (/(?:section|category|part|أقسام|فئات)/i.test(lowerQuery)) {
+      return this.siteInfoService.getAllSectionsSummary(lang);
+    }
+
+    // Default: provide overview
+    const overview = this.siteInfoService.getSiteOverview(lang);
+    const sectionsPreview = lang === 'ar'
+      ? '\n\n💡 **اسألني عن:**\n• "ما هي ميزات البحث؟"\n• "كيف يعمل نظام الحجز؟"\n• "كيف أضيف عقاري؟"\n• "ما هي جميع الميزات؟"'
+      : '\n\n💡 **Ask me about:**\n• "What are the search features?"\n• "How does booking work?"\n• "How do I list my property?"\n• "What are all the features?"';
+
+    return overview + sectionsPreview;
   }
 
   /**
@@ -523,31 +580,31 @@ Be concise, helpful. Suggest clear actions.`;
 
     if (lang === 'ar') {
       let response = `تم! سأبحث عن ${propertyType}`;
-      
+
       // Location
       if (data.locations.length > 0) {
         response += ` في ${data.locations[0]}`;
         criteria.push(`📍 الموقع: ${data.locations[0]}`);
       }
-      
+
       // Bedrooms
       if (data.bedrooms !== null) {
         response += ` بـ ${data.bedrooms} ${data.bedrooms === 0 ? 'استوديو' : 'غرف نوم'}`;
         criteria.push(`🛏️ غرف النوم: ${data.bedrooms}`);
       }
-      
+
       // Bathrooms
       if (data.bathrooms !== null) {
         criteria.push(`🚿 حمامات: ${data.bathrooms}`);
       }
-      
+
       // Price
       if (data.prices.length > 0) {
         const maxPrice = Math.max(...data.prices);
         response += ` تحت ${maxPrice.toLocaleString()} جنيه`;
         criteria.push(`💰 السعر الأقصى: ${maxPrice.toLocaleString()} جنيه`);
       }
-      
+
       // Amenities
       if (data.amenities.length > 0) {
         const amenityNames: any = {
@@ -558,51 +615,51 @@ Be concise, helpful. Suggest clear actions.`;
           criteria.push(`✨ ${amenityNames[a] || a}`);
         });
       }
-      
+
       response += '.';
-      
+
       if (criteria.length > 0) {
         response += `\n\n📋 معايير البحث:\n${criteria.join('\n')}`;
       }
-      
+
       response += '\n\n✨ اضغط "عرض النتائج" للبحث الآن!';
       return response;
-      
+
     } else {
       let response = `Perfect! I'll search for ${propertyType}`;
-      
+
       if (data.locations.length > 0) {
         response += ` in ${data.locations[0]}`;
         criteria.push(`📍 Location: ${data.locations[0]}`);
       }
-      
+
       if (data.bedrooms !== null) {
         response += ` with ${data.bedrooms} ${data.bedrooms === 0 ? 'studio' : 'bedrooms'}`;
         criteria.push(`🛏️ Bedrooms: ${data.bedrooms}`);
       }
-      
+
       if (data.bathrooms !== null) {
         criteria.push(`🚿 Bathrooms: ${data.bathrooms}`);
       }
-      
+
       if (data.prices.length > 0) {
         const maxPrice = Math.max(...data.prices);
         response += ` under ${maxPrice.toLocaleString()} EGP`;
         criteria.push(`💰 Max Price: ${maxPrice.toLocaleString()} EGP`);
       }
-      
+
       if (data.amenities.length > 0) {
         data.amenities.forEach((a: string) => {
           criteria.push(`✨ ${a.charAt(0).toUpperCase() + a.slice(1)}`);
         });
       }
-      
+
       response += '.';
-      
+
       if (criteria.length > 0) {
         response += `\n\n📋 Search Criteria:\n${criteria.join('\n')}`;
       }
-      
+
       response += '\n\n✨ Click "View Results" to search now!';
       return response;
     }
@@ -613,56 +670,56 @@ Be concise, helpful. Suggest clear actions.`;
    */
   private generateBookingResponse(data: any, lang: 'en' | 'ar'): string {
     const details = [];
-    
+
     if (lang === 'ar') {
       let response = 'عظيم! سأساعدك في الحجز';
-      
+
       if (data.locations.length > 0) {
         response += ` في ${data.locations[0]}`;
         details.push(`📍 ${data.locations[0]}`);
       }
-      
+
       if (data.timeframe) {
         const timeMap: any = { immediate: 'فوري', week: 'أسبوع', month: 'شهر' };
         details.push(`📅 ${timeMap[data.timeframe]}`);
       }
-      
+
       if (data.prices.length > 0) {
         details.push(`💰 ميزانية: ${Math.max(...data.prices).toLocaleString()} جنيه`);
       }
-      
+
       response += '.';
-      
+
       if (details.length > 0) {
         response += `\n\n${details.join(' • ')}`;
       }
-      
+
       response += '\n\n🏠 اضغط "ابدأ الحجز" للمتابعة!';
       return response;
-      
+
     } else {
       let response = 'Great! I\'ll help you book';
-      
+
       if (data.locations.length > 0) {
         response += ` in ${data.locations[0]}`;
         details.push(`📍 ${data.locations[0]}`);
       }
-      
+
       if (data.timeframe) {
         const timeMap: any = { immediate: 'immediately', week: 'this week', month: 'this month' };
         details.push(`📅 ${timeMap[data.timeframe]}`);
       }
-      
+
       if (data.prices.length > 0) {
         details.push(`💰 Budget: ${Math.max(...data.prices).toLocaleString()} EGP`);
       }
-      
+
       response += '.';
-      
+
       if (details.length > 0) {
         response += `\n\n${details.join(' • ')}`;
       }
-      
+
       response += '\n\n🏠 Click "Start Booking" to proceed!';
       return response;
     }
@@ -673,7 +730,7 @@ Be concise, helpful. Suggest clear actions.`;
    */
   private generateListingResponse(data: any, lang: 'en' | 'ar'): string {
     const propertyInfo = [];
-    
+
     if (data.propertyTypes.length > 0) {
       const typeMap: any = {
         en: { apartment: 'apartment', villa: 'villa', house: 'house' },
@@ -681,15 +738,15 @@ Be concise, helpful. Suggest clear actions.`;
       };
       propertyInfo.push(typeMap[lang][data.propertyTypes[0]] || (lang === 'ar' ? 'عقار' : 'property'));
     }
-    
+
     if (data.bedrooms !== null) {
       propertyInfo.push(lang === 'ar' ? `${data.bedrooms} غرف` : `${data.bedrooms} beds`);
     }
-    
+
     if (data.locations.length > 0) {
       propertyInfo.push(lang === 'ar' ? `في ${data.locations[0]}` : `in ${data.locations[0]}`);
     }
-    
+
     if (lang === 'ar') {
       let response = `رائع! تريد إضافة ${propertyInfo.join(' ')}. `;
       response += '\n\nسأرشدك خلال عملية الإضافة:\n• 📸 صور واضحة\n• 📝 التفاصيل\n• 💰 السعر\n• ✨ المرافق';
@@ -720,10 +777,10 @@ Be concise, helpful. Suggest clear actions.`;
     if (data.locations.length > 0 || data.prices.length > 0 || data.propertyTypes.length > 0) {
       return this.generateSearchResponse(data, lang);
     }
-    
+
     return lang === 'ar'
-      ? '🤔 جرب أن تقول:\n• "شقة 2 غرفة في المعادي"\n• "فيلا مع مسبح"\n• "عقارات تحت 5000 جنيه في القاهرة"\n\nأو اسألني مباشرة! 💬'
-      : '🤔 Try saying:\n• "2-bed apartment in Maadi"\n• "Villa with pool"\n• "Properties under 5000 EGP in Cairo"\n\nOr just ask me directly! 💬';
+      ? '🤔 **يمكنني مساعدتك في:**\n\n📍 **البحث:** "شقة 2 غرفة في المعادي" أو "فيلا مع مسبح"\n\n🏠 **الحجز:** "احجز شاليه في الساحل"\n\n➕ **إضافة عقار:** "أضف شقتي للإيجار"\n\nℹ️ **معلومات:** "ما هي ميزات المنصة؟"\n\nجرب الآن! 💬'
+      : '🤔 **I can help you with:**\n\n📍 **Search:** "2-bed apartment in Maadi" or "Villa with pool"\n\n🏠 **Booking:** "Book chalet in North Coast"\n\n➕ **List Property:** "List my apartment for rent"\n\nℹ️ **Info:** "What features does the platform offer?"\n\nTry now! 💬';
   }
 
   /**

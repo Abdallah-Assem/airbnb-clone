@@ -1,0 +1,2980 @@
+57998be44d46443aaae48151ff9719e50fa4ba86|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-06|refactor: Use Firebase profile images for thumbnails instead of Face ID
+2	2	frontend/src/app/core/services/auth.service.ts
+0	8	frontend/src/app/features/auth/register.ts
+0	7	frontend/src/app/shared/components/face-id-prompt/face-id-prompt.ts
+
+b777034ae4bfb069181b8d2588071a0a21b9b6ff|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-06|fix: Clear user data from localStorage on logout
+10	0	frontend/src/app/core/services/auth.service.ts
+
+4b0b6290dae7f2c030c50641f491f285d320430f|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-06|fix: Add debugging and change detection to Face ID prompt component
+12	1	frontend/src/app/shared/components/face-id-prompt/face-id-prompt.ts
+
+918de1e681ebf9a88a9f3de93d89420b7a11a335|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-06|refactor: clean up whitespace in auth service, registration, and face ID prompt components
+6	6	frontend/src/app/core/services/auth.service.ts
+11	11	frontend/src/app/features/auth/register.ts
+2	2	frontend/src/app/shared/components/face-id-prompt/face-id-prompt.html
+8	8	frontend/src/app/shared/components/face-id-prompt/face-id-prompt.ts
+
+0e5615029491f0c06ee2c219b7abcf5a04852a8a|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-06|fix: resolve build errors and add FaceId repository to UnitOfWork
+5	3	Backend/BLL/Services/Impelementation/IdentityService.cs
+1	0	Backend/DAL/Repo/Abstraction/IUnitOfWork.cs
+2	0	Backend/DAL/Repo/Implementation/UnitOfWork.cs
+2	0	Backend/PL/Controllers/ReviewController.cs
+1	1	Backend/PL/PL.csproj
+-	-	Backend/PL/wwwroot/listings/1ab07f26-6038-473f-b7de-25a5e78af497.png
+0	22	Backend/start-backend-with-logging.ps1
+
+4301aed954b0a436fabb4e5fda0c2afd3121931e|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-06|feat: Add persistent Face ID setup prompt for users without biometric authentication
+1	0	Backend/BLL/ModelVM/Auth/LoginResponseVM.cs
+7	2	Backend/BLL/Services/Impelementation/IdentityService.cs
+1	0	frontend/src/app/app.html
+2	1	frontend/src/app/app.ts
+13	0	frontend/src/app/core/services/auth.service.ts
+3	0	frontend/src/app/features/auth/register.ts
+189	0	frontend/src/app/shared/components/face-id-prompt/face-id-prompt.css
+32	0	frontend/src/app/shared/components/face-id-prompt/face-id-prompt.html
+111	0	frontend/src/app/shared/components/face-id-prompt/face-id-prompt.ts
+8	1	frontend/src/assets/i18n/ar.json
+8	1	frontend/src/assets/i18n/en.json
+
+fc5b4c337834a9c8b3d5da31afc68b33a9db90a4|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-06|feat: Implement new user registration enhancements
+20	0	Backend/BLL/Services/Impelementation/IdentityService.cs
+28	0	frontend/src/app/core/services/auth.service.ts
+5	4	frontend/src/app/features/auth/login.ts
+41	1	frontend/src/app/features/auth/register.ts
+59	0	frontend/src/app/shared/components/navbar/navbar.css
+15	2	frontend/src/app/shared/components/navbar/navbar.html
+31	0	frontend/src/app/shared/components/navbar/navbar.ts
+
+a873712fc1dca70430ad1799a23e064fb74776de|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-06|Fix booking property case sensitivity and review form visibility
+53	14	frontend/src/app/core/services/Booking/booking.service.ts
+22	22	frontend/src/app/features/booking/booking-details/booking-details.html
+2	2	frontend/src/app/features/booking/booking-details/booking-details.ts
+3	3	frontend/src/app/features/host-listings/detail/listings-detail.html
+83	19	frontend/src/app/features/host-listings/detail/listings-detail.ts
+
+0495354e843ff8677da90cd306e3b4c6e39413ea|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-06|feat: Enhanced review system with comprehensive features and improved seeder
+5	0	Backend/BLL/AutoMapper/DomainProfile.cs
+7	0	Backend/BLL/ModelVM/Review/AddHostReplyVM.cs
+7	0	Backend/BLL/ModelVM/Review/AddReviewImagesVM.cs
+7	0	Backend/BLL/ModelVM/Review/FlagReviewVM.cs
+13	0	Backend/BLL/ModelVM/Review/ReviewVM.cs
+17	9	Backend/BLL/Services/Abstractions/IReviewService.cs
+1	1	Backend/BLL/Services/Impelementation/BookingService.cs
+4	4	Backend/BLL/Services/Impelementation/PaymentService.cs
+148	2	Backend/BLL/Services/Impelementation/ReviewService.cs
+37	1	Backend/DAL/Configurations/ReviewConfiguration.cs
+51	0	Backend/DAL/Entities/Review.cs
+38	1	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+5	0	Backend/DAL/Repo/Abstraction/IReviewRepository.cs
+28	0	Backend/DAL/Repo/Implementation/ReviewRepository.cs
+60	0	Backend/PL/Controllers/BookingController.cs
+62	0	Backend/PL/Controllers/ReviewController.cs
+122	25	Backend/PL/Helpers/Seeder.cs
+458	0	REVIEW_SYSTEM_ENHANCEMENTS.md
+10	0	frontend/src/app/app.routes.ts
+49	0	frontend/src/app/core/models/review.model.ts
+44	0	frontend/src/app/core/services/Booking/booking.service.ts
+122	9	frontend/src/app/core/services/review/review.service.ts
+406	0	frontend/src/app/features/booking/booking-details/booking-details.css
+192	0	frontend/src/app/features/booking/booking-details/booking-details.html
+96	0	frontend/src/app/features/booking/booking-details/booking-details.ts
+237	3	frontend/src/app/features/host-listings/detail/listings-detail.css
+153	10	frontend/src/app/features/host-listings/detail/listings-detail.html
+188	19	frontend/src/app/features/host-listings/detail/listings-detail.ts
+
+2143f00c078e9c6f533e6ff5553af25d4b329084|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-06|Merge pull request #41 from AbdelrahmanMoohamed/master
+b7f3312b533265a4f463aec98ad46fa1172e21ec|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-12-06|last updated
+2	0	Backend/PL/Program.cs
+-	-	Backend/PL/wwwroot/listings/461f9223-e5ed-4569-ad59-780eb267e102.jpg
+-	-	Backend/PL/wwwroot/listings/5acd71cf-34f9-4b66-a91b-e51b0e315531.jpg
+
+a4180b7f28fa0bcbca99d829eff00241cf55957d|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-12-06|staged
+adcb7dde0bcdc13ad69552314c28e8f7030b9843|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-12-06|befor merge
+0	3	Backend/BLL/ModelVM/MapsVM/GeocodeResponseDto.cs
+2	4	Backend/BLL/Services/Impelementation/MapService.cs
+2	1	Backend/BLL/Services/Impelementation/NominatimGeocodingService.cs
+0	1	Backend/DAL/Entities/Listing.cs
+16	18	Backend/DAL/Repo/Implementation/ListingRepository.cs
+1	1	Backend/DAL/Repo/Implementation/MapRepo.cs
+10	2	Backend/PL/Controllers/BookingController.cs
+-	-	Backend/PL/wwwroot/listings/04235693-c117-4259-9b82-72e1e40cff2c.jpg
+-	-	Backend/PL/wwwroot/listings/18cd9d58-10df-4286-8b7d-5ae8333b8756.jpg
+-	-	Backend/PL/wwwroot/listings/1997aa02-212a-487e-a14e-d1e5f135020d.jpg
+-	-	Backend/PL/wwwroot/listings/1b545721-9c2f-402f-bba3-aa968ca0fd9a.jpg
+-	-	Backend/PL/wwwroot/listings/1fcb5034-d968-4ece-8b65-6e2d95fcce63.jpg
+-	-	Backend/PL/wwwroot/listings/3399dc35-c019-4d8b-b828-8ffb80ac7c71.jpg
+-	-	Backend/PL/wwwroot/listings/58bbc384-af0e-410b-9263-cc733c635d6f.jpg
+-	-	Backend/PL/wwwroot/listings/6a68ac33-2bf0-415e-98e3-72da9b5fcada.jpeg
+-	-	Backend/PL/wwwroot/listings/6f6967b1-f78a-4bbe-b3c1-0c6efd3677c0.jpg
+-	-	Backend/PL/wwwroot/listings/b48795ab-c1ad-4f5b-b87d-84225d5f5cbb.jpg
+-	-	Backend/PL/wwwroot/listings/ce0915c6-7c44-480d-b0a2-5307368da2c8.jpg
+1	1	frontend/src/app/app.routes.ts
+9	10	frontend/src/app/core/models/map.model.ts
+84	50	frontend/src/app/core/services/map/map.ts
+50	35	frontend/src/app/features/Map/map/map.ts
+1	1	frontend/src/app/features/favorites/favorite-page/favorite-page.ts
+0	0	frontend/src/app/features/{listings-page-user-View => guest-listings}/listing-card/listing-card.css
+0	0	frontend/src/app/features/{listings-page-user-View => guest-listings}/listing-card/listing-card.html
+0	0	frontend/src/app/features/{listings-page-user-View => guest-listings}/listing-card/listing-card.spec.ts
+0	0	frontend/src/app/features/{listings-page-user-View => guest-listings}/listing-card/listing-card.ts
+0	0	frontend/src/app/features/{listings-page-user-View => guest-listings}/listings/listings.css
+0	0	frontend/src/app/features/{listings-page-user-View => guest-listings}/listings/listings.html
+0	0	frontend/src/app/features/{listings-page-user-View => guest-listings}/listings/listings.spec.ts
+0	0	frontend/src/app/features/{listings-page-user-View => guest-listings}/listings/listings.ts
+0	214	frontend/src/app/features/home-page/hero-card/hero-card.css
+0	22	frontend/src/app/features/home-page/hero-card/hero-card.html
+0	23	frontend/src/app/features/home-page/hero-card/hero-card.spec.ts
+0	14	frontend/src/app/features/home-page/hero-card/hero-card.ts
+15	12	frontend/src/app/features/host-listings/create-edit/listings-create-edit.ts
+21	4	frontend/src/app/features/host-listings/listing-Host-View/listing-list.ts
+
+bb08ab3f12c2454a5df9435ae6162a2a0963cacb|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-06|Merge pull request #40 from AbdelrahmanKhalid710/master
+70f528f6631f8d51c2f9ac091cd25787c82dd351|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-06|allowing retry payment for failed payment processes
+10	0	frontend/src/app/core/models/booking.ts
+141	2	frontend/src/app/features/booking/my-bookings/my-bookings.css
+37	3	frontend/src/app/features/booking/my-bookings/my-bookings.html
+117	23	frontend/src/app/features/booking/my-bookings/my-bookings.ts
+6	0	frontend/src/app/shared/components/navbar/navbar.html
+
+0d8da4997e7b408a424e3f9137a449a084012ef2|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-06|merging the FaceID
+5	0	Backend/BLL/BLL.csproj
+-	-	Backend/BLL/DlibDotNetNativeDnnAgeClassification.dll
+-	-	Backend/BLL/DlibDotNetNativeDnnGenderClassification.dll
+5	0	Backend/DAL/DAL.csproj
+-	-	Backend/DAL/DlibDotNetNativeDnnAgeClassification.dll
+-	-	Backend/DAL/DlibDotNetNativeDnnGenderClassification.dll
+-	-	Backend/PL/DlibDotNetNativeDnnAgeClassification.dll
+-	-	Backend/PL/DlibDotNetNativeDnnGenderClassification.dll
+5	0	Backend/PL/PL.csproj
+2	2	frontend/src/app/features/payment/stripe-payment/stripe-payment.ts
+
+d5480c0bdddbc2b6c66b268f5796794a1a518f0e|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-06|Merge branch 'master' of https://github.com/AbdelrahmanKhalid710/airbnb-clone
+32608f4a833c0988ca6bbf9ca9376406e92e0e1f|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-05|fixing the Booking Controller merge erros
+113	38	Backend/PL/Controllers/BookingController.cs
+
+2fa88a111f3f4dfc8bd42b1a465d888f2888920a|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-05|Merge pull request #38 from Abdallah-Assem/master
+5e9a99a4768e662b93553b663a25e5fef2068148|AbdallahAssem|abdallahassem3@gmail.com|2025-12-05|Fix indentation in AuthController namespace declaration
+1	1	Backend/PL/Controllers/AuthController.cs
+
+5f0d8c0dd8660299e6c8ce601d8c32df9fadc71b|AbdallahAssem|abdallahassem3@gmail.com|2025-12-05|Refactor BookingController and update authentication UI
+2	122	Backend/PL/Controllers/BookingController.cs
+53	140	frontend/src/app/features/auth/login.css
+86	32	frontend/src/app/features/auth/login.html
+15	145	frontend/src/app/features/auth/register.css
+180	59	frontend/src/app/features/auth/register.ts
+0	1	frontend/src/app/features/host-listings/detail/listings-detail.ts
+
+3167f6bfd76f740e3683f830245479c9434c17e7|AbdallahAssem|abdallahassem3@gmail.com|2025-12-05|Merge branch 'master' of https://github.com/Abdallah-Assem/airbnb-clone
+961c0fd1af897a9b315cbbe17ddd0caaf56baf77|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-05|adding payment verifications to continue only if the payment is completed successfully
+2	110	Backend/PL/Controllers/BookingController.cs
+1	1	Backend/PL/appsettings.json
+-	-	Backend/PL/wwwroot/listings/e207b2b1-c3df-4208-b9d0-8941392fb7e0.png
+0	5	frontend/src/app/features/booking/my-bookings/my-bookings.html
+1	1	frontend/src/app/features/booking/my-bookings/my-bookings.ts
+0	2	frontend/src/app/features/host-listings/detail/listings-detail.ts
+133	30	frontend/src/app/features/payment/stripe-payment/stripe-payment.ts
+
+6fc5c2c1a0b33e6d897639e1394d366ddd3f3c9c|AbdallahAssem|abdallahassem3@gmail.com|2025-12-05|handle merge errors
+0	58	Backend/DAL/Entities/Listing.cs
+14	14	Backend/PL/Controllers/AuthController.cs
+10	10	Backend/PL/Controllers/BookingController.cs
+-	-	Backend/PL/wwwroot/listings/2c695e11-2c91-456c-9c01-7550bc9dd851.jpg
+-	-	Backend/PL/wwwroot/listings/4e363d05-fc67-4c38-be4f-021038ff3090.jpg
+-	-	Backend/PL/wwwroot/listings/990037fd-445c-472f-a401-6d1612e9543e.jpg
+-	-	Backend/PL/wwwroot/listings/9c7b29b6-a692-4867-993a-ef2eba27ab6b.jpg
+45	96	frontend/src/app/features/auth/login.ts
+2	149	frontend/src/app/features/auth/register.ts
+0	14	frontend/src/app/features/booking/create-booking/create-booking.ts
+0	14	frontend/src/app/features/host-listings/listing-Host-View/listing-list.ts
+0	20	frontend/src/app/features/payment/stripe-payment/stripe-payment.ts
+1	3	frontend/src/assets/i18n/ar.json
+2	2	frontend/src/assets/i18n/en.json
+
+2f14e1162fdaa503b67785d6c8647b8cde02f696|AbdallahAssem|abdallahassem3@gmail.com|2025-12-05|Merge Assem work
+f6ed30904aac4abbba0d176d67db1a287cbf9b68|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-05|Merge pull request #37 from aaliyahhazem/master
+ae53936f96e504ff644c2877d1ff397a6728a011|aaliyahhazem|aaliyahhazem@gmail.com|2025-12-05|Merge Conflicts and fix errors
+53fdca2da17590ed69ea2dc5e74ef48cd07ecbb4|AbdallahAssem|abdallahassem3@gmail.com|2025-12-05|IntegrateFaceID&UpdateAdmin-dashboardDesign
+19	0	Backend/BLL/AutoMapper/DomainProfile.cs
+1	0	Backend/BLL/BLL.csproj
+3	0	Backend/BLL/Common/ModularBLL.cs
+14	0	Backend/BLL/ModelVM/FaceId/RegisterFaceIdVM.cs
+16	0	Backend/BLL/ModelVM/FaceId/UpdateFaceIdVM.cs
+14	0	Backend/BLL/Services/Abstractions/IFaceIdService.cs
+292	0	Backend/BLL/Services/Impelementation/FaceIdService.cs
+2	0	Backend/DAL/Common/ModularDAL.cs
+2	0	Backend/DAL/Common/ModularDataAccessLayer.cs
+24	0	Backend/DAL/Configurations/FaceIdConfiguration.cs
+1	0	Backend/DAL/DAL.csproj
+1	0	Backend/DAL/Database/AppDbContext.cs
+61	0	Backend/DAL/Entities/FaceId.cs
+1	0	Backend/DAL/Entities/User.cs
+47	0	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+14	0	Backend/DAL/Repo/Abstraction/IFaceIdRepo.cs
+124	0	Backend/DAL/Repo/Implementation/FaceIdRepo.cs
+49	0	Backend/PL/Controllers/FaceIdController.cs
+-	-	Backend/PL/Models/FaceModels/dlib_face_recognition_resnet_model_v1.dat
+-	-	Backend/PL/Models/FaceModels/mmod_human_face_detector.dat
+-	-	Backend/PL/Models/FaceModels/shape_predictor_5_face_landmarks.dat
+-	-	Backend/PL/Models/FaceModels/shape_predictor_68_face_landmarks.dat
+8	2	Backend/PL/PL.csproj
+14	0	Backend/PL/Program.cs
+4	2	Backend/PL/appsettings.json
+-	-	Backend/PL/wwwroot/listings/4efc47d6-67ae-4be9-bb41-cde1e0c63704.jpg
+-	-	Backend/PL/wwwroot/listings/97209086-fb49-4ce1-bce7-4fb42b4dcfca.jpg
+-	-	Backend/PL/wwwroot/listings/bd5fb118-3649-483a-bf8f-bdf0e39c8fd7.png
+64	0	frontend/src/app/core/services/auth.service.ts
+361	268	frontend/src/app/features/admin/admin-dashboard/admin-dashboard.css
+132	134	frontend/src/app/features/admin/admin-dashboard/admin-dashboard.html
+209	55	frontend/src/app/features/admin/admin-dashboard/admin-dashboard.ts
+438	0	frontend/src/app/features/auth/face-capture/face-capture.component.ts
+0	0	frontend/src/app/features/auth/face-login/face-login.component.ts
+200	0	frontend/src/app/features/auth/login.css
+106	18	frontend/src/app/features/auth/login.ts
+262	0	frontend/src/app/features/auth/register.css
+62	6	frontend/src/app/features/auth/register.html
+97	15	frontend/src/app/features/auth/register.ts
+190	3	frontend/src/assets/i18n/ar.json
+190	3	frontend/src/assets/i18n/en.json
+
+a94823ca898f07ae294d6c844c8324252acc7a40|AbdallahAssem|abdallahassem3@gmail.com|2025-12-05|Merge branch 'master' of https://github.com/Abdallah-Assem/airbnb-clone
+10	2	Backend/BLL/AutoMapper/DomainProfile.cs
+4	0	Backend/BLL/Common/ModularBLL.cs
+1	3	Backend/BLL/Global/Global.cs
+25	0	Backend/BLL/ModelVM/Auth/LoginResponseVM.cs
+1	0	Backend/BLL/ModelVM/Auth/TokenRequestVM.cs
+1	1	Backend/BLL/ModelVM/Booking/CreateBookingVM.cs
+2	0	Backend/BLL/ModelVM/Booking/GetBookingVM.cs
+7	0	Backend/BLL/ModelVM/Favorite/FavoriteListingVM.cs
+7	1	Backend/BLL/ModelVM/LIstingVM/ListingDetailVM.cs
+5	1	Backend/BLL/ModelVM/LIstingVM/ListingOverviewVM.cs
+4	0	Backend/BLL/ModelVM/Notification/CreateNotificationVM.cs
+7	3	Backend/BLL/ModelVM/Notification/GetNotificationVM.cs
+2	2	Backend/BLL/ModelVM/Payment/CreatePaymentIntentVm.cs
+4	0	Backend/BLL/ModelVM/Response/Response.cs
+1	0	Backend/BLL/Services/Abstractions/IBookingService.cs
+4	3	Backend/BLL/Services/Abstractions/IIdentityService.cs
+3	0	Backend/BLL/Services/Abstractions/IListingService.cs
+7	0	Backend/BLL/Services/Abstractions/INotificationPublisher.cs
+2	2	Backend/BLL/Services/Abstractions/INotificationService.cs
+1	1	Backend/BLL/Services/Abstractions/ITokenService.cs
+1	1	Backend/BLL/Services/Impelementation/AdminService.cs
+116	11	Backend/BLL/Services/Impelementation/BookingService.cs
+8	0	Backend/BLL/Services/Impelementation/FavoriteService.cs
+118	16	Backend/BLL/Services/Impelementation/IdentityService.cs
+113	16	Backend/BLL/Services/Impelementation/ListingService.cs
+29	15	Backend/BLL/Services/Impelementation/NotificationService.cs
+83	21	Backend/BLL/Services/Impelementation/PaymentService.cs
+24	1	Backend/BLL/Services/Impelementation/ReviewService.cs
+4	2	Backend/BLL/Services/Impelementation/TokenService.cs
+1	1	Backend/DAL/Configurations/BookingConfiguration.cs
+6	0	Backend/DAL/Configurations/NotificationConfiguration.cs
+5	0	Backend/DAL/Configurations/UserConfiguration.cs
+74	4	Backend/DAL/Entities/Listing.cs
+10	2	Backend/DAL/Entities/Notification.cs
+10	0	Backend/DAL/Entities/User.cs
+2	1	Backend/DAL/Enum/BookingStatus.cs
+26	1	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+6	0	Backend/DAL/ModelView/ListingFilterDto.cs
+2	0	Backend/DAL/Repo/Abstraction/IAdminRepository.cs
+11	0	Backend/DAL/Repo/Abstraction/IListingRepository.cs
+2	1	Backend/DAL/Repo/Abstraction/INotificationRepository.cs
+12	0	Backend/DAL/Repo/Implementation/AdminRepository.cs
+1	1	Backend/DAL/Repo/Implementation/BookingRepository.cs
+151	1	Backend/DAL/Repo/Implementation/ListingRepository.cs
+11	3	Backend/DAL/Repo/Implementation/NotificationRepository.cs
+13	0	Backend/FixMigrations.cs
+1	1	Backend/PL/Controllers/AdminController.cs
+45	5	Backend/PL/Controllers/AuthController.cs
+28	2	Backend/PL/Controllers/BookingController.cs
+47	3	Backend/PL/Controllers/ListingsController.cs
+19	4	Backend/PL/Controllers/NotificationController.cs
+20	5	Backend/PL/Controllers/PaymentController.cs
+1	0	Backend/PL/Global/Global.cs
+11	1	Backend/PL/Helpers/Seeder.cs
+23	9	Backend/PL/Hubs/NotificationHub.cs
+32	1	Backend/PL/Program.cs
+170	0	Backend/PL/Resources/SharedResources.ar.resx
+8	0	Backend/PL/Resources/SharedResources.cs
+170	0	Backend/PL/Resources/SharedResources.en-US.resx
+44	0	Backend/PL/Services/NotificationPublisher.cs
+1	1	Backend/PL/appsettings.json
+-	-	Backend/PL/wwwroot/listings/0b2a473e-e55d-4574-8b55-fd958a3b2b88.jpg
+-	-	Backend/PL/wwwroot/listings/32ab54bd-e186-4622-be41-37ec88e30eb4.jpg
+-	-	Backend/PL/wwwroot/listings/37805612-c55c-4617-aa69-dbcc74b6b69c.jpg
+-	-	Backend/PL/wwwroot/listings/43c39375-9554-4868-9c04-4211eb7f62ea.jpg
+-	-	Backend/PL/wwwroot/listings/53a5ef91-6acd-4832-8999-71976ba46576.jpg
+-	-	Backend/PL/wwwroot/listings/630c5ed7-2099-4aeb-8c12-9ac5d7db39ba.png
+-	-	Backend/PL/wwwroot/listings/636a3954-7e5f-4f57-9cd2-7f2cef0ed895.jpg
+-	-	Backend/PL/wwwroot/listings/6ca2fde4-f299-40d0-8cfd-d2316485509f.jpg
+-	-	Backend/PL/wwwroot/listings/71d3abd7-7e0b-4479-add9-e622612b1f7e.jpg
+-	-	Backend/PL/wwwroot/listings/99d619ad-8b4a-4637-9b89-4297a3de4e42.jpg
+-	-	Backend/PL/wwwroot/listings/9b066b34-8177-4c74-86b1-baf0ff61b823.jpg
+-	-	Backend/PL/wwwroot/listings/ac5b29cb-7c50-44ca-b042-36910a2a6a20.jpg
+-	-	Backend/PL/wwwroot/listings/ced30885-1487-4175-9dd3-eedcb0d82a1e.jpg
+-	-	Backend/PL/wwwroot/listings/da8e7b20-9230-402d-9e7f-bb532d5a37f4.png
+-	-	Backend/PL/wwwroot/listings/e0359967-d1fc-44e3-a4c2-706c4dbf2e18.jpg
+-	-	Backend/PL/wwwroot/listings/ffbdee7d-ba9a-42e2-95d5-b330ed0d4c67.jpg
+29	0	Backend/fix-migrations.sql
+6	0	Backend/package-lock.json
+1524	0	README.md
+220	0	frontend/BROKER_REDESIGN_GUIDE.md
+0	119	frontend/BUTTONS_FIX_NEEDED.md
+0	59	frontend/README.md
+10	0	frontend/angular.json
+32	18	frontend/package-lock.json
+3	2	frontend/package.json
+-	-	frontend/public/3.png
+-	-	frontend/public/bg1.png
+-	-	frontend/public/me.png
+20	5	frontend/src/app/app.config.ts
+36	7	frontend/src/app/app.routes.ts
+30	2	frontend/src/app/app.ts
+31	0	frontend/src/app/core/models/booking.ts
+7	0	frontend/src/app/core/models/favorite.ts
+7	1	frontend/src/app/core/models/listing.model.ts
+2	0	frontend/src/app/core/models/notification.ts
+25	0	frontend/src/app/core/models/payment.ts
+16	0	frontend/src/app/core/services/Booking/booking-service.spec.ts
+36	0	frontend/src/app/core/services/Booking/booking-service.ts
+16	0	frontend/src/app/core/services/Booking/booking-store-service.spec.ts
+72	0	frontend/src/app/core/services/Booking/booking-store-service.ts
+21	4	frontend/src/app/core/services/admin.service.ts
+2	0	frontend/src/app/core/services/api/message.service.ts
+1	0	frontend/src/app/core/services/api/notification.service.ts
+38	6	frontend/src/app/core/services/auth.service.ts
+12	1	frontend/src/app/core/services/favoriteService/favorite-service.ts
+55	14	frontend/src/app/core/services/favoriteService/favorite-store-service.ts
+233	0	frontend/src/app/core/services/language.service.ts
+86	37	frontend/src/app/core/services/listings/listing.service.ts
+47	2	frontend/src/app/core/services/message-hub.ts
+28	17	frontend/src/app/core/services/message-store.ts
+53	2	frontend/src/app/core/services/notification-hub.ts
+83	19	frontend/src/app/core/services/notification-store.ts
+16	0	frontend/src/app/core/services/payment/payment-service.spec.ts
+35	0	frontend/src/app/core/services/payment/payment-service.ts
+671	0	frontend/src/app/features/about/about.css
+129	0	frontend/src/app/features/about/about.html
+60	0	frontend/src/app/features/about/about.ts
+57	34	frontend/src/app/features/admin/admin-dashboard/admin-dashboard.html
+1	1	frontend/src/app/features/admin/admin-dashboard/admin-dashboard.ts
+229	7	frontend/src/app/features/auth/login.css
+119	8	frontend/src/app/features/auth/login.html
+16	3	frontend/src/app/features/auth/login.ts
+244	7	frontend/src/app/features/auth/register.css
+51	12	frontend/src/app/features/auth/register.html
+11	2	frontend/src/app/features/auth/register.ts
+0	14	frontend/src/app/features/booking/booking-module.ts
+0	10	frontend/src/app/features/booking/booking-routing-module.ts
+0	34	frontend/src/app/features/booking/booking.ts
+13	0	frontend/src/app/features/booking/create-booking/create-booking.css
+95	0	frontend/src/app/features/booking/create-booking/create-booking.html
+23	0	frontend/src/app/features/booking/create-booking/create-booking.spec.ts
+153	0	frontend/src/app/features/booking/create-booking/create-booking.ts
+84	0	frontend/src/app/features/booking/host-bookings/host-bookings.css
+120	0	frontend/src/app/features/booking/host-bookings/host-bookings.html
+23	0	frontend/src/app/features/booking/host-bookings/host-bookings.spec.ts
+67	0	frontend/src/app/features/booking/host-bookings/host-bookings.ts
+63	0	frontend/src/app/features/booking/my-bookings/my-bookings.css
+103	0	frontend/src/app/features/booking/my-bookings/my-bookings.html
+23	0	frontend/src/app/features/booking/my-bookings/my-bookings.spec.ts
+74	0	frontend/src/app/features/booking/my-bookings/my-bookings.ts
+658	0	frontend/src/app/features/contact/contact.css
+163	0	frontend/src/app/features/contact/contact.html
+107	0	frontend/src/app/features/contact/contact.ts
+21	4	frontend/src/app/features/favorites/favorite-button/favorite-button.css
+16	2	frontend/src/app/features/favorites/favorite-button/favorite-button.ts
+574	191	frontend/src/app/features/favorites/favorite-page/favorite-page.css
+174	68	frontend/src/app/features/favorites/favorite-page/favorite-page.html
+139	16	frontend/src/app/features/favorites/favorite-page/favorite-page.ts
+26	1	frontend/src/app/features/home-page/hero-card/hero-card.css
+6	6	frontend/src/app/features/home-page/hero-card/hero-card.html
+2	1	frontend/src/app/features/home-page/hero-card/hero-card.ts
+56	1	frontend/src/app/features/home-page/home-listing-card/home-listing-card.css
+10	4	frontend/src/app/features/home-page/home-listing-card/home-listing-card.html
+21	6	frontend/src/app/features/home-page/home-listing-card/home-listing-card.ts
+676	21	frontend/src/app/features/home-page/home/home.css
+95	35	frontend/src/app/features/home-page/home/home.html
+130	4	frontend/src/app/features/home-page/home/home.ts
+66	2	frontend/src/app/features/home-page/stacked-cards/stacked-cards.css
+22	16	frontend/src/app/features/home-page/stacked-cards/stacked-cards.html
+2	1	frontend/src/app/features/home-page/stacked-cards/stacked-cards.ts
+291	47	frontend/src/app/features/listings-page/listing-card/listing-card.css
+60	30	frontend/src/app/features/listings-page/listing-card/listing-card.html
+27	3	frontend/src/app/features/listings-page/listing-card/listing-card.ts
+464	82	frontend/src/app/features/listings-page/listings/listings.css
+143	69	frontend/src/app/features/listings-page/listings/listings.html
+91	4	frontend/src/app/features/listings-page/listings/listings.ts
+450	115	frontend/src/app/features/listings/create-edit/listings-create-edit.css
+81	61	frontend/src/app/features/listings/create-edit/listings-create-edit.html
+920	42	frontend/src/app/features/listings/detail/listings-detail.css
+313	110	frontend/src/app/features/listings/detail/listings-detail.html
+56	30	frontend/src/app/features/listings/detail/listings-detail.ts
+513	99	frontend/src/app/features/listings/list/listing-list.css
+170	86	frontend/src/app/features/listings/list/listing-list.html
+38	3	frontend/src/app/features/listings/list/listing-list.ts
+1008	36	frontend/src/app/features/message/chat-window.css
+167	24	frontend/src/app/features/message/chat-window.html
+3	1	frontend/src/app/features/message/chat-window.ts
+406	127	frontend/src/app/features/notification/notification-window.css
+99	40	frontend/src/app/features/notification/notification-window.html
+12	4	frontend/src/app/features/notification/notification-window.ts
+555	0	frontend/src/app/features/onboarding/onboarding-walkthrough.css
+92	0	frontend/src/app/features/onboarding/onboarding-walkthrough.html
+118	0	frontend/src/app/features/onboarding/onboarding-walkthrough.ts
+0	29	frontend/src/app/features/payment/payment.ts
+10	0	frontend/src/app/features/payment/stripe-payment/stripe-payment.css
+42	0	frontend/src/app/features/payment/stripe-payment/stripe-payment.html
+23	0	frontend/src/app/features/payment/stripe-payment/stripe-payment.spec.ts
+249	0	frontend/src/app/features/payment/stripe-payment/stripe-payment.ts
+436	11	frontend/src/app/shared/components/footer/footer.css
+100	8	frontend/src/app/shared/components/footer/footer.html
+2	1	frontend/src/app/shared/components/footer/footer.ts
+278	0	frontend/src/app/shared/components/language-switcher/language-switcher.component.ts
+383	74	frontend/src/app/shared/components/navbar/navbar.css
+65	53	frontend/src/app/shared/components/navbar/navbar.html
+59	6	frontend/src/app/shared/components/navbar/navbar.ts
+544	0	frontend/src/assets/i18n/ar.json
+544	0	frontend/src/assets/i18n/en.json
+1	1	frontend/src/environments/environment.ts
+138	11	frontend/src/styles.css
+199	0	frontend/src/styles/rtl.css
+
+e9e06e0a4ab8ff6aa000af97caee24dd1fbdacf4|aaliyahhazem|aaliyahhazem@gmail.com|2025-12-05|Refactor and enhance email feature across backend  - Implemented email endpoint logic and validation - Updated EmailService to handle new scenarios and error cases - Refined EmailMappingService for cleaner data mapping - Streamlined integration between controllers and email services - Performed general cleanup and organization of email-related modules
+8	0	Backend/BLL/ModelVM/Auth/PasswordResetRequestVM.cs
+96	0	Backend/BLL/Services/Impelementation/BookingReminderService.cs
+102	88	Backend/BLL/Services/Impelementation/EmailService.cs
+7	0	Backend/DAL/Repo/Abstraction/IBookingRepository.cs
+33	0	Backend/DAL/Repo/Implementation/BookingRepository.cs
+96	8	Backend/PL/Controllers/BookingController.cs
+2	0	Backend/PL/Global/Global.cs
+2	0	Backend/PL/Program.cs
+7	8	Backend/PL/appsettings.json
+-	-	Backend/PL/wwwroot/listings/32b9c22d-a2bd-40ce-b4d8-7e7ff53c8976.jpg
+14	0	frontend/src/app/core/models/review.model.ts
+31	0	frontend/src/app/core/services/review/review.service.ts
+8	3	frontend/src/app/features/home-page/home-listing-card/home-listing-card.css
+4	4	frontend/src/app/features/home-page/home-listing-card/home-listing-card.html
+164	15	frontend/src/app/features/home-page/home/home.css
+59	20	frontend/src/app/features/home-page/home/home.html
+26	3	frontend/src/app/features/home-page/home/home.ts
+0	127	frontend/src/app/features/home-page/stacked-cards/stacked-cards.css
+0	45	frontend/src/app/features/home-page/stacked-cards/stacked-cards.html
+0	23	frontend/src/app/features/home-page/stacked-cards/stacked-cards.spec.ts
+0	13	frontend/src/app/features/home-page/stacked-cards/stacked-cards.ts
+115	293	frontend/src/app/features/listings/detail/listings-detail.html
+116	37	frontend/src/app/features/listings/detail/listings-detail.ts
+1	1	frontend/src/assets/i18n/ar.json
+1	1	frontend/src/assets/i18n/en.json
+
+a691488d687b87b621dd2b5765db0d6519b30ae3|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-05|Merge pull request #36 from AbdelrahmanMoohamed/master
+22801399a39c2378b53b767031e207e3d04e55be|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-12-05|no conflicts and  edit on approutes
+7	0	frontend/src/app/app.routes.ts
+
+fd7ba8677dd59ab50472813d7bd4c66e1fafaf7d|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-05|Merge pull request #35 from AbdelrahmanKhalid710/master
+3f6bb063e990770eef35a078b58aa154c60f7714|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-05|Merge pull request #33 from AbdelrahmanMoohamed/master
+bd12cbcbee49ac8f0875b6662b8a1bf1d213f990|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-12-05|edit on routes
+0	7	frontend/src/app/app.routes.ts
+
+c812285f44797cc1be073374f905421bf61cbc22|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-12-05|Merge branch 'master' of https://github.com/AbdelrahmanMoohamed/airbnb-clone
+5bbdae04827c3922b479a61c9a2f2eeb4e3c08e1|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-12-05|before merge
+6	6	frontend/src/app/app.routes.ts
+1	1	frontend/src/app/features/favorites/favorite-page/favorite-page.ts
+0	0	frontend/src/app/features/{listings => host-listings}/create-edit/listings-create-edit.css
+0	0	frontend/src/app/features/{listings => host-listings}/create-edit/listings-create-edit.html
+0	0	frontend/src/app/features/{listings => host-listings}/create-edit/listings-create-edit.spec.ts
+0	0	frontend/src/app/features/{listings => host-listings}/create-edit/listings-create-edit.ts
+0	0	frontend/src/app/features/{listings => host-listings}/detail/listings-detail.css
+0	0	frontend/src/app/features/{listings => host-listings}/detail/listings-detail.html
+0	0	frontend/src/app/features/{listings => host-listings}/detail/listings-detail.spec.ts
+0	0	frontend/src/app/features/{listings => host-listings}/detail/listings-detail.ts
+0	0	frontend/src/app/features/{listings/list => host-listings/listing-Host-View}/listing-list.css
+0	0	frontend/src/app/features/{listings/list => host-listings/listing-Host-View}/listing-list.html
+0	0	frontend/src/app/features/{listings/list => host-listings/listing-Host-View}/listing-list.spec.ts
+0	0	frontend/src/app/features/{listings/list => host-listings/listing-Host-View}/listing-list.ts
+0	0	frontend/src/app/features/{listings-page => listings-page-user-View}/listing-card/listing-card.css
+0	0	frontend/src/app/features/{listings-page => listings-page-user-View}/listing-card/listing-card.html
+0	0	frontend/src/app/features/{listings-page => listings-page-user-View}/listing-card/listing-card.spec.ts
+0	0	frontend/src/app/features/{listings-page => listings-page-user-View}/listing-card/listing-card.ts
+0	0	frontend/src/app/features/{listings-page => listings-page-user-View}/listings/listings.css
+0	0	frontend/src/app/features/{listings-page => listings-page-user-View}/listings/listings.html
+0	0	frontend/src/app/features/{listings-page => listings-page-user-View}/listings/listings.spec.ts
+0	0	frontend/src/app/features/{listings-page => listings-page-user-View}/listings/listings.ts
+0	421	frontend/src/app/features/listings/admin-listings/admin-listings.css
+0	126	frontend/src/app/features/listings/admin-listings/admin-listings.html
+0	101	frontend/src/app/features/listings/admin-listings/admin-listings.ts
+
+9a8624dd57858fb30a1af8113e7bc74f3e5b2287|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-12-05|Merge branch 'Abdelkarimo:master' into master
+8fef1df0ecb0bbb4a570e538569e16a63711f621|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-05|Fixing the Image not loading in the Favorite Page
+-	-	Backend/PL/wwwroot/listings/ec03fa81-e3af-4d30-87e7-4928077ef11f.jpg
+23	16	frontend/src/app/features/favorites/favorite-page/favorite-page.ts
+
+97ffb337f04e2561f1d7954ecc13386d65167e75|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-05|Merge pull request #34 from AbdelrahmanKhalid710/master
+28d389d397d068e1f3376843167b09a9c8634911|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-05|Enhanced Host Booking component and My Booking to fetch real data
+-	-	Backend/PL/wwwroot/listings/3eb3dfa1-b794-4380-93fc-165d0add91b0.jpg
+1	0	frontend/src/app/core/services/favoriteService/favorite-service.ts
+4	12	frontend/src/app/core/services/favoriteService/favorite-store-service.ts
+2	2	frontend/src/app/features/booking/host-bookings/host-bookings.ts
+64	15	frontend/src/app/features/booking/my-bookings/my-bookings.ts
+47	33	frontend/src/app/features/favorites/favorite-page/favorite-page.css
+0	8	frontend/src/app/features/favorites/favorite-page/favorite-page.html
+12	8	frontend/src/app/features/favorites/favorite-page/favorite-page.ts
+5	0	frontend/src/app/features/listings/detail/listings-detail.html
+13	4	frontend/src/app/features/listings/detail/listings-detail.ts
+
+955624f8a9eca8df140d1c7dd397c1d7c7773ac4|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-12-04|translate create-edit listing and edit for popup when delete listing
+46	47	frontend/src/app/features/listings/create-edit/listings-create-edit.html
+171	0	frontend/src/app/features/listings/list/listing-list.css
+30	0	frontend/src/app/features/listings/list/listing-list.html
+24	1	frontend/src/app/features/listings/list/listing-list.ts
+119	13	frontend/src/assets/i18n/ar.json
+43	15	frontend/src/assets/i18n/en.json
+
+59791b09b694bae14fcc6b9520936f96326e5836|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-12-04|edit on detail listing to view the host name in details and good view for images
+2	0	Backend/BLL/AutoMapper/DomainProfile.cs
+4	0	Backend/BLL/ModelVM/LIstingVM/ListingDetailVM.cs
+2	22	Backend/DAL/Entities/Listing.cs
+2	0	Backend/PL/Global/Global.cs
+3	32	frontend/package-lock.json
+3	0	frontend/src/app/core/models/listing.model.ts
+8	0	frontend/src/app/core/services/listings/listing.service.ts
+10	3	frontend/src/app/features/listings/detail/listings-detail.css
+1	1	frontend/src/app/features/listings/detail/listings-detail.html
+
+7d61144d06bee8a65df921fe4bb6971c1dee1979|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-04|Modified Booking Components Frontend to be compatible with the frontend theme and Identity
+1	1	Backend/BLL/Services/Impelementation/BookingService.cs
+-	-	Backend/PL/wwwroot/listings/85f95574-4864-4d9c-b6bc-8c67aafafb6a.jpg
+8	4	frontend/src/app/core/services/Booking/booking-service.ts
+42	2	frontend/src/app/features/booking/create-booking/create-booking.css
+23	36	frontend/src/app/features/booking/create-booking/create-booking.html
+44	52	frontend/src/app/features/booking/host-bookings/host-bookings.css
+14	5	frontend/src/app/features/booking/host-bookings/host-bookings.ts
+76	29	frontend/src/app/features/booking/my-bookings/my-bookings.css
+15	1	frontend/src/app/features/booking/my-bookings/my-bookings.ts
+42	4	frontend/src/app/features/payment/stripe-payment/stripe-payment.css
+
+f0fa18b57a60796350be86f32a465244294eda35|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-04|Merge branch 'master' of https://github.com/AbdelrahmanKhalid710/airbnb-clone
+746ba33af9103225d2d776e22c72a69f36526328|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-04|Handling Logs For better Performance
+4	72	Backend/BLL/Services/Impelementation/PaymentService.cs
+1	16	Backend/PL/Controllers/PaymentController.cs
+1	4	frontend/src/app/core/services/Booking/booking-service.ts
+4	14	frontend/src/app/features/booking/create-booking/create-booking.ts
+0	4	frontend/src/app/features/payment/stripe-payment/stripe-payment.html
+15	43	frontend/src/app/features/payment/stripe-payment/stripe-payment.ts
+
+fe3048b93b82b745532b0234da8fbc2266f66b8c|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-04|ReGrouped Commits to Sync the Fork : 1- Favorite Enhanced Frontend (navbar counter + Listing Favorited Counts) 2- Adding Two Recurring Background Jobs for deleting seen notifications and Messages that was created 30 days ago 3-Fixing the Booking and Payment Loading problems in the Frontend due to the return conflicts between Backend and Frontend Models
+12	18	Backend/.idea/.idea.Backend/.idea/workspace.xml
+1	1	Backend/BLL/ModelVM/Payment/CreatePaymentIntentVm.cs
+4	1	Backend/BLL/Services/Abstractions/IMessageService.cs
+3	1	Backend/BLL/Services/Abstractions/INotificationService.cs
+123	41	Backend/BLL/Services/Impelementation/BookingService.cs
+13	0	Backend/BLL/Services/Impelementation/MessageService.cs
+13	0	Backend/BLL/Services/Impelementation/NotificationService.cs
+303	109	Backend/BLL/Services/Impelementation/PaymentService.cs
+11	1	Backend/DAL/Entities/Booking.cs
+3	0	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+1	0	Backend/DAL/Repo/Abstraction/IMessageRepository.cs
+1	0	Backend/DAL/Repo/Abstraction/INotificationRepository.cs
+14	0	Backend/DAL/Repo/Implementation/MessageRepository.cs
+15	1	Backend/DAL/Repo/Implementation/NotificationRepository.cs
+29	0	Backend/PL/Background Jobs/MessageCleanupJob.cs
+30	0	Backend/PL/Background Jobs/NotificationCleanupJob.cs
+59	22	Backend/PL/Controllers/BookingController.cs
+26	11	Backend/PL/Controllers/PaymentController.cs
+3	0	Backend/PL/PL.csproj
+45	0	Backend/PL/Program.cs
+6	0	Backend/PL/appsettings.json
+1	1	frontend/src/app/core/models/booking.ts
+87	15	frontend/src/app/core/services/Booking/booking-service.ts
+106	63	frontend/src/app/features/booking/create-booking/create-booking.ts
+144	0	frontend/src/app/features/favorites/favorite-page/favorite-page.css
+24	117	frontend/src/app/features/favorites/favorite-page/favorite-page.html
+83	23	frontend/src/app/features/favorites/favorite-page/favorite-page.ts
+44	33	frontend/src/app/features/payment/stripe-payment/stripe-payment.html
+265	130	frontend/src/app/features/payment/stripe-payment/stripe-payment.ts
+8	0	frontend/src/app/shared/components/navbar/navbar.ts
+3	1	frontend/src/assets/i18n/ar.json
+3	1	frontend/src/assets/i18n/en.json
+
+83d0847ff124703550c0423ec22d2d0428f1e648|aaliyahhazem|aaliyahhazem@gmail.com|2025-12-04|Implemented Google authentication with firebase
+9	8	Backend/PL/appsettings.json
+41	0	et --soft 405322c
+122	184	frontend/src/app/core/services/auth-service.ts
+
+7a61c09317a5b2f86ee9f216d751a6b49922580f|aaliyahhazem|aaliyahhazem@gmail.com|2025-12-04|Fix push error
+26	26	Backend/PL/appsettings.json
+
+405322c84ca4219846a12af3b5731c7bb884a7d6|aaliyahhazem|aaliyahhazem@gmail.com|2025-12-03|Google Auth - Firebase
+26	26	Backend/PL/appsettings.json
+
+9887ccfb7fa721f510afe3a225655f47b27bd40a|aaliyahhazem|aaliyahhazem@gmail.com|2025-12-03|Merge branch 'master' of https://github.com/aaliyahhazem/airbnb-clone
+d878d8a1cbaad3fa126d9d3bec615ed0963d9236|aaliyahhazem|aaliyahhazem@gmail.com|2025-12-03|Implemented Google authentication with firebase
+2	0	Backend/BLL/BLL.csproj
+9	1	Backend/BLL/ModelVM/Auth/LoginResponseVM.cs
+8	1	Backend/BLL/Services/Abstractions/IIdentityService.cs
+155	104	Backend/BLL/Services/Impelementation/IdentityService.cs
+2	0	Backend/DAL/DAL.csproj
+82	4	Backend/PL/Controllers/AuthController.cs
+4	0	Backend/PL/Global/Global.cs
+2	0	Backend/PL/PL.csproj
+28	16	Backend/PL/Program.cs
+16	4	Backend/PL/appsettings.json
+1	1	frontend/src/app/core/services/auth-service.ts
+29	0	frontend/src/app/core/services/auth.service.ts
+126	19	frontend/src/app/features/auth/login.css
+15	23	frontend/src/app/features/auth/login.html
+23	0	frontend/src/app/features/auth/login.ts
+111	27	frontend/src/app/features/auth/register.css
+24	49	frontend/src/app/features/auth/register.html
+27	2	frontend/src/app/features/auth/register.ts
+18	0	frontend/src/app/firebase.config.ts
+1	1	frontend/src/environments/environment.prod.ts
+1	1	frontend/src/environments/environment.ts
+
+471c46f725c8a739595b8989b8ecfdd4e8340295|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|fix: resolve auth and preferences issues, add SSR hydration
+3	1	frontend/src/app/app.config.server.ts
+109	10	frontend/src/app/core/services/auth-service.ts
+42	9	frontend/src/app/core/services/auth.service.ts
+32	1	frontend/src/app/core/services/listings/listing.service.ts
+27	11	frontend/src/app/core/services/user-preferences/user-preferences.service.ts
+25	8	frontend/src/app/features/auth/authModels.ts
+55	0	frontend/src/app/features/listings-page/listing-card/listing-card.css
+7	0	frontend/src/app/features/listings-page/listing-card/listing-card.html
+15	1	frontend/src/app/features/listings-page/listing-card/listing-card.ts
+1	0	frontend/src/app/features/listings-page/listings/listings.html
+15	4	frontend/src/app/features/listings-page/listings/listings.ts
+4	1	frontend/src/app/shared/components/personalization-badge/personalization-badge.ts
+5	1	frontend/src/assets/i18n/ar.json
+5	1	frontend/src/assets/i18n/en.json
+-	-	frontend/src/assets/images/placeholder-listing.jpg
+
+c4e7d1cc47de38a735ef03189a7dd0883afc048c|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|fix: Resolve favorite toggle 400 error and enhance logging
+86	15	Backend/BLL/Services/Impelementation/FavoriteService.cs
+45	0	Backend/DAL/Scripts/FixFavoriteFK.sql
+182	0	Backend/FAVORITE_FIX_SUMMARY.md
+101	48	Backend/PL/Controllers/FavoriteController.cs
+11	0	Backend/PL/Program.cs
+22	0	Backend/start-backend-with-logging.ps1
+35	0	Backend/test_favorite.bat
+
+a55a4e8243680809ff7949fe81152d74ed783840|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|edit fix
+1	1	Backend/PL/appsettings.json
+-	-	Backend/PL/wwwroot/listings/5c54335c-7520-4579-ba13-39e041e90a08.png
+
+d4fe1e56b1a3ee9d6cfb6f14b5d200d5650b9924|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|feat(user-preferences): Implement guest preferences migration and enhance user preference handling
+1	1	frontend/src/app/core/models/map.model.ts
+15	1	frontend/src/app/core/services/auth-service.ts
+1	1	frontend/src/app/core/services/listings/listing.service.ts
+107	16	frontend/src/app/core/services/user-preferences/user-preferences.service.ts
+5	5	frontend/src/app/features/Map/map/map.ts
+1	1	frontend/src/app/shared/components/personalization-badge/personalization-badge.ts
+
+0a2befe691589cf9e1ee4d28047c9a4b9d903d0f|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|feat(personalization): Implement intelligent user preference tracking and personalized listing sorting
+272	0	PERSONALIZATION_ALGORITHM.md
+4	0	frontend/src/app/core/models/map.model.ts
+31	1	frontend/src/app/core/services/listings/listing.service.ts
+235	0	frontend/src/app/core/services/user-preferences/user-preferences.service.ts
+59	1	frontend/src/app/features/Map/map/map.ts
+6	2	frontend/src/app/features/home-page/home/home.ts
+1	0	frontend/src/app/features/listings-page/listings/listings.html
+28	3	frontend/src/app/features/listings-page/listings/listings.ts
+156	0	frontend/src/app/shared/components/personalization-badge/personalization-badge.ts
+5	1	frontend/src/assets/i18n/ar.json
+5	1	frontend/src/assets/i18n/en.json
+
+04d13e27841eab4ababb3371658dba0a5098ee83|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|fix(listings): Convert amenities filter to signal-based reactivity and add missing translations
+3	3	frontend/src/app/core/models/listing.model.ts
+4	4	frontend/src/app/features/listings-page/listings/listings.html
+29	27	frontend/src/app/features/listings-page/listings/listings.ts
+1	0	frontend/src/assets/i18n/ar.json
+1	0	frontend/src/assets/i18n/en.json
+
+0669baa420b619040b79dda82a93a1b7d5c760a9|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|feat: Implement comprehensive RAG chatbot service with advanced NLP capabilities and context-aware responses
+982	0	frontend/src/app/core/services/chat/rag-chat.service.ts
+
+15ba854cef03e7bc91c439fd476103b7a7e05b0d|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|Merge branch 'master' of https://github.com/Abdelkarimo/airbnb-clone
+52e74ee145611320f3e58604cd8c74f13bdbde2d|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|feat: Implement advanced AI-powered RAG chatbot with NLP-like semantic analysis
+348	0	RAG_CHAT_SETUP.md
+443	0	RAG_IMPLEMENTATION_COMPLETE.md
+328	0	RAG_QUICKSTART.md
+1	0	frontend/src/app/app.html
+2	1	frontend/src/app/app.ts
+47	0	frontend/src/app/core/models/chat.model.ts
+329	0	frontend/src/app/core/services/chat/rag-chat.service.spec.ts
+982	0	frontend/src/app/core/services/chat/rag-chat.service.ts
+4	4	frontend/src/app/features/favorites/favorite-page/favorite-page.html
+1	1	frontend/src/app/features/home-page/home/home.html
+8	3	frontend/src/app/features/home-page/home/home.ts
+8	8	frontend/src/app/features/listings-page/listing-card/listing-card.html
+5	5	frontend/src/app/features/listings-page/listings/listings.ts
+489	0	frontend/src/app/shared/components/broker-chat/broker-chat.css
+109	0	frontend/src/app/shared/components/broker-chat/broker-chat.html
+137	0	frontend/src/app/shared/components/broker-chat/broker-chat.ts
+11	0	frontend/src/assets/i18n/ar.json
+11	0	frontend/src/assets/i18n/en.json
+
+3e7e021d93eb37624b352352c399d950dd8c5ced|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|feat: Implement advanced AI-powered RAG chatbot with NLP-like semantic analysis
+348	0	RAG_CHAT_SETUP.md
+443	0	RAG_IMPLEMENTATION_COMPLETE.md
+328	0	RAG_QUICKSTART.md
+1	0	frontend/src/app/app.html
+2	1	frontend/src/app/app.ts
+47	0	frontend/src/app/core/models/chat.model.ts
+329	0	frontend/src/app/core/services/chat/rag-chat.service.spec.ts
+982	0	frontend/src/app/core/services/chat/rag-chat.service.ts
+1	1	frontend/src/app/features/favorites/favorite-page/favorite-page.html
+1	1	frontend/src/app/features/home-page/home/home.html
+8	3	frontend/src/app/features/home-page/home/home.ts
+7	7	frontend/src/app/features/listings-page/listing-card/listing-card.html
+2	2	frontend/src/app/features/listings-page/listings/listings.ts
+489	0	frontend/src/app/shared/components/broker-chat/broker-chat.css
+109	0	frontend/src/app/shared/components/broker-chat/broker-chat.html
+137	0	frontend/src/app/shared/components/broker-chat/broker-chat.ts
+11	0	frontend/src/assets/i18n/ar.json
+11	0	frontend/src/assets/i18n/en.json
+
+0a15bcf2ede2cb0abc57cf4032274432c5ae3f41|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|Merge branch 'master' of https://github.com/Abdelkarimo/airbnb-clone
+7907a8014ec9f2cb890aa50f006024cdd381a3b8|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|feat: Add broker speech bubble and dialogue to home page; update button link in listings
+1	1	frontend/src/app/features/Map/map/map.css
+2	2	frontend/src/app/features/Map/map/map.html
+76	1	frontend/src/app/features/home-page/home/home.css
+3	0	frontend/src/app/features/home-page/home/home.html
+1	1	frontend/src/app/features/home-page/home/home.ts
+1	1	frontend/src/app/features/listings-page/listings/listings.html
+1	0	frontend/src/assets/i18n/ar.json
+1	0	frontend/src/assets/i18n/en.json
+
+d2f24bf76b8a7573ef239ef61023847ccaf4d606|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|Merge pull request #32 from aaliyahhazem/master
+485f6cba1dc069d9eb6210d6053a03deb5dfbad7|aaliyahhazem|aaliyahhazem@gmail.com|2025-12-03|Merge branch 'Abdelkarimo:master' into master
+648887e8b124c3ac8c4a6a0b76cd071f4bc40267|aaliyahhazem|aaliyahhazem@gmail.com|2025-12-03|merge: fix map conflict
+3	3	frontend/src/app/features/listings-page/listings/listings.html
+14	10	frontend/src/app/features/listings-page/listings/listings.ts
+
+40d8871477b89031cd14658b740182ae9e842e44|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|feat: Enhance map page with Egyptian theme and complete i18n support
+788	216	frontend/src/app/features/Map/map/map.css
+148	49	frontend/src/app/features/Map/map/map.html
+48	15	frontend/src/app/features/Map/map/map.ts
+57	0	frontend/src/app/features/home-page/home/home.css
+4	0	frontend/src/app/features/home-page/home/home.html
+4	0	frontend/src/app/features/home-page/home/home.ts
+70	0	frontend/src/app/features/listings-page/listings/listings.css
+5	1	frontend/src/app/features/listings-page/listings/listings.html
+35	10	frontend/src/assets/i18n/ar.json
+25	0	frontend/src/assets/i18n/en.json
+
+3b745f4254f186de8fa856bb054f809e8b407598|aaliyahhazem|aaliyahhazem@gmail.com|2025-12-03|merge: resolve conflicts in listings filters, pagination, and create/edit components
+5104205cb3826493c9c8b15b25eba55eb06d1140|aaliyahhazem|aaliyahhazem@gmail.com|2025-12-03|fix(listings): repair search & filters logic, correct pagination behavior, and update create/edit component
+1	1	Backend/BLL/ModelVM/LIstingVM/ListingOverviewVM.cs
+1	1	Backend/PL/appsettings.json
+-	-	Backend/PL/wwwroot/listings/045d3938-4351-4d93-a39f-d829ac4f5824.jpg
+-	-	Backend/PL/wwwroot/listings/04900047-2d99-48fc-86ed-3b2ba9d7e9ca.png
+-	-	Backend/PL/wwwroot/listings/724d24b6-65c9-4ab1-9b25-3ac91ac049e1.png
+-	-	Backend/PL/wwwroot/listings/8c78284b-ee74-46ee-8f0f-e1e97c48ad72.jpg
+-	-	Backend/PL/wwwroot/listings/922a6705-ef19-42be-bc1d-2bef88914efb.jpg
+-	-	Backend/PL/wwwroot/listings/9a74707a-ad88-405d-9a7d-2fe0158d7171.jpg
+-	-	Backend/PL/wwwroot/listings/e408dd01-3b31-41d8-b864-0bce59b9ad48.jpg
+32	3	frontend/package-lock.json
+1	0	frontend/src/app/core/models/listing.model.ts
+5	8	frontend/src/app/features/listings-page/listing-card/listing-card.html
+122	48	frontend/src/app/features/listings-page/listings/listings.css
+65	55	frontend/src/app/features/listings-page/listings/listings.html
+91	74	frontend/src/app/features/listings-page/listings/listings.ts
+3	0	frontend/src/app/features/listings/create-edit/listings-create-edit.css
+159	306	frontend/src/app/features/listings/create-edit/listings-create-edit.html
+497	20	frontend/src/app/features/listings/detail/listings-detail.css
+329	225	frontend/src/app/features/listings/detail/listings-detail.html
+35	16	frontend/src/app/features/listings/list/listing-list.html
+15	22	frontend/src/app/features/listings/list/listing-list.ts
+2	3	frontend/src/app/features/listings/user-listings/user-listings.html
+12	0	frontend/src/environments/environment.prod.ts
+11	11	frontend/src/environments/environment.ts
+
+59256ad2367569c6d4c5ff6fa04bc16e9587058a|aaliyahhazem|aaliyahhazem@gmail.com|2025-12-03|Add multilingual support and redesign UI/UX
+97aa8f5568f0b882eae4d1206306e3edc56531a1|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|Merge pull request #31 from AbdelrahmanMoohamed/master
+b0fab553b61e93b1c27145388957d23184c2d2b7|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|Merge branch 'master' of https://github.com/Abdelkarimo/airbnb-clone
+2b18da9000ff5da9b4cd61fde04ad7e02cac38f8|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|Ensure username uniqueness and improve registration flow
+15	8	Backend/BLL/Services/Impelementation/IdentityService.cs
+4	6	Backend/PL/Controllers/AuthController.cs
+1	8	Backend/PL/Helpers/Seeder.cs
+
+dde76c767b892675f236f287a5f426f41cd0efdc|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|Merge pull request #30 from AbdelrahmanMoohamed/master
+e59b1d772a27bdb82ed0f6911379d5dadd6ffdde|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-12-03|edit on the map leaflet
+4	0	Backend/BLL/AutoMapper/ListingProfile.cs
+2	0	Backend/BLL/ModelVM/LIstingVM/ListingCreateVM.cs
+2	0	Backend/BLL/ModelVM/LIstingVM/ListingOverviewVM.cs
+1	0	Backend/BLL/Services/Impelementation/IdentityService.cs
+13	7	Backend/BLL/Services/Impelementation/MapService.cs
+5	0	Backend/DAL/Entities/Listing.cs
+4	1	frontend/src/app/core/models/map.model.ts
+22	14	frontend/src/app/core/services/map/map.ts
+547	14	frontend/src/app/features/Map/map/map.css
+107	5	frontend/src/app/features/Map/map/map.html
+77	22	frontend/src/app/features/Map/map/map.ts
+8	0	frontend/src/app/features/listings-page/listings/listings.html
+4	0	frontend/src/app/features/listings-page/listings/listings.ts
+
+657be30e9b942f1f411571f8b3c0633108ef6f0b|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-12-03|Merge branch 'master' of https://github.com/AbdelrahmanMoohamed/airbnb-clone
+74b515a86b83371f059442fc5b685d7bfdacfc05|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|fix: Clean up whitespace in login and registration forms for improved readability
+14	14	frontend/src/app/features/auth/login.html
+8	8	frontend/src/app/features/auth/login.ts
+30	30	frontend/src/app/features/auth/register.html
+3	3	frontend/src/app/features/auth/register.ts
+
+cfe7649d11e668f3362a1e9a70882be3b16e1037|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-03|feat: Enhance authentication system with comprehensive validation, error handling, and multilingual support
+1	1	frontend/src/app/core/services/message-store.ts
+134	0	frontend/src/app/features/auth/login.css
+51	6	frontend/src/app/features/auth/login.html
+101	11	frontend/src/app/features/auth/login.ts
+134	0	frontend/src/app/features/auth/register.css
+100	15	frontend/src/app/features/auth/register.html
+149	12	frontend/src/app/features/auth/register.ts
+2	2	frontend/src/app/shared/components/navbar/navbar.html
+19	4	frontend/src/assets/i18n/ar.json
+18	3	frontend/src/assets/i18n/en.json
+
+7ac10e0dd206fe7c3bfd948523ac7cf6fe1d6001|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-12-01|Merge branch 'master' of https://github.com/AbdelrahmanMoohamed/airbnb-clone
+1c2bc9f14c71ce36fcd64ab3316c72937a4c9d91|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-12-01|befor merge
+0	2	frontend/src/app/app.routes.ts
+0	141	frontend/src/app/core/services/listings/listings.ts
+1	1	frontend/src/app/features/home-page/home-listing-card/home-listing-card.html
+3	3	frontend/src/app/features/listings-page/listing-card/listing-card.html
+45	45	frontend/src/app/features/listings/create-edit/listings-create-edit.html
+2	1	frontend/src/app/features/listings/create-edit/listings-create-edit.ts
+29	29	frontend/src/app/features/listings/list/listing-list.html
+2	1	frontend/src/app/features/listings/list/listing-list.ts
+0	225	frontend/src/app/features/listings/user-listings/user-listings.css
+0	80	frontend/src/app/features/listings/user-listings/user-listings.html
+0	93	frontend/src/app/features/listings/user-listings/user-listings.ts
+84	1	frontend/src/assets/i18n/ar.json
+84	1	frontend/src/assets/i18n/en.json
+
+2dc1eaac1df51c0953a2e70257aa48fa790a273b|aaliyahhazem|aaliyahhazem@gmail.com|2025-12-01|Update Host page and listings page and fix filters logic - update create-edit page
+-	-	Backend/PL/wwwroot/listings/1096f89d-abc9-4917-9d82-52a782228b65.jpg
+-	-	Backend/PL/wwwroot/listings/2eed0f66-e0ff-4c4d-adff-31bb4a641852.png
+-	-	Backend/PL/wwwroot/listings/396c29b9-e6a4-4f8e-99c5-ff0ffe634f00.jpg
+-	-	Backend/PL/wwwroot/listings/3f55c916-549c-4932-a107-08b1f28434ec.jpg
+-	-	Backend/PL/wwwroot/listings/5a8cac0c-b615-49f4-aff1-5a28a9bc15a5.jpg
+-	-	Backend/PL/wwwroot/listings/5b1d9302-5477-4a0f-8331-1d936739d91c.jpg
+-	-	Backend/PL/wwwroot/listings/9eca69e5-944b-4f4c-a389-55f3fedb113b.jpg
+-	-	Backend/PL/wwwroot/listings/b554a25b-814d-42bd-9c74-3b0053feb8d5.jpg
+-	-	Backend/PL/wwwroot/listings/d9c5eef3-03b5-433e-bb06-38209ab1d7f7.jpg
+-	-	Backend/PL/wwwroot/listings/df902ae7-c0b1-4e5d-95f4-914dffcbeca5.png
+-	-	Backend/PL/wwwroot/listings/df9da6ee-5024-43dd-b070-3a2320b19e7c.jpg
+-	-	Backend/PL/wwwroot/listings/ec209f66-61a9-462f-a02b-d25d93add924.jpg
+-	-	Backend/PL/wwwroot/listings/ffd96063-0204-4b8c-a6ff-2afe9ab2d1d3.jpg
+11	1	frontend/src/app/core/models/listing.model.ts
+33	1	frontend/src/app/features/listings-page/listing-card/listing-card.css
+18	10	frontend/src/app/features/listings-page/listing-card/listing-card.html
+124	9	frontend/src/app/features/listings-page/listings/listings.css
+29	34	frontend/src/app/features/listings-page/listings/listings.html
+52	23	frontend/src/app/features/listings-page/listings/listings.ts
+14	0	frontend/src/app/features/listings/create-edit/listings-create-edit.css
+87	174	frontend/src/app/features/listings/create-edit/listings-create-edit.html
+22	20	frontend/src/app/features/listings/create-edit/listings-create-edit.ts
+582	804	frontend/src/app/features/listings/detail/listings-detail.css
+290	147	frontend/src/app/features/listings/detail/listings-detail.html
+287	45	frontend/src/app/features/listings/list/listing-list.css
+109	75	frontend/src/app/features/listings/list/listing-list.html
+59	53	frontend/src/app/features/listings/list/listing-list.ts
+
+795905da3043c34b50eb173956c0fad518b829f8|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-01|Merge pull request #29 from AbdelrahmanKhalid710/master
+cf8a8688cdaa7e48f08a497eef48e2a5ebb98861|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-01|Enhance responsive design for chat window: adjust layout, padding, and input styles for various screen sizes
+225	1	frontend/src/app/features/message/chat-window.css
+
+ada0a3a1b08dff1280dfbbf0762c2d94ce00e8f8|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-01|Merge branch 'master' of https://github.com/AbdelrahmanKhalid710/airbnb-clone
+12e6cd15eb60c4a0368224080b79c1fc45fb646b|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-01|Add SweetAlert2 for confirmation dialogs and custom styling in favorites management
+11	0	frontend/package-lock.json
+1	0	frontend/package.json
+26	0	frontend/src/app/features/favorites/favorite-page/favorite-page.css
+45	3	frontend/src/app/features/favorites/favorite-page/favorite-page.ts
+
+ab12f04480ce858243262e692383ea5bc62f0cc8|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-01|Refactor favorite functionality: normalize toggle response, sync favorites on toggle, and enhance listing card integration
+12	1	frontend/src/app/core/services/favoriteService/favorite-service.ts
+7	0	frontend/src/app/core/services/favoriteService/favorite-store-service.ts
+3	13	frontend/src/app/features/favorites/favorite-page/favorite-page.html
+19	12	frontend/src/app/features/favorites/favorite-page/favorite-page.ts
+7	4	frontend/src/app/features/listings-page/listing-card/listing-card.html
+10	8	frontend/src/app/features/listings-page/listing-card/listing-card.ts
+5	1	frontend/src/app/features/listings-page/listings/listings.html
+17	0	frontend/src/app/features/listings-page/listings/listings.ts
+
+d7daa46e0a4ac58c879f88db4eed2ebdab63c506|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-01|Merge pull request #28 from AbdelrahmanMoohamed/master
+588d44f96cc48bbd607b6fa17bd8d106ef162d66|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-12-01|edit the home and the listing host and check if the user have any listing or no
+3	0	Backend/BLL/Services/Abstractions/IListingService.cs
+14	0	Backend/BLL/Services/Impelementation/ListingService.cs
+3	0	Backend/DAL/Repo/Abstraction/IListingRepository.cs
+15	0	Backend/DAL/Repo/Implementation/ListingRepository.cs
+17	0	Backend/PL/Controllers/ListingsController.cs
+-	-	Backend/PL/wwwroot/listings/32ab54bd-e186-4622-be41-37ec88e30eb4.jpg
+-	-	Backend/PL/wwwroot/listings/37805612-c55c-4617-aa69-dbcc74b6b69c.jpg
+12	1	frontend/src/app/core/services/listings/listing.service.ts
+68	0	frontend/src/app/features/home-page/home/home.css
+19	11	frontend/src/app/features/home-page/home/home.html
+106	6	frontend/src/app/features/home-page/home/home.ts
+81	1	frontend/src/app/features/listings-page/listings/listings.css
+11	0	frontend/src/app/features/listings-page/listings/listings.html
+490	143	frontend/src/app/features/listings/list/listing-list.css
+166	129	frontend/src/app/features/listings/list/listing-list.html
+2	0	frontend/src/assets/i18n/ar.json
+2	0	frontend/src/assets/i18n/en.json
+
+d079b1552d152000f7d3a4a3526c1d2b466ca49e|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-01|Merge branch 'master' of https://github.com/AbdelrahmanKhalid710/airbnb-clone
+5505914c47b6daeb25a1de595a683ccd5d3152fe|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-01|Merge pull request #27 from AbdelrahmanMoohamed/master
+8ab1d393789fc274db524084623d5e2fa88b0734|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-12-01|add priority for listing to show for the users
+fefded8dd52b7f65fbdaae0df81c485b3d64a591|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-01|Add client secret and payment intent ID to booking models and update booking flow
+2	0	Backend/BLL/ModelVM/Booking/GetBookingVM.cs
+2	2	Backend/BLL/ModelVM/Payment/CreatePaymentIntentVm.cs
+44	18	Backend/BLL/Services/Impelementation/BookingService.cs
+2	0	frontend/src/app/core/models/booking.ts
+37	76	frontend/src/app/features/booking/create-booking/create-booking.ts
+
+ef245120102df9a1ebd8fe9b9c85d723fd454ae7|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-01|Fixing the Create Intent Problem
+24	24	frontend/src/app/core/services/favoriteService/favorite-store-service.ts
+
+2c55375729177754bdf3df2097b213295a8cd2f6|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-12-01|Before merge
+10	2	Backend/BLL/AutoMapper/DomainProfile.cs
+7	1	Backend/BLL/ModelVM/LIstingVM/ListingDetailVM.cs
+5	1	Backend/BLL/ModelVM/LIstingVM/ListingOverviewVM.cs
+4	0	Backend/BLL/ModelVM/Response/Response.cs
+4	0	Backend/BLL/Services/Impelementation/BookingService.cs
+8	0	Backend/BLL/Services/Impelementation/FavoriteService.cs
+27	15	Backend/BLL/Services/Impelementation/ListingService.cs
+24	1	Backend/BLL/Services/Impelementation/ReviewService.cs
+73	3	Backend/DAL/Entities/Listing.cs
+12	0	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+6	0	Backend/DAL/ModelView/ListingFilterDto.cs
+8	0	Backend/DAL/Repo/Abstraction/IListingRepository.cs
+136	1	Backend/DAL/Repo/Implementation/ListingRepository.cs
+30	3	Backend/PL/Controllers/ListingsController.cs
+-	-	Backend/PL/wwwroot/listings/43c39375-9554-4868-9c04-4211eb7f62ea.jpg
+-	-	Backend/PL/wwwroot/listings/53a5ef91-6acd-4832-8999-71976ba46576.jpg
+-	-	Backend/PL/wwwroot/listings/636a3954-7e5f-4f57-9cd2-7f2cef0ed895.jpg
+-	-	Backend/PL/wwwroot/listings/99d619ad-8b4a-4637-9b89-4297a3de4e42.jpg
+-	-	Backend/PL/wwwroot/listings/9b066b34-8177-4c74-86b1-baf0ff61b823.jpg
+-	-	Backend/PL/wwwroot/listings/ced30885-1487-4175-9dd3-eedcb0d82a1e.jpg
+-	-	Backend/PL/wwwroot/listings/e0359967-d1fc-44e3-a4c2-706c4dbf2e18.jpg
+-	-	Backend/PL/wwwroot/listings/ffbdee7d-ba9a-42e2-95d5-b330ed0d4c67.jpg
+6	0	Backend/package-lock.json
+6	0	frontend/src/app/core/models/listing.model.ts
+72	41	frontend/src/app/core/services/listings/listing.service.ts
+28	0	frontend/src/app/features/home-page/home-listing-card/home-listing-card.css
+7	1	frontend/src/app/features/home-page/home-listing-card/home-listing-card.html
+19	5	frontend/src/app/features/home-page/home-listing-card/home-listing-card.ts
+31	13	frontend/src/app/features/home-page/home/home.html
+19	2	frontend/src/app/features/home-page/home/home.ts
+61	0	frontend/src/app/features/listings-page/listings/listings.css
+42	2	frontend/src/app/features/listings-page/listings/listings.html
+71	2	frontend/src/app/features/listings-page/listings/listings.ts
+4	2	frontend/src/app/features/listings/detail/listings-detail.html
+28	28	frontend/src/app/features/listings/detail/listings-detail.ts
+67	0	frontend/src/app/features/listings/list/listing-list.css
+47	0	frontend/src/app/features/listings/list/listing-list.html
+38	3	frontend/src/app/features/listings/list/listing-list.ts
+
+b4a95c3974ba82d48ce8499c91fe7fde60ebc8f5|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-01|feat: Enhance create listing page with new styling and button components
+140	0	frontend/src/app/features/home-page/home/home.css
+4	4	frontend/src/app/features/home-page/home/home.html
+2	2	frontend/src/app/features/home-page/home/home.ts
+450	115	frontend/src/app/features/listings/create-edit/listings-create-edit.css
+81	61	frontend/src/app/features/listings/create-edit/listings-create-edit.html
+
+823890be017e53e8a51697769c15508ee68e008a|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-01|feat: Add About and Contact pages with responsive design and form handling
+-	-	frontend/public/me.png
+4	0	frontend/src/app/app.routes.ts
+671	0	frontend/src/app/features/about/about.css
+129	0	frontend/src/app/features/about/about.html
+60	0	frontend/src/app/features/about/about.ts
+229	7	frontend/src/app/features/auth/login.css
+35	8	frontend/src/app/features/auth/login.html
+2	1	frontend/src/app/features/auth/login.ts
+244	7	frontend/src/app/features/auth/register.css
+51	12	frontend/src/app/features/auth/register.html
+2	1	frontend/src/app/features/auth/register.ts
+658	0	frontend/src/app/features/contact/contact.css
+163	0	frontend/src/app/features/contact/contact.html
+107	0	frontend/src/app/features/contact/contact.ts
+548	191	frontend/src/app/features/favorites/favorite-page/favorite-page.css
+168	81	frontend/src/app/features/favorites/favorite-page/favorite-page.html
+7	5	frontend/src/app/features/favorites/favorite-page/favorite-page.ts
+205	20	frontend/src/app/features/home-page/home/home.css
+8	8	frontend/src/app/features/home-page/home/home.html
+9	1	frontend/src/app/features/home-page/home/home.ts
+34	2	frontend/src/app/features/home-page/stacked-cards/stacked-cards.css
+9	3	frontend/src/app/features/home-page/stacked-cards/stacked-cards.html
+291	47	frontend/src/app/features/listings-page/listing-card/listing-card.css
+57	30	frontend/src/app/features/listings-page/listing-card/listing-card.html
+2	1	frontend/src/app/features/listings-page/listing-card/listing-card.ts
+384	82	frontend/src/app/features/listings-page/listings/listings.css
+127	68	frontend/src/app/features/listings-page/listings/listings.html
+3	2	frontend/src/app/features/listings-page/listings/listings.ts
+920	42	frontend/src/app/features/listings/detail/listings-detail.css
+313	110	frontend/src/app/features/listings/detail/listings-detail.html
+4	2	frontend/src/app/features/listings/detail/listings-detail.ts
+784	36	frontend/src/app/features/message/chat-window.css
+167	24	frontend/src/app/features/message/chat-window.html
+3	1	frontend/src/app/features/message/chat-window.ts
+389	141	frontend/src/app/features/notification/notification-window.css
+99	49	frontend/src/app/features/notification/notification-window.html
+2	1	frontend/src/app/features/notification/notification-window.ts
+420	127	frontend/src/app/features/onboarding/onboarding-walkthrough.css
+84	47	frontend/src/app/features/onboarding/onboarding-walkthrough.html
+4	4	frontend/src/app/features/onboarding/onboarding-walkthrough.ts
+436	11	frontend/src/app/shared/components/footer/footer.css
+100	8	frontend/src/app/shared/components/footer/footer.html
+2	1	frontend/src/app/shared/components/footer/footer.ts
+43	26	frontend/src/app/shared/components/language-switcher/language-switcher.component.ts
+80	29	frontend/src/app/shared/components/navbar/navbar.css
+7	7	frontend/src/app/shared/components/navbar/navbar.html
+10	0	frontend/src/app/shared/components/navbar/navbar.ts
+264	0	frontend/src/assets/i18n/ar.json
+265	1	frontend/src/assets/i18n/en.json
+3	3	frontend/src/styles.css
+
+3795e87cc01ee5d1b53ac91122c60cc148498cc9|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-01|Merge branch 'master' of https://github.com/AbdelrahmanKhalid710/airbnb-clone
+114741e7f6b0d583a0167bc25df386e9416118d1|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-01|using Logging
+2	0	Backend/BLL/Services/Impelementation/BookingService.cs
+2	0	Backend/BLL/Services/Impelementation/PaymentService.cs
+
+131d3f713db025c35a1bdbb5280fa6ca030bcf99|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-12-01|Staging Files
+4	0	Backend/BLL/Common/ModularBLL.cs
+1	3	Backend/BLL/Global/Global.cs
+25	0	Backend/BLL/ModelVM/Auth/LoginResponseVM.cs
+1	0	Backend/BLL/ModelVM/Auth/TokenRequestVM.cs
+1	1	Backend/BLL/ModelVM/Booking/CreateBookingVM.cs
+7	0	Backend/BLL/ModelVM/Favorite/FavoriteListingVM.cs
+4	0	Backend/BLL/ModelVM/Notification/CreateNotificationVM.cs
+7	3	Backend/BLL/ModelVM/Notification/GetNotificationVM.cs
+1	0	Backend/BLL/Services/Abstractions/IBookingService.cs
+4	3	Backend/BLL/Services/Abstractions/IIdentityService.cs
+7	0	Backend/BLL/Services/Abstractions/INotificationPublisher.cs
+2	2	Backend/BLL/Services/Abstractions/INotificationService.cs
+1	1	Backend/BLL/Services/Abstractions/ITokenService.cs
+77	5	Backend/BLL/Services/Impelementation/BookingService.cs
+118	16	Backend/BLL/Services/Impelementation/IdentityService.cs
+72	1	Backend/BLL/Services/Impelementation/ListingService.cs
+29	15	Backend/BLL/Services/Impelementation/NotificationService.cs
+81	21	Backend/BLL/Services/Impelementation/PaymentService.cs
+4	2	Backend/BLL/Services/Impelementation/TokenService.cs
+1	1	Backend/DAL/Configurations/BookingConfiguration.cs
+6	0	Backend/DAL/Configurations/NotificationConfiguration.cs
+5	0	Backend/DAL/Configurations/UserConfiguration.cs
+10	2	Backend/DAL/Entities/Notification.cs
+10	0	Backend/DAL/Entities/User.cs
+2	1	Backend/DAL/Enum/BookingStatus.cs
+14	1	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+2	2	Backend/DAL/ModelView/ListingFilterDto.cs
+2	1	Backend/DAL/Repo/Abstraction/INotificationRepository.cs
+1	1	Backend/DAL/Repo/Implementation/BookingRepository.cs
+11	3	Backend/DAL/Repo/Implementation/NotificationRepository.cs
+13	0	Backend/FixMigrations.cs
+45	5	Backend/PL/Controllers/AuthController.cs
+28	2	Backend/PL/Controllers/BookingController.cs
+19	4	Backend/PL/Controllers/NotificationController.cs
+20	5	Backend/PL/Controllers/PaymentController.cs
+1	0	Backend/PL/Global/Global.cs
+11	1	Backend/PL/Helpers/Seeder.cs
+23	9	Backend/PL/Hubs/NotificationHub.cs
+32	1	Backend/PL/Program.cs
+170	0	Backend/PL/Resources/SharedResources.ar.resx
+8	0	Backend/PL/Resources/SharedResources.cs
+170	0	Backend/PL/Resources/SharedResources.en-US.resx
+44	0	Backend/PL/Services/NotificationPublisher.cs
+1	1	Backend/PL/appsettings.json
+-	-	Backend/PL/wwwroot/listings/0b2a473e-e55d-4574-8b55-fd958a3b2b88.jpg
+-	-	Backend/PL/wwwroot/listings/630c5ed7-2099-4aeb-8c12-9ac5d7db39ba.png
+-	-	Backend/PL/wwwroot/listings/6ca2fde4-f299-40d0-8cfd-d2316485509f.jpg
+-	-	Backend/PL/wwwroot/listings/71d3abd7-7e0b-4479-add9-e622612b1f7e.jpg
+-	-	Backend/PL/wwwroot/listings/ac5b29cb-7c50-44ca-b042-36910a2a6a20.jpg
+-	-	Backend/PL/wwwroot/listings/da8e7b20-9230-402d-9e7f-bb532d5a37f4.png
+29	0	Backend/fix-migrations.sql
+1524	0	README.md
+0	119	frontend/BUTTONS_FIX_NEEDED.md
+0	59	frontend/README.md
+10	0	frontend/angular.json
+21	18	frontend/package-lock.json
+2	2	frontend/package.json
+20	5	frontend/src/app/app.config.ts
+33	5	frontend/src/app/app.routes.ts
+30	2	frontend/src/app/app.ts
+29	0	frontend/src/app/core/models/booking.ts
+62	0	frontend/src/app/core/models/favorite.ts
+1	1	frontend/src/app/core/models/listing.model.ts
+2	0	frontend/src/app/core/models/notification.ts
+25	0	frontend/src/app/core/models/payment.ts
+16	0	frontend/src/app/core/services/Booking/booking-service.spec.ts
+36	0	frontend/src/app/core/services/Booking/booking-service.ts
+16	0	frontend/src/app/core/services/Booking/booking-store-service.spec.ts
+72	0	frontend/src/app/core/services/Booking/booking-store-service.ts
+2	0	frontend/src/app/core/services/api/message.service.ts
+1	0	frontend/src/app/core/services/api/notification.service.ts
+38	6	frontend/src/app/core/services/auth.service.ts
+16	0	frontend/src/app/core/services/favoriteService/favorite-service.spec.ts
+70	0	frontend/src/app/core/services/favoriteService/favorite-service.ts
+16	0	frontend/src/app/core/services/favoriteService/favorite-store-service.spec.ts
+132	0	frontend/src/app/core/services/favoriteService/favorite-store-service.ts
+233	0	frontend/src/app/core/services/language.service.ts
+8	1	frontend/src/app/core/services/listings/listing.service.ts
+47	2	frontend/src/app/core/services/message-hub.ts
+28	17	frontend/src/app/core/services/message-store.ts
+53	2	frontend/src/app/core/services/notification-hub.ts
+83	19	frontend/src/app/core/services/notification-store.ts
+16	0	frontend/src/app/core/services/payment/payment-service.spec.ts
+35	0	frontend/src/app/core/services/payment/payment-service.ts
+14	2	frontend/src/app/features/auth/login.ts
+9	1	frontend/src/app/features/auth/register.ts
+0	14	frontend/src/app/features/booking/booking-module.ts
+0	10	frontend/src/app/features/booking/booking-routing-module.ts
+0	34	frontend/src/app/features/booking/booking.ts
+13	0	frontend/src/app/features/booking/create-booking/create-booking.css
+95	0	frontend/src/app/features/booking/create-booking/create-booking.html
+23	0	frontend/src/app/features/booking/create-booking/create-booking.spec.ts
+192	0	frontend/src/app/features/booking/create-booking/create-booking.ts
+84	0	frontend/src/app/features/booking/host-bookings/host-bookings.css
+120	0	frontend/src/app/features/booking/host-bookings/host-bookings.html
+23	0	frontend/src/app/features/booking/host-bookings/host-bookings.spec.ts
+67	0	frontend/src/app/features/booking/host-bookings/host-bookings.ts
+63	0	frontend/src/app/features/booking/my-bookings/my-bookings.css
+103	0	frontend/src/app/features/booking/my-bookings/my-bookings.html
+23	0	frontend/src/app/features/booking/my-bookings/my-bookings.spec.ts
+74	0	frontend/src/app/features/booking/my-bookings/my-bookings.ts
+63	0	frontend/src/app/features/favorites/favorite-button/favorite-button.css
+10	0	frontend/src/app/features/favorites/favorite-button/favorite-button.html
+23	0	frontend/src/app/features/favorites/favorite-button/favorite-button.spec.ts
+53	0	frontend/src/app/features/favorites/favorite-button/favorite-button.ts
+40	0	frontend/src/app/features/favorites/favorite-page/favorite-page.css
+55	0	frontend/src/app/features/favorites/favorite-page/favorite-page.html
+23	0	frontend/src/app/features/favorites/favorite-page/favorite-page.spec.ts
+175	0	frontend/src/app/features/favorites/favorite-page/favorite-page.ts
+26	1	frontend/src/app/features/home-page/hero-card/hero-card.css
+6	6	frontend/src/app/features/home-page/hero-card/hero-card.html
+2	1	frontend/src/app/features/home-page/hero-card/hero-card.ts
+28	1	frontend/src/app/features/home-page/home-listing-card/home-listing-card.css
+4	4	frontend/src/app/features/home-page/home-listing-card/home-listing-card.html
+2	1	frontend/src/app/features/home-page/home-listing-card/home-listing-card.ts
+25	1	frontend/src/app/features/home-page/home/home.css
+4	4	frontend/src/app/features/home-page/home/home.html
+2	1	frontend/src/app/features/home-page/home/home.ts
+32	0	frontend/src/app/features/home-page/stacked-cards/stacked-cards.css
+12	12	frontend/src/app/features/home-page/stacked-cards/stacked-cards.html
+2	1	frontend/src/app/features/home-page/stacked-cards/stacked-cards.ts
+14	5	frontend/src/app/features/listings-page/listing-card/listing-card.html
+24	3	frontend/src/app/features/listings-page/listing-card/listing-card.ts
+2	2	frontend/src/app/features/listings-page/listings/listings.html
+32	0	frontend/src/app/features/listings/detail/listings-detail.html
+27	3	frontend/src/app/features/listings/detail/listings-detail.ts
+5	5	frontend/src/app/features/listings/list/listing-list.html
+31	0	frontend/src/app/features/notification/notification-window.css
+9	0	frontend/src/app/features/notification/notification-window.html
+10	3	frontend/src/app/features/notification/notification-window.ts
+262	0	frontend/src/app/features/onboarding/onboarding-walkthrough.css
+55	0	frontend/src/app/features/onboarding/onboarding-walkthrough.html
+118	0	frontend/src/app/features/onboarding/onboarding-walkthrough.ts
+0	29	frontend/src/app/features/payment/payment.ts
+10	0	frontend/src/app/features/payment/stripe-payment/stripe-payment.css
+42	0	frontend/src/app/features/payment/stripe-payment/stripe-payment.html
+23	0	frontend/src/app/features/payment/stripe-payment/stripe-payment.spec.ts
+249	0	frontend/src/app/features/payment/stripe-payment/stripe-payment.ts
+261	0	frontend/src/app/shared/components/language-switcher/language-switcher.component.ts
+190	10	frontend/src/app/shared/components/navbar/navbar.css
+60	45	frontend/src/app/shared/components/navbar/navbar.html
+47	5	frontend/src/app/shared/components/navbar/navbar.ts
+278	0	frontend/src/assets/i18n/ar.json
+278	0	frontend/src/assets/i18n/en.json
+1	1	frontend/src/environments/environment.ts
+8	1	frontend/src/styles.css
+199	0	frontend/src/styles/rtl.css
+
+248e370b88ec6d20d7ab832e9d5ad9d3a25c41da|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-12-01|feat: Redesign frontend with 'The Broker | ╪º┘ä╪│┘à╪│╪º╪▒╪⌐' Egyptian theme
+220	0	frontend/BROKER_REDESIGN_GUIDE.md
+-	-	frontend/public/3.png
+-	-	frontend/public/bg1.png
+267	29	frontend/src/app/features/home-page/home/home.css
+89	37	frontend/src/app/features/home-page/home/home.html
+148	70	frontend/src/app/shared/components/navbar/navbar.css
+7	4	frontend/src/app/shared/components/navbar/navbar.html
+132	12	frontend/src/styles.css
+
+8f42c5bee58a2264e9217b07c5745bc9cb26e46f|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-30|Add comprehensive README for Airbnb Clone project with detailed architecture, features, and setup instructions
+-	-	Backend/PL/wwwroot/listings/630c5ed7-2099-4aeb-8c12-9ac5d7db39ba.png
+0	414	LOCALIZATION_IMPLEMENTATION.md
+0	215	ONBOARDING_SETUP.md
+1524	0	README.md
+0	119	frontend/BUTTONS_FIX_NEEDED.md
+0	59	frontend/README.md
+
+fb76d49db4afba0d1d9b4b89c388152035e0e905|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-30|Refactor code structure for improved readability and maintainability
+4	4	Backend/BLL/ModelVM/Notification/GetNotificationVM.cs
+7	0	Backend/BLL/Services/Abstractions/INotificationPublisher.cs
+2	2	Backend/BLL/Services/Abstractions/INotificationService.cs
+28	14	Backend/BLL/Services/Impelementation/NotificationService.cs
+1	1	Backend/DAL/Repo/Abstraction/INotificationRepository.cs
+3	3	Backend/DAL/Repo/Implementation/NotificationRepository.cs
+19	4	Backend/PL/Controllers/NotificationController.cs
+23	9	Backend/PL/Hubs/NotificationHub.cs
+3	0	Backend/PL/Program.cs
+44	0	Backend/PL/Services/NotificationPublisher.cs
+-	-	Backend/PL/wwwroot/listings/da8e7b20-9230-402d-9e7f-bb532d5a37f4.png
+5	0	frontend/src/app/core/services/notification-hub.ts
+59	17	frontend/src/app/core/services/notification-store.ts
+2	2	frontend/src/app/features/notification/notification-window.ts
+3	3	frontend/src/app/shared/components/navbar/navbar.ts
+
+790f8b892b367a80b268939827f15126ef7c8ad4|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-30|feat: Implement multilingual support with language switcher and RTL styles
+1	0	Backend/BLL/ModelVM/Auth/TokenRequestVM.cs
+4	0	Backend/BLL/ModelVM/Notification/CreateNotificationVM.cs
+4	0	Backend/BLL/ModelVM/Notification/GetNotificationVM.cs
+1	1	Backend/BLL/Services/Abstractions/IIdentityService.cs
+1	1	Backend/BLL/Services/Abstractions/ITokenService.cs
+29	1	Backend/BLL/Services/Impelementation/BookingService.cs
+58	8	Backend/BLL/Services/Impelementation/IdentityService.cs
+32	4	Backend/BLL/Services/Impelementation/ListingService.cs
+36	4	Backend/BLL/Services/Impelementation/PaymentService.cs
+4	2	Backend/BLL/Services/Impelementation/TokenService.cs
+6	0	Backend/DAL/Configurations/NotificationConfiguration.cs
+10	2	Backend/DAL/Entities/Notification.cs
+8	0	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+1	0	Backend/DAL/Repo/Abstraction/INotificationRepository.cs
+8	0	Backend/DAL/Repo/Implementation/NotificationRepository.cs
+13	0	Backend/FixMigrations.cs
+2	1	Backend/PL/Controllers/AuthController.cs
+1	0	Backend/PL/Global/Global.cs
+1	1	Backend/PL/Helpers/Seeder.cs
+29	1	Backend/PL/Program.cs
+170	0	Backend/PL/Resources/SharedResources.ar.resx
+8	0	Backend/PL/Resources/SharedResources.cs
+170	0	Backend/PL/Resources/SharedResources.en-US.resx
+29	0	Backend/fix-migrations.sql
+414	0	LOCALIZATION_IMPLEMENTATION.md
+10	0	frontend/angular.json
+24	49	frontend/package-lock.json
+2	2	frontend/package.json
+20	5	frontend/src/app/app.config.ts
+21	1	frontend/src/app/app.ts
+2	0	frontend/src/app/core/models/notification.ts
+2	0	frontend/src/app/core/services/api/message.service.ts
+1	0	frontend/src/app/core/services/api/notification.service.ts
+13	0	frontend/src/app/core/services/auth.service.ts
+233	0	frontend/src/app/core/services/language.service.ts
+47	2	frontend/src/app/core/services/message-hub.ts
+28	17	frontend/src/app/core/services/message-store.ts
+48	2	frontend/src/app/core/services/notification-hub.ts
+27	5	frontend/src/app/core/services/notification-store.ts
+26	1	frontend/src/app/features/home-page/hero-card/hero-card.css
+6	6	frontend/src/app/features/home-page/hero-card/hero-card.html
+2	1	frontend/src/app/features/home-page/hero-card/hero-card.ts
+28	1	frontend/src/app/features/home-page/home-listing-card/home-listing-card.css
+4	4	frontend/src/app/features/home-page/home-listing-card/home-listing-card.html
+2	1	frontend/src/app/features/home-page/home-listing-card/home-listing-card.ts
+25	1	frontend/src/app/features/home-page/home/home.css
+4	4	frontend/src/app/features/home-page/home/home.html
+2	1	frontend/src/app/features/home-page/home/home.ts
+32	0	frontend/src/app/features/home-page/stacked-cards/stacked-cards.css
+12	12	frontend/src/app/features/home-page/stacked-cards/stacked-cards.html
+2	1	frontend/src/app/features/home-page/stacked-cards/stacked-cards.ts
+2	2	frontend/src/app/features/listings-page/listings/listings.html
+4	4	frontend/src/app/features/listings/list/listing-list.html
+31	0	frontend/src/app/features/notification/notification-window.css
+9	0	frontend/src/app/features/notification/notification-window.html
+8	1	frontend/src/app/features/notification/notification-window.ts
+31	0	frontend/src/app/features/onboarding/onboarding-walkthrough.css
+6	6	frontend/src/app/features/onboarding/onboarding-walkthrough.html
+19	15	frontend/src/app/features/onboarding/onboarding-walkthrough.ts
+261	0	frontend/src/app/shared/components/language-switcher/language-switcher.component.ts
+190	10	frontend/src/app/shared/components/navbar/navbar.css
+54	45	frontend/src/app/shared/components/navbar/navbar.html
+37	4	frontend/src/app/shared/components/navbar/navbar.ts
+278	0	frontend/src/assets/i18n/ar.json
+278	0	frontend/src/assets/i18n/en.json
+8	1	frontend/src/styles.css
+199	0	frontend/src/styles/rtl.css
+
+b3d0c37ec05eb46208ccb1f81283c28e08df096a|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-30|Merge branch 'master' of https://github.com/Abdelkarimo/airbnb-clone
+d6178e08073c67ffc648291ed13e942901af41fe|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-30|Add notifications and system user; update dependencies
+1	1	Backend/BLL/ModelVM/Notification/GetNotificationVM.cs
+44	1	Backend/BLL/Services/Impelementation/ListingService.cs
+1	1	Backend/BLL/Services/Impelementation/NotificationService.cs
+1	1	Backend/BLL/Services/Impelementation/PaymentService.cs
+10	4	Backend/PL/Controllers/AuthController.cs
+10	0	Backend/PL/Helpers/Seeder.cs
+1	1	Backend/PL/appsettings.json
+
+6937ed7a6341335e10ca665fd5c6ade0a100e59a|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-30|Implement first-time user onboarding system with backend and frontend integration
+1	3	Backend/BLL/Global/Global.cs
+25	0	Backend/BLL/ModelVM/Auth/LoginResponseVM.cs
+3	2	Backend/BLL/Services/Abstractions/IIdentityService.cs
+60	8	Backend/BLL/Services/Impelementation/IdentityService.cs
+5	0	Backend/DAL/Configurations/UserConfiguration.cs
+10	0	Backend/DAL/Entities/User.cs
+5	0	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+17	0	Backend/PL/Controllers/AuthController.cs
+215	0	ONBOARDING_SETUP.md
+5	2	frontend/src/app/app.routes.ts
+25	6	frontend/src/app/core/services/auth.service.ts
+14	2	frontend/src/app/features/auth/login.ts
+9	1	frontend/src/app/features/auth/register.ts
+231	0	frontend/src/app/features/onboarding/onboarding-walkthrough.css
+55	0	frontend/src/app/features/onboarding/onboarding-walkthrough.html
+114	0	frontend/src/app/features/onboarding/onboarding-walkthrough.ts
+
+173be32bf6879e7eb5c954566d39366e19ceab51|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-28|Merge pull request #26 from aaliyahhazem/master
+44922fe6fe2b1390c58dec1572783b5fbcf8cf4e|AbdelrahmanMoohamed|abdelrahmanhamed559@gmail.com|2025-11-28|Merging Latest Updates
+0487ded1795128028ef914a5f5c75352bc6ff78f|AbdelrahmanMoohamed|abdelrahmanhamed559@gmail.com|2025-11-28|fix merges
+-	-	Backend/PL/wwwroot/listings/0b2a473e-e55d-4574-8b55-fd958a3b2b88.jpg
+-	-	Backend/PL/wwwroot/listings/6ca2fde4-f299-40d0-8cfd-d2316485509f.jpg
+-	-	Backend/PL/wwwroot/listings/71d3abd7-7e0b-4479-add9-e622612b1f7e.jpg
+-	-	Backend/PL/wwwroot/listings/ac5b29cb-7c50-44ca-b042-36910a2a6a20.jpg
+35	71	frontend/src/app/features/listings/create-edit/listings-create-edit.ts
+2	2	frontend/src/app/features/listings/list/listing-list.html
+
+9cd44a69f4e230d4e9c9047d26ce208e33cbb6b4|AbdelrahmanMoohamed|abdelrahmanhamed559@gmail.com|2025-11-28|sync latest updates
+7	0	Backend/BLL/AutoMapper/DomainProfile.cs
+27	0	Backend/BLL/AutoMapper/FavoriteProfile.cs
+0	5	Backend/BLL/BLL.csproj
+5	0	Backend/BLL/Common/ModularBLL.cs
+15	0	Backend/BLL/ModelVM/Favorite/AddFavoriteVM.cs
+14	0	Backend/BLL/ModelVM/Favorite/BatchFavoriteCheckResultVM.cs
+13	0	Backend/BLL/ModelVM/Favorite/BatchFavoriteCheckVM.cs
+23	0	Backend/BLL/ModelVM/Favorite/FavoriteListingVM.cs
+16	0	Backend/BLL/ModelVM/Favorite/FavoriteStatsVM.cs
+17	0	Backend/BLL/ModelVM/Favorite/FavoriteVM.cs
+14	0	Backend/BLL/ModelVM/Favorite/IsFavoritedVM.cs
+19	0	Backend/BLL/ModelVM/Favorite/PaginatedFavoritesVM.cs
+15	0	Backend/BLL/ModelVM/Favorite/TopFavoritedListingVM.cs
+13	0	Backend/BLL/ModelVM/LIstingVM/HomeVM.cs
+2	0	Backend/BLL/ModelVM/LIstingVM/ListingDetailVM.cs
+1	1	Backend/BLL/ModelVM/LIstingVM/ListingOverviewVM.cs
+28	0	Backend/BLL/Services/Abstractions/IFavoriteService.cs
+3	2	Backend/BLL/Services/Abstractions/IListingService.cs
+6	3	Backend/BLL/Services/Abstractions/IMessageService.cs
+2	3	Backend/BLL/Services/Abstractions/INotificationService.cs
+276	0	Backend/BLL/Services/Impelementation/FavoriteService.cs
+20	1	Backend/BLL/Services/Impelementation/ListingService.cs
+44	0	Backend/BLL/Services/Impelementation/MessageService.cs
+14	0	Backend/BLL/Services/Impelementation/NotificationService.cs
+1	0	Backend/DAL/Common/ModularDAL.cs
+47	0	Backend/DAL/Configurations/FavoriteConfigurations.cs
+5	2	Backend/DAL/Configurations/ListingConfiguration.cs
+5	0	Backend/DAL/Configurations/UserConfiguration.cs
+1	0	Backend/DAL/Database/AppDbContext.cs
+40	0	Backend/DAL/Entities/Favorite.cs
+1	1	Backend/DAL/Entities/Listing.cs
+1	0	Backend/DAL/Entities/User.cs
+54	0	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+35	0	Backend/DAL/Repo/Abstraction/IFavoriteRepository.cs
+1	0	Backend/DAL/Repo/Abstraction/IGenericRepository.cs
+3	0	Backend/DAL/Repo/Abstraction/IMessageRepository.cs
+2	0	Backend/DAL/Repo/Abstraction/INotificationRepository.cs
+2	0	Backend/DAL/Repo/Abstraction/IUnitOfWork.cs
+106	0	Backend/DAL/Repo/Implementation/FavoriteRepository.cs
+4	1	Backend/DAL/Repo/Implementation/GenericRepository.cs
+1	1	Backend/DAL/Repo/Implementation/ListingRepository.cs
+23	0	Backend/DAL/Repo/Implementation/MessageRepository.cs
+13	0	Backend/DAL/Repo/Implementation/NotificationRepository.cs
+2	0	Backend/DAL/Repo/Implementation/UnitOfWork.cs
+0	0	Backend/PL/Controllers/CountsController.cs
+189	0	Backend/PL/Controllers/FavoriteController.cs
+31	0	Backend/PL/Controllers/MessageController.cs
+12	0	Backend/PL/Controllers/NotificationController.cs
+1	0	Backend/PL/Global/Global.cs
+131	0	Backend/PL/Helpers/Seeder.cs
+5	164	Backend/PL/Program.cs
+1	1	Backend/PL/appsettings.json
+-	-	Backend/PL/wwwroot/listings/02420db7-5b72-450e-9a2c-99c0afb879d7.jpg
+-	-	Backend/PL/wwwroot/listings/18bf58c2-18df-4706-9281-9c6dcf51faca.jpg
+-	-	Backend/PL/wwwroot/listings/1b3d1e9c-d571-4edf-a27a-098ed4efd4ed.jpg
+-	-	Backend/PL/wwwroot/listings/298f90a3-b8a4-4140-9eca-499db39ac86f.jpg
+-	-	Backend/PL/wwwroot/listings/2f7ff40e-a78d-4747-b972-9230b2cc583c.jpg
+-	-	Backend/PL/wwwroot/listings/59c755a3-ca66-403c-9332-c9671306ac1a.jpg
+-	-	Backend/PL/wwwroot/listings/5d5b3f52-4d8b-4db0-b7c7-886dec45cbab.jpg
+-	-	Backend/PL/wwwroot/listings/65c03703-7dbc-419c-a843-13abe56cde08.jpg
+-	-	Backend/PL/wwwroot/listings/6d47dfa0-4169-40a4-98b0-4c35178a2eef.jpg
+-	-	Backend/PL/wwwroot/listings/84f5d816-52b8-4549-8ac5-fe5cb6369a21.jpg
+-	-	Backend/PL/wwwroot/listings/9499353d-ebd2-4192-a4e6-53b9df924149.jpg
+-	-	Backend/PL/wwwroot/listings/ac65ac39-e205-4fe0-a43f-ef26250689b5.jpg
+-	-	Backend/PL/wwwroot/listings/c974ffbb-f8e8-4119-bb92-bbb9bf20fd54.jpg
+-	-	Backend/PL/wwwroot/listings/d630b441-3189-40f9-81a3-12667cf979f2.jpg
+-	-	Backend/PL/wwwroot/listings/d85f6717-d8b6-408c-be0b-edb1cd81c77f.jpg
+-	-	Backend/PL/wwwroot/listings/e45deb5f-08d3-4533-85c8-7da726fe843e.jpg
+-	-	Backend/PL/wwwroot/listings/ec238354-336c-431b-b700-8a4c00661b2b.jpg
+1	6	frontend/angular.json
+31	26	frontend/package-lock.json
+14	4	frontend/src/app/app.config.ts
+1	1	frontend/src/app/app.html
+21	16	frontend/src/app/app.routes.ts
+6	6	frontend/src/app/app.ts
+0	15	frontend/src/app/app/core/guards/auth.guard.ts
+0	120	frontend/src/app/app/core/services/auth.service.ts
+0	28	frontend/src/app/app/core/services/map/map.ts
+0	59	frontend/src/app/app/core/services/message-store.ts
+0	28	frontend/src/app/app/features/auth/login.ts
+0	11	frontend/src/app/app/features/home-page/home-listing-card/home-listing-card.ts
+0	14	frontend/src/app/app/features/home-page/home/home.ts
+0	65	frontend/src/app/app/features/listings-page/listing-card/listing-card.css
+0	52	frontend/src/app/app/features/listings-page/listing-card/listing-card.html
+0	11	frontend/src/app/app/features/listings-page/listing-card/listing-card.ts
+0	70	frontend/src/app/app/features/listings-page/listings/listings.css
+0	31	frontend/src/app/app/features/listings-page/listings/listings.html
+0	12	frontend/src/app/app/features/listings-page/listings/listings.ts
+0	254	frontend/src/app/app/features/listings/create-edit/listings-create-edit.ts
+0	368	frontend/src/app/app/features/listings/detail/listings-detail.css
+0	118	frontend/src/app/app/features/listings/detail/listings-detail.html
+0	93	frontend/src/app/app/features/listings/detail/listings-detail.ts
+0	3	frontend/src/app/app/features/listings/list/listing-list.css
+0	123	frontend/src/app/app/features/listings/list/listing-list.html
+0	0	frontend/src/app/{app => }/core/core-module.ts
+0	0	frontend/src/app/{app => }/core/guards/auth-guard.spec.ts
+0	0	frontend/src/app/{app => }/core/guards/auth-guard.ts
+30	0	frontend/src/app/core/guards/auth.guard.ts
+0	0	frontend/src/app/{app => }/core/interceptors/auth-interceptor.spec.ts
+0	0	frontend/src/app/{app => }/core/interceptors/auth-interceptor.ts
+1	0	frontend/src/app/{app => }/core/models/listing.model.ts
+0	0	frontend/src/app/{app => }/core/models/map.model.ts
+0	0	frontend/src/app/{app => }/core/models/message.ts
+0	0	frontend/src/app/{app => }/core/models/notification.ts
+0	0	frontend/src/app/{app => }/core/services/api/base.service.ts
+0	0	frontend/src/app/{app => }/core/services/api/message.service.ts
+0	0	frontend/src/app/{app => }/core/services/api/notification.service.ts
+0	0	frontend/src/app/{app => }/core/services/auth-service.spec.ts
+8	8	frontend/src/app/{app => }/core/services/auth-service.ts
+195	0	frontend/src/app/core/services/auth.service.ts
+0	0	frontend/src/app/{app => }/core/services/listings/listing-exists.guard.ts
+75	33	frontend/src/app/{app => }/core/services/listings/listing.service.ts
+0	0	frontend/src/app/{app => }/core/services/listings/listings.spec.ts
+0	0	frontend/src/app/{app => }/core/services/listings/listings.ts
+0	0	frontend/src/app/{app => }/core/services/map/map.spec.ts
+83	0	frontend/src/app/core/services/map/map.ts
+0	0	frontend/src/app/{app => }/core/services/message-hub.ts
+120	0	frontend/src/app/core/services/message-store.ts
+0	0	frontend/src/app/{app => }/core/services/notification-hub.spec.ts
+0	0	frontend/src/app/{app => }/core/services/notification-hub.ts
+0	0	frontend/src/app/{app => }/core/services/notification-store.spec.ts
+27	4	frontend/src/app/{app => }/core/services/notification-store.ts
+0	0	frontend/src/app/{app => }/features/Map/map/map.css
+0	0	frontend/src/app/{app => }/features/Map/map/map.html
+0	0	frontend/src/app/{app => }/features/Map/map/map.spec.ts
+19	3	frontend/src/app/{app => }/features/Map/map/map.ts
+0	0	frontend/src/app/{app => }/features/admin/admin-module.ts
+0	0	frontend/src/app/{app => }/features/admin/admin-routing-module.ts
+0	0	frontend/src/app/{app => }/features/admin/dashboard.ts
+0	0	frontend/src/app/{app => }/features/auth/auth-module.ts
+0	0	frontend/src/app/{app => }/features/auth/auth-routing-module.ts
+0	0	frontend/src/app/{app => }/features/auth/authModels.ts
+0	0	frontend/src/app/{app => }/features/auth/login.css
+0	0	frontend/src/app/{app => }/features/auth/login.html
+46	0	frontend/src/app/features/auth/login.ts
+0	0	frontend/src/app/{app => }/features/auth/register.css
+0	0	frontend/src/app/{app => }/features/auth/register.html
+0	0	frontend/src/app/{app => }/features/auth/register.ts
+0	0	frontend/src/app/{app => }/features/booking/booking-module.ts
+0	0	frontend/src/app/{app => }/features/booking/booking-routing-module.ts
+0	0	frontend/src/app/{app => }/features/booking/booking.ts
+0	0	frontend/src/app/{app => }/features/chat/chat-module.ts
+0	0	frontend/src/app/{app => }/features/chat/chat-routing-module.ts
+0	0	frontend/src/app/{app => }/features/home-page/hero-card/hero-card.css
+2	2	frontend/src/app/{app => }/features/home-page/hero-card/hero-card.html
+0	0	frontend/src/app/{app => }/features/home-page/hero-card/hero-card.spec.ts
+3	1	frontend/src/app/{app => }/features/home-page/hero-card/hero-card.ts
+0	0	frontend/src/app/{app => }/features/home-page/home-listing-card/home-listing-card.css
+10	11	frontend/src/app/{app => }/features/home-page/home-listing-card/home-listing-card.html
+36	0	frontend/src/app/features/home-page/home-listing-card/home-listing-card.ts
+0	0	frontend/src/app/{app => }/features/home-page/home-listing-card/listing-card.spec.ts
+0	0	frontend/src/app/{app => }/features/home-page/home/home.css
+12	18	frontend/src/app/{app => }/features/home-page/home/home.html
+0	0	frontend/src/app/{app => }/features/home-page/home/home.spec.ts
+58	0	frontend/src/app/features/home-page/home/home.ts
+0	0	frontend/src/app/{app => }/features/home-page/stacked-cards/stacked-cards.css
+1	1	frontend/src/app/{app => }/features/home-page/stacked-cards/stacked-cards.html
+0	0	frontend/src/app/{app => }/features/home-page/stacked-cards/stacked-cards.spec.ts
+1	0	frontend/src/app/{app => }/features/home-page/stacked-cards/stacked-cards.ts
+74	0	frontend/src/app/features/listings-page/listing-card/listing-card.css
+42	0	frontend/src/app/features/listings-page/listing-card/listing-card.html
+0	0	frontend/src/app/{app => }/features/listings-page/listing-card/listing-card.spec.ts
+36	0	frontend/src/app/features/listings-page/listing-card/listing-card.ts
+125	0	frontend/src/app/features/listings-page/listings/listings.css
+83	0	frontend/src/app/features/listings-page/listings/listings.html
+0	0	frontend/src/app/{app => }/features/listings-page/listings/listings.spec.ts
+183	0	frontend/src/app/features/listings-page/listings/listings.ts
+0	0	frontend/src/app/{app => }/features/listings/admin-listings/admin-listings.css
+0	0	frontend/src/app/{app => }/features/listings/admin-listings/admin-listings.html
+0	0	frontend/src/app/{app => }/features/listings/admin-listings/admin-listings.ts
+0	0	frontend/src/app/{app => }/features/listings/create-edit/listings-create-edit.css
+16	2	frontend/src/app/{app => }/features/listings/create-edit/listings-create-edit.html
+0	0	frontend/src/app/{app => }/features/listings/create-edit/listings-create-edit.spec.ts
+419	0	frontend/src/app/features/listings/create-edit/listings-create-edit.ts
+791	0	frontend/src/app/features/listings/detail/listings-detail.css
+235	0	frontend/src/app/features/listings/detail/listings-detail.html
+0	0	frontend/src/app/{app => }/features/listings/detail/listings-detail.spec.ts
+173	0	frontend/src/app/features/listings/detail/listings-detail.ts
+158	0	frontend/src/app/features/listings/list/listing-list.css
+101	0	frontend/src/app/features/listings/list/listing-list.html
+0	0	frontend/src/app/{app => }/features/listings/list/listing-list.spec.ts
+81	26	frontend/src/app/{app => }/features/listings/list/listing-list.ts
+0	0	frontend/src/app/{app => }/features/listings/user-listings/user-listings.css
+0	0	frontend/src/app/{app => }/features/listings/user-listings/user-listings.html
+0	0	frontend/src/app/{app => }/features/listings/user-listings/user-listings.ts
+0	0	frontend/src/app/{app => }/features/message/chat-window.css
+0	0	frontend/src/app/{app => }/features/message/chat-window.html
+2	2	frontend/src/app/{app => }/features/message/chat-window.ts
+252	0	frontend/src/app/features/notification/notification-window.css
+52	0	frontend/src/app/features/notification/notification-window.html
+87	0	frontend/src/app/features/notification/notification-window.ts
+1	1	frontend/src/app/{app => }/features/payment/payment.ts
+0	0	frontend/src/app/{app => }/shared/components/footer/footer.css
+0	0	frontend/src/app/{app => }/shared/components/footer/footer.html
+0	0	frontend/src/app/{app => }/shared/components/footer/footer.spec.ts
+0	0	frontend/src/app/{app => }/shared/components/footer/footer.ts
+133	68	frontend/src/app/{app => }/shared/components/navbar/navbar.css
+19	17	frontend/src/app/{app => }/shared/components/navbar/navbar.html
+0	0	frontend/src/app/{app => }/shared/components/navbar/navbar.spec.ts
+44	2	frontend/src/app/{app => }/shared/components/navbar/navbar.ts
+0	0	frontend/src/app/{app => }/shared/shared-module.ts
+0	1	frontend/src/main.ts
+
+992e63f490450782a1c4c8a3d81ed3116d2494f0|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-28|Merge pull request #25 from AbdelrahmanKhalid710/master
+e5911dd6f762ca1509f22d043510a1504ba74fae|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-11-28|ListingFilterDto Type And Description properties set to accept nulls
+2	2	Backend/DAL/ModelView/ListingFilterDto.cs
+1	1	frontend/src/app/features/listings/list/listing-list.html
+
+54f2a0a72a39414a7d5f3abb29bea847b05605ce|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-11-28|Merge branch 'master' of https://github.com/AbdelrahmanKhalid710/airbnb-clone
+f151b18340bbd5e68c97287e56eb0c906325cdaa|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-11-28|Added Favorite Icon to Navbar
+1	1	Backend/PL/appsettings.json
+3	31	frontend/package-lock.json
+8	2	frontend/src/app/shared/components/navbar/navbar.html
+10	1	frontend/src/app/shared/components/navbar/navbar.ts
+
+5df93c02974994c8c677b6b9a1238e4879fd9597|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-28|Merge pull request #24 from Abdallah-Assem/master
+4c1d01d80434b03ffb87d84fa7631f1248d5676d|AbdallahAssem|abdallahassem3@gmail.com|2025-11-28|Refactor code structure for improved readability and maintainability
+1	2	Backend/PL/appsettings.json
+-	-	Backend/PL/wwwroot/listings/0f2741bf-ca60-44d4-a5cd-c2ccd3149d7f.jpg
+-	-	Backend/PL/wwwroot/listings/14979b36-91aa-4f7f-9c95-b7fc19023a37.jpg
+2	2	frontend/src/app/core/models/listing.model.ts
+5	5	frontend/src/app/core/services/listings/listing.service.ts
+28	14	frontend/src/app/features/admin/admin-dashboard/admin-dashboard.ts
+16	37	frontend/src/app/features/listings/create-edit/listings-create-edit.ts
+1	1	frontend/src/app/features/listings/list/listing-list.html
+3	3	frontend/src/app/features/listings/list/listing-list.ts
+
+c40434c36ebf5abb4e2c786d0cce8e41166bc9c0|AbdallahAssem|abdallahassem3@gmail.com|2025-11-28|Enhance admin functionality with new features and UI
+64	0	Backend/BLL/ModelVM/Admin/AdminVMs.cs
+11	1	Backend/BLL/Services/Abstractions/IAdminService.cs
+302	1	Backend/BLL/Services/Impelementation/AdminService.cs
+44	7	Backend/PL/Controllers/AdminController.cs
+2	1	frontend/src/app/app.routes.ts
+447	0	frontend/src/app/core/services/admin.service.ts
+3	3	frontend/src/app/core/services/listings/listing.service.ts
+3	3	frontend/src/app/features/Map/map/map.html
+820	0	frontend/src/app/features/admin/admin-dashboard/admin-dashboard.css
+613	0	frontend/src/app/features/admin/admin-dashboard/admin-dashboard.html
+23	0	frontend/src/app/features/admin/admin-dashboard/admin-dashboard.spec.ts
+366	0	frontend/src/app/features/admin/admin-dashboard/admin-dashboard.ts
+37	16	frontend/src/app/features/listings/create-edit/listings-create-edit.ts
+428	0	frontend/src/app/features/listings/detail/listings-detail.css
+2	2	frontend/src/app/features/listings/user-listings/user-listings.ts
+
+f19f90cee99ccd7167a9ae445fc6752a04a40a17|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-28|Merge pull request #23 from AbdelrahmanMoohamed/master
+6f43cd74811e948e9685a87290216bb190b667c2|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-28|update name file MV
+1	1	Backend/BLL/AutoMapper/DomainProfile.cs
+0	0	Backend/DAL/{DTO => ModelView}/ConversationDto.cs
+3	1	Backend/DAL/{DTO => ModelView}/ListingFilterDto.cs
+-	-	Backend/PL/wwwroot/listings/3fd2b651-0beb-4eb1-981a-ea4b8506de1e.jpg
+-	-	Backend/PL/wwwroot/listings/f24bb9c7-8b5f-4666-8ffa-4d8dacb804b7.jpg
+
+f204b07ff1d8d3b52e3513919fd4468efb01f968|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-28|add destination,Type,bedrooms and bathrooms for listings
+10	2	Backend/BLL/AutoMapper/DomainProfile.cs
+11	1	Backend/BLL/ModelVM/LIstingVM/ListingCreateVM.cs
+6	0	Backend/BLL/ModelVM/LIstingVM/ListingDetailVM.cs
+11	1	Backend/BLL/ModelVM/LIstingVM/ListingOverviewVM.cs
+12	33	Backend/BLL/ModelVM/LIstingVM/ListingUpdateVM.cs
+39	12	Backend/BLL/Services/Impelementation/ListingService.cs
+14	0	Backend/DAL/Configurations/ListingConfiguration.cs
+23	1	Backend/DAL/Entities/Listing.cs
+16	0	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+20	11	Backend/DAL/Repo/Implementation/ListingRepository.cs
+4	0	Backend/PL/Helpers/Seeder.cs
+1	1	Backend/PL/appsettings.json
+-	-	Backend/PL/wwwroot/listings/0374785d-8a07-4f52-aa7d-14cd7f3289be.jpg
+-	-	Backend/PL/wwwroot/listings/03f68512-7cf6-4bcf-a215-024b1ef12401.jpg
+-	-	Backend/PL/wwwroot/listings/11c32aa8-bd00-4ee3-90d3-cf6ea65a6431.jpg
+-	-	Backend/PL/wwwroot/listings/144c6f00-312e-4734-9671-501b5393dc8c.jpg
+-	-	Backend/PL/wwwroot/listings/1cc5d319-ec04-40f2-9f26-9462314ef5cd.jpg
+-	-	Backend/PL/wwwroot/listings/20417bf0-a534-4862-a28f-0173810e3ae9.jpg
+-	-	Backend/PL/wwwroot/listings/27e00b79-3520-4d42-a9fa-ea9629bce13d.jpg
+-	-	Backend/PL/wwwroot/listings/52043c45-b215-4bb4-8e7b-0edb62ef5b3f.jpg
+-	-	Backend/PL/wwwroot/listings/58ebb29a-716b-4ed4-92d0-91a97166182b.jpg
+-	-	Backend/PL/wwwroot/listings/5f0d0080-c7c3-4391-a555-fa625fe14e00.jpg
+-	-	Backend/PL/wwwroot/listings/681f7644-76dc-4119-8d16-d201a05dfe3f.jpg
+-	-	Backend/PL/wwwroot/listings/6eb67355-d200-4213-ba13-c06563d4da0a.jpg
+-	-	Backend/PL/wwwroot/listings/71a88a9a-5b73-4717-a42a-fa47a2a8ed84.jpg
+-	-	Backend/PL/wwwroot/listings/7e87309d-b28f-483b-becf-85873b99a00a.jpg
+-	-	Backend/PL/wwwroot/listings/aaf7a33c-b5c9-49e3-bc68-290b388da4fa.jpg
+-	-	Backend/PL/wwwroot/listings/b9781488-7d71-4abd-b839-5c0b135a18af.jpg
+-	-	Backend/PL/wwwroot/listings/c27d6bd1-4488-4b2f-990f-544fb359028d.jpg
+-	-	Backend/PL/wwwroot/listings/c838ce10-6668-41e2-8df2-a41bcc33fdf2.jpg
+-	-	Backend/PL/wwwroot/listings/ca910c5a-1bf1-4ee2-9d51-437d56c3abd5.jpg
+-	-	Backend/PL/wwwroot/listings/cf5a3c6c-58d5-48ba-8eeb-16f604bd765d.jpg
+-	-	Backend/PL/wwwroot/listings/d5ad8ad9-4670-4c3f-9908-726d7650571e.jpg
+-	-	Backend/PL/wwwroot/listings/d7318510-fe76-4f56-bfb8-f73d88b86d55.jpg
+-	-	Backend/PL/wwwroot/listings/debd5803-a5d3-42e6-81fc-74af7165590b.jpg
+-	-	Backend/PL/wwwroot/listings/e271cd11-566b-4184-bccb-b4c4bd705c50.jpg
+-	-	Backend/PL/wwwroot/listings/ec3aeafe-d8a1-44ea-aef3-d5bf5ca58355.jpg
+-	-	Backend/PL/wwwroot/listings/ff205f48-33fa-4d6b-898b-64aff204c860.jpg
+3	31	frontend/package-lock.json
+1	1	frontend/src/app/app.routes.ts
+28	7	frontend/src/app/core/models/listing.model.ts
+153	89	frontend/src/app/core/services/listings/listing.service.ts
+5	1	frontend/src/app/features/listings-page/listing-card/listing-card.html
+4	4	frontend/src/app/features/listings/admin-listings/admin-listings.ts
+71	5	frontend/src/app/features/listings/create-edit/listings-create-edit.html
+56	74	frontend/src/app/features/listings/create-edit/listings-create-edit.ts
+0	1	frontend/src/app/features/listings/detail/listings-detail.css
+19	7	frontend/src/app/features/listings/detail/listings-detail.html
+2	2	frontend/src/app/features/listings/detail/listings-detail.ts
+4	2	frontend/src/app/features/listings/list/listing-list.html
+
+c67b51a506e22c6792a016ab21d7299c4debc5b5|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-11-28|`Added Favorite components and Favorite Service`
+3	1	frontend/src/app/app.routes.ts
+55	0	frontend/src/app/core/models/favorite.ts
+16	0	frontend/src/app/core/services/favoriteService/favorite-service.spec.ts
+70	0	frontend/src/app/core/services/favoriteService/favorite-service.ts
+16	0	frontend/src/app/core/services/favoriteService/favorite-store-service.spec.ts
+100	0	frontend/src/app/core/services/favoriteService/favorite-store-service.ts
+46	0	frontend/src/app/features/favorites/favorite-button/favorite-button.css
+10	0	frontend/src/app/features/favorites/favorite-button/favorite-button.html
+23	0	frontend/src/app/features/favorites/favorite-button/favorite-button.spec.ts
+40	0	frontend/src/app/features/favorites/favorite-button/favorite-button.ts
+345	0	frontend/src/app/features/favorites/favorite-page/favorite-page.css
+103	0	frontend/src/app/features/favorites/favorite-page/favorite-page.html
+23	0	frontend/src/app/features/favorites/favorite-page/favorite-page.spec.ts
+103	0	frontend/src/app/features/favorites/favorite-page/favorite-page.ts
+
+811c4346ccd2005eecf582a263cb22f247940099|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-27|Merge pull request #21 from AbdelrahmanMoohamed/master
+1bff7e46b225acd23d07d3ceab4f67fc5a429a59|aaliyahhazem|aaliyahhazem@gmail.com|2025-11-27|solve merge conflicts in navbar and app.config
+16ae0c3b608b78c6676666247363f8a55b79b249|aaliyahhazem|aaliyahhazem@gmail.com|2025-11-27|Editing ListingOverviewVm - update listing service - binding frontend with backend for listings page and host page
+7	0	Backend/BLL/AutoMapper/DomainProfile.cs
+13	0	Backend/BLL/ModelVM/LIstingVM/HomeVM.cs
+2	0	Backend/BLL/ModelVM/LIstingVM/ListingDetailVM.cs
+1	1	Backend/BLL/ModelVM/LIstingVM/ListingOverviewVM.cs
+3	2	Backend/BLL/Services/Abstractions/IListingService.cs
+20	1	Backend/BLL/Services/Impelementation/ListingService.cs
+1	1	Backend/DAL/Repo/Implementation/ListingRepository.cs
+1	1	Backend/PL/appsettings.json
+-	-	Backend/PL/wwwroot/listings/02420db7-5b72-450e-9a2c-99c0afb879d7.jpg
+-	-	Backend/PL/wwwroot/listings/18bf58c2-18df-4706-9281-9c6dcf51faca.jpg
+-	-	Backend/PL/wwwroot/listings/1b3d1e9c-d571-4edf-a27a-098ed4efd4ed.jpg
+-	-	Backend/PL/wwwroot/listings/298f90a3-b8a4-4140-9eca-499db39ac86f.jpg
+-	-	Backend/PL/wwwroot/listings/2f7ff40e-a78d-4747-b972-9230b2cc583c.jpg
+-	-	Backend/PL/wwwroot/listings/59c755a3-ca66-403c-9332-c9671306ac1a.jpg
+-	-	Backend/PL/wwwroot/listings/5d5b3f52-4d8b-4db0-b7c7-886dec45cbab.jpg
+-	-	Backend/PL/wwwroot/listings/65c03703-7dbc-419c-a843-13abe56cde08.jpg
+-	-	Backend/PL/wwwroot/listings/6d47dfa0-4169-40a4-98b0-4c35178a2eef.jpg
+-	-	Backend/PL/wwwroot/listings/84f5d816-52b8-4549-8ac5-fe5cb6369a21.jpg
+-	-	Backend/PL/wwwroot/listings/9499353d-ebd2-4192-a4e6-53b9df924149.jpg
+-	-	Backend/PL/wwwroot/listings/ac65ac39-e205-4fe0-a43f-ef26250689b5.jpg
+-	-	Backend/PL/wwwroot/listings/c974ffbb-f8e8-4119-bb92-bbb9bf20fd54.jpg
+-	-	Backend/PL/wwwroot/listings/d630b441-3189-40f9-81a3-12667cf979f2.jpg
+-	-	Backend/PL/wwwroot/listings/d85f6717-d8b6-408c-be0b-edb1cd81c77f.jpg
+-	-	Backend/PL/wwwroot/listings/e45deb5f-08d3-4533-85c8-7da726fe843e.jpg
+-	-	Backend/PL/wwwroot/listings/ec238354-336c-431b-b700-8a4c00661b2b.jpg
+31	26	frontend/package-lock.json
+2	1	frontend/src/app/app.config.ts
+3	0	frontend/src/app/app.routes.ts
+1	0	frontend/src/app/app/core/models/listing.model.ts
+75	33	frontend/src/app/app/core/services/listings/listing.service.ts
+55	0	frontend/src/app/app/core/services/map/map.ts
+19	3	frontend/src/app/app/features/Map/map/map.ts
+2	2	frontend/src/app/app/features/home-page/hero-card/hero-card.html
+3	1	frontend/src/app/app/features/home-page/hero-card/hero-card.ts
+10	11	frontend/src/app/app/features/home-page/home-listing-card/home-listing-card.html
+28	3	frontend/src/app/app/features/home-page/home-listing-card/home-listing-card.ts
+12	18	frontend/src/app/app/features/home-page/home/home.html
+47	3	frontend/src/app/app/features/home-page/home/home.ts
+1	0	frontend/src/app/app/features/home-page/stacked-cards/stacked-cards.ts
+46	37	frontend/src/app/app/features/listings-page/listing-card/listing-card.css
+31	41	frontend/src/app/app/features/listings-page/listing-card/listing-card.html
+29	4	frontend/src/app/app/features/listings-page/listing-card/listing-card.ts
+99	44	frontend/src/app/app/features/listings-page/listings/listings.css
+78	26	frontend/src/app/app/features/listings-page/listings/listings.html
+175	4	frontend/src/app/app/features/listings-page/listings/listings.ts
+16	2	frontend/src/app/app/features/listings/create-edit/listings-create-edit.html
+201	36	frontend/src/app/app/features/listings/create-edit/listings-create-edit.ts
+430	7	frontend/src/app/app/features/listings/detail/listings-detail.css
+146	29	frontend/src/app/app/features/listings/detail/listings-detail.html
+82	2	frontend/src/app/app/features/listings/detail/listings-detail.ts
+156	1	frontend/src/app/app/features/listings/list/listing-list.css
+80	102	frontend/src/app/app/features/listings/list/listing-list.html
+81	26	frontend/src/app/app/features/listings/list/listing-list.ts
+1	1	frontend/src/app/app/features/payment/payment.ts
+9	20	frontend/src/app/app/shared/components/navbar/navbar.css
+6	6	frontend/src/app/app/shared/components/navbar/navbar.html
+0	1	frontend/src/main.ts
+
+616bae904c1755adc18939a73e6d3bc4e19194b2|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-27|Merge pull request #20 from AbdelrahmanKhalid710/master
+ca803b31f1b1bcd47d713637de8c2762591bd3f1|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-11-27|Merge branch 'Abdelkarimo:master' into master
+84a5caf03f9db77df24329bade723e7e6cf135b4|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-11-27|"Removed User Id From View Model"
+0	1	Backend/BLL/ModelVM/Favorite/FavoriteVM.cs
+
+93e953a05c003f63838ec2990daf1241fd2d5eb0|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-27|Merge pull request #19 from AbdelrahmanKhalid710/master
+c6be716f61827f23b2e9a65e0f9cfcdd1e9678e2|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-11-27|Merge branch 'Abdelkarimo:master' into master
+ed6efe0aa780724bcc7280858ea8aa74133b43c3|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-27|Merge branch 'master' of https://github.com/Abdelkarimo/airbnb-clone
+747275a5bca8fa1e969d94a1a8109bb107c312a8|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-27|Enhance message/notification handling and seeding logic
+0	5	Backend/BLL/BLL.csproj
+6	3	Backend/BLL/Services/Abstractions/IMessageService.cs
+2	3	Backend/BLL/Services/Abstractions/INotificationService.cs
+44	0	Backend/BLL/Services/Impelementation/MessageService.cs
+14	0	Backend/BLL/Services/Impelementation/NotificationService.cs
+1	0	Backend/DAL/Repo/Abstraction/IGenericRepository.cs
+3	0	Backend/DAL/Repo/Abstraction/IMessageRepository.cs
+2	0	Backend/DAL/Repo/Abstraction/INotificationRepository.cs
+4	1	Backend/DAL/Repo/Implementation/GenericRepository.cs
+23	0	Backend/DAL/Repo/Implementation/MessageRepository.cs
+13	0	Backend/DAL/Repo/Implementation/NotificationRepository.cs
+0	0	Backend/PL/Controllers/CountsController.cs
+31	0	Backend/PL/Controllers/MessageController.cs
+12	0	Backend/PL/Controllers/NotificationController.cs
+1	0	Backend/PL/Global/Global.cs
+131	0	Backend/PL/Helpers/Seeder.cs
+1	163	Backend/PL/Program.cs
+
+646f5dec54224dbd2e1ea1eb5683a80ddc2319f2|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-27|Fix messages route not reloading on same URL navigation
+1	6	frontend/angular.json
+12	4	frontend/src/app/app.config.ts
+1	1	frontend/src/app/app.html
+18	16	frontend/src/app/app.routes.ts
+6	6	frontend/src/app/app.ts
+0	15	frontend/src/app/app/core/guards/auth.guard.ts
+0	120	frontend/src/app/app/core/services/auth.service.ts
+0	59	frontend/src/app/app/core/services/message-store.ts
+0	28	frontend/src/app/app/features/auth/login.ts
+0	0	frontend/src/app/{app => }/core/core-module.ts
+0	0	frontend/src/app/{app => }/core/guards/auth-guard.spec.ts
+0	0	frontend/src/app/{app => }/core/guards/auth-guard.ts
+30	0	frontend/src/app/core/guards/auth.guard.ts
+0	0	frontend/src/app/{app => }/core/interceptors/auth-interceptor.spec.ts
+0	0	frontend/src/app/{app => }/core/interceptors/auth-interceptor.ts
+0	0	frontend/src/app/{app => }/core/models/listing.model.ts
+0	0	frontend/src/app/{app => }/core/models/map.model.ts
+0	0	frontend/src/app/{app => }/core/models/message.ts
+0	0	frontend/src/app/{app => }/core/models/notification.ts
+0	0	frontend/src/app/{app => }/core/services/api/base.service.ts
+0	0	frontend/src/app/{app => }/core/services/api/message.service.ts
+0	0	frontend/src/app/{app => }/core/services/api/notification.service.ts
+0	0	frontend/src/app/{app => }/core/services/auth-service.spec.ts
+8	8	frontend/src/app/{app => }/core/services/auth-service.ts
+195	0	frontend/src/app/core/services/auth.service.ts
+0	0	frontend/src/app/{app => }/core/services/listings/listing-exists.guard.ts
+0	0	frontend/src/app/{app => }/core/services/listings/listing.service.ts
+0	0	frontend/src/app/{app => }/core/services/listings/listings.spec.ts
+0	0	frontend/src/app/{app => }/core/services/listings/listings.ts
+0	0	frontend/src/app/{app => }/core/services/map/map.spec.ts
+0	0	frontend/src/app/{app => }/core/services/map/map.ts
+0	0	frontend/src/app/{app => }/core/services/message-hub.ts
+120	0	frontend/src/app/core/services/message-store.ts
+0	0	frontend/src/app/{app => }/core/services/notification-hub.spec.ts
+0	0	frontend/src/app/{app => }/core/services/notification-hub.ts
+0	0	frontend/src/app/{app => }/core/services/notification-store.spec.ts
+27	4	frontend/src/app/{app => }/core/services/notification-store.ts
+0	0	frontend/src/app/{app => }/features/Map/map/map.css
+0	0	frontend/src/app/{app => }/features/Map/map/map.html
+0	0	frontend/src/app/{app => }/features/Map/map/map.spec.ts
+0	0	frontend/src/app/{app => }/features/Map/map/map.ts
+0	0	frontend/src/app/{app => }/features/admin/admin-module.ts
+0	0	frontend/src/app/{app => }/features/admin/admin-routing-module.ts
+0	0	frontend/src/app/{app => }/features/admin/dashboard.ts
+0	0	frontend/src/app/{app => }/features/auth/auth-module.ts
+0	0	frontend/src/app/{app => }/features/auth/auth-routing-module.ts
+0	0	frontend/src/app/{app => }/features/auth/authModels.ts
+0	0	frontend/src/app/{app => }/features/auth/login.css
+0	0	frontend/src/app/{app => }/features/auth/login.html
+46	0	frontend/src/app/features/auth/login.ts
+0	0	frontend/src/app/{app => }/features/auth/register.css
+0	0	frontend/src/app/{app => }/features/auth/register.html
+0	0	frontend/src/app/{app => }/features/auth/register.ts
+0	0	frontend/src/app/{app => }/features/booking/booking-module.ts
+0	0	frontend/src/app/{app => }/features/booking/booking-routing-module.ts
+0	0	frontend/src/app/{app => }/features/booking/booking.ts
+0	0	frontend/src/app/{app => }/features/chat/chat-module.ts
+0	0	frontend/src/app/{app => }/features/chat/chat-routing-module.ts
+0	0	frontend/src/app/{app => }/features/home-page/hero-card/hero-card.css
+0	0	frontend/src/app/{app => }/features/home-page/hero-card/hero-card.html
+0	0	frontend/src/app/{app => }/features/home-page/hero-card/hero-card.spec.ts
+0	0	frontend/src/app/{app => }/features/home-page/hero-card/hero-card.ts
+0	0	frontend/src/app/{app => }/features/home-page/home-listing-card/home-listing-card.css
+0	0	frontend/src/app/{app => }/features/home-page/home-listing-card/home-listing-card.html
+0	0	frontend/src/app/{app => }/features/home-page/home-listing-card/home-listing-card.ts
+0	0	frontend/src/app/{app => }/features/home-page/home-listing-card/listing-card.spec.ts
+0	0	frontend/src/app/{app => }/features/home-page/home/home.css
+0	0	frontend/src/app/{app => }/features/home-page/home/home.html
+0	0	frontend/src/app/{app => }/features/home-page/home/home.spec.ts
+0	0	frontend/src/app/{app => }/features/home-page/home/home.ts
+0	0	frontend/src/app/{app => }/features/home-page/stacked-cards/stacked-cards.css
+1	1	frontend/src/app/{app => }/features/home-page/stacked-cards/stacked-cards.html
+0	0	frontend/src/app/{app => }/features/home-page/stacked-cards/stacked-cards.spec.ts
+0	0	frontend/src/app/{app => }/features/home-page/stacked-cards/stacked-cards.ts
+0	0	frontend/src/app/{app => }/features/listings-page/listing-card/listing-card.css
+0	0	frontend/src/app/{app => }/features/listings-page/listing-card/listing-card.html
+0	0	frontend/src/app/{app => }/features/listings-page/listing-card/listing-card.spec.ts
+0	0	frontend/src/app/{app => }/features/listings-page/listing-card/listing-card.ts
+0	0	frontend/src/app/{app => }/features/listings-page/listings/listings.css
+0	0	frontend/src/app/{app => }/features/listings-page/listings/listings.html
+0	0	frontend/src/app/{app => }/features/listings-page/listings/listings.spec.ts
+0	0	frontend/src/app/{app => }/features/listings-page/listings/listings.ts
+0	0	frontend/src/app/{app => }/features/listings/admin-listings/admin-listings.css
+0	0	frontend/src/app/{app => }/features/listings/admin-listings/admin-listings.html
+0	0	frontend/src/app/{app => }/features/listings/admin-listings/admin-listings.ts
+0	0	frontend/src/app/{app => }/features/listings/create-edit/listings-create-edit.css
+0	0	frontend/src/app/{app => }/features/listings/create-edit/listings-create-edit.html
+0	0	frontend/src/app/{app => }/features/listings/create-edit/listings-create-edit.spec.ts
+0	0	frontend/src/app/{app => }/features/listings/create-edit/listings-create-edit.ts
+0	0	frontend/src/app/{app => }/features/listings/detail/listings-detail.css
+0	0	frontend/src/app/{app => }/features/listings/detail/listings-detail.html
+0	0	frontend/src/app/{app => }/features/listings/detail/listings-detail.spec.ts
+0	0	frontend/src/app/{app => }/features/listings/detail/listings-detail.ts
+0	0	frontend/src/app/{app => }/features/listings/list/listing-list.css
+0	0	frontend/src/app/{app => }/features/listings/list/listing-list.html
+0	0	frontend/src/app/{app => }/features/listings/list/listing-list.spec.ts
+0	0	frontend/src/app/{app => }/features/listings/list/listing-list.ts
+0	0	frontend/src/app/{app => }/features/listings/user-listings/user-listings.css
+0	0	frontend/src/app/{app => }/features/listings/user-listings/user-listings.html
+0	0	frontend/src/app/{app => }/features/listings/user-listings/user-listings.ts
+0	0	frontend/src/app/{app => }/features/message/chat-window.css
+0	0	frontend/src/app/{app => }/features/message/chat-window.html
+2	2	frontend/src/app/{app => }/features/message/chat-window.ts
+252	0	frontend/src/app/features/notification/notification-window.css
+52	0	frontend/src/app/features/notification/notification-window.html
+87	0	frontend/src/app/features/notification/notification-window.ts
+0	0	frontend/src/app/{app => }/features/payment/payment.ts
+0	0	frontend/src/app/{app => }/shared/components/footer/footer.css
+0	0	frontend/src/app/{app => }/shared/components/footer/footer.html
+0	0	frontend/src/app/{app => }/shared/components/footer/footer.spec.ts
+0	0	frontend/src/app/{app => }/shared/components/footer/footer.ts
+127	55	frontend/src/app/{app => }/shared/components/navbar/navbar.css
+16	14	frontend/src/app/{app => }/shared/components/navbar/navbar.html
+0	0	frontend/src/app/{app => }/shared/components/navbar/navbar.spec.ts
+44	2	frontend/src/app/{app => }/shared/components/navbar/navbar.ts
+0	0	frontend/src/app/{app => }/shared/shared-module.ts
+
+7f1fed2ca3d6efee516b32acb312ceb924adb5a8|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-11-26|Merge branch 'master' of https://github.com/AbdelrahmanKhalid710/airbnb-clone
+e75e78b1589183024bef20c26becc988e75d6b9a|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-11-26|The Complete Favorite Module Business Logic and Endpoints
+27	0	Backend/BLL/AutoMapper/FavoriteProfile.cs
+1	0	Backend/BLL/Common/ModularBLL.cs
+15	0	Backend/BLL/ModelVM/Favorite/AddFavoriteVM.cs
+14	0	Backend/BLL/ModelVM/Favorite/BatchFavoriteCheckResultVM.cs
+13	0	Backend/BLL/ModelVM/Favorite/BatchFavoriteCheckVM.cs
+23	0	Backend/BLL/ModelVM/Favorite/FavoriteListingVM.cs
+16	0	Backend/BLL/ModelVM/Favorite/FavoriteStatsVM.cs
+18	0	Backend/BLL/ModelVM/Favorite/FavoriteVM.cs
+14	0	Backend/BLL/ModelVM/Favorite/IsFavoritedVM.cs
+19	0	Backend/BLL/ModelVM/Favorite/PaginatedFavoritesVM.cs
+15	0	Backend/BLL/ModelVM/Favorite/TopFavoritedListingVM.cs
+28	0	Backend/BLL/Services/Abstractions/IFavoriteService.cs
+276	0	Backend/BLL/Services/Impelementation/FavoriteService.cs
+1	0	Backend/DAL/Common/ModularDAL.cs
+47	0	Backend/DAL/Configurations/FavoriteConfigurations.cs
+5	2	Backend/DAL/Configurations/ListingConfiguration.cs
+5	0	Backend/DAL/Configurations/UserConfiguration.cs
+1	0	Backend/DAL/Database/AppDbContext.cs
+40	0	Backend/DAL/Entities/Favorite.cs
+1	1	Backend/DAL/Entities/Listing.cs
+1	0	Backend/DAL/Entities/User.cs
+54	0	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+35	0	Backend/DAL/Repo/Abstraction/IFavoriteRepository.cs
+2	0	Backend/DAL/Repo/Abstraction/IUnitOfWork.cs
+106	0	Backend/DAL/Repo/Implementation/FavoriteRepository.cs
+2	0	Backend/DAL/Repo/Implementation/UnitOfWork.cs
+189	0	Backend/PL/Controllers/FavoriteController.cs
+4	1	Backend/PL/Program.cs
+
+10c7cce76ef9181cbe13176a2c9094c29514d71d|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-26|Merge pull request #17 from AbdelrahmanMoohamed/master
+0f5cfd8492353c0172945845b7e282085e26595a|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-26|fix error in create edit page
+34319305729103259c9f348ceff601252b52ad81|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-26|Add email functionality and improve admin interface
+1334c6ce01405500b6474c68114293e8c44e66ac|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-26|Merge pull request #16 from AbdelrahmanMoohamed/master
+dd7604fa9d23fc68361811b226ad0b3a0ea1ce21|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-26|Add email functionality and improve admin interface
+36e7bcbdaafe3e94d1d64bb041fc6d21441e1bdb|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-26|before merge
+2	0	Backend/BLL/Services/Impelementation/ListingService.cs
+1	0	Backend/PL/Controllers/ListingsController.cs
+1	1	Backend/PL/appsettings.json
+-	-	Backend/PL/wwwroot/listings/28b3bed7-686e-487c-8ea5-862d6fdf064f.jpg
+-	-	Backend/PL/wwwroot/listings/2a64c0ce-0ab8-48e5-9f5f-4626655419b6.jpg
+-	-	Backend/PL/wwwroot/listings/37249de8-2316-44d0-934c-f18386a87161.jpg
+-	-	Backend/PL/wwwroot/listings/6063c99f-6c74-4e88-a593-927dffb359a4.jpg
+-	-	Backend/PL/wwwroot/listings/87b72cd4-3172-4382-80cb-9ee64aecfb7d.png
+-	-	Backend/PL/wwwroot/listings/87bbb6c4-d75c-40c5-84c4-5b0d94faac56.jpg
+-	-	Backend/PL/wwwroot/listings/8ee7681d-b3ff-494e-8703-229e57504080.jpg
+-	-	Backend/PL/wwwroot/listings/9bca4f58-911e-45c3-93b9-397a55091c33.jpg
+-	-	Backend/PL/wwwroot/listings/b272b2fb-7953-4800-9914-4fdc115a4011.jpg
+-	-	Backend/PL/wwwroot/listings/e2727c44-8e01-4fb1-8ec7-b36e8e932dca.jpg
+-	-	Backend/PL/wwwroot/listings/f285ccbb-333b-40ba-adbd-ad60953a714b.jpg
+-	-	Backend/PL/wwwroot/listings/f2def976-3808-4099-8181-2e169374f0c6.jpg
+-	-	Backend/PL/wwwroot/listings/fbbca8c3-4640-4739-b970-b322999b8bc9.jpg
+119	0	frontend/BUTTONS_FIX_NEEDED.md
+3	3	frontend/src/app/app.routes.ts
+2	7	frontend/src/app/app.ts
+93	0	frontend/src/app/app/core/models/listing.model.ts
+32	0	frontend/src/app/app/core/models/map.model.ts
+31	0	frontend/src/app/app/core/services/listings/listing-exists.guard.ts
+202	0	frontend/src/app/app/core/services/listings/listing.service.ts
+15	0	frontend/src/app/app/core/services/listings/listings.spec.ts
+141	0	frontend/src/app/app/core/services/listings/listings.ts
+16	0	frontend/src/app/app/core/services/map/map.spec.ts
+28	0	frontend/src/app/app/core/services/map/map.ts
+25	0	frontend/src/app/app/features/Map/map/map.css
+7	0	frontend/src/app/app/features/Map/map/map.html
+23	0	frontend/src/app/app/features/Map/map/map.spec.ts
+151	0	frontend/src/app/app/features/Map/map/map.ts
+421	0	frontend/src/app/app/features/listings/admin-listings/admin-listings.css
+126	0	frontend/src/app/app/features/listings/admin-listings/admin-listings.html
+101	0	frontend/src/app/app/features/listings/admin-listings/admin-listings.ts
+3	2	frontend/src/app/app/features/listings/create-edit/listings-create-edit.ts
+6	2	frontend/src/app/app/features/listings/detail/listings-detail.ts
+225	0	frontend/src/app/app/features/listings/user-listings/user-listings.css
+80	0	frontend/src/app/app/features/listings/user-listings/user-listings.html
+93	0	frontend/src/app/app/features/listings/user-listings/user-listings.ts
+6	0	frontend/src/assets/default-listing.svg
+6	0	frontend/src/assets/images/default-listing.svg
+4	1	frontend/src/server.ts
+6	0	package-lock.json
+
+8131f00c1c5070a2133caa1ec86a012f8411186f|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-26|Merge pull request #15 from aaliyahhazem/master
+f9464f4dbd2a10f3b6ae64bd318cbc3ad8afef85|aaliyahhazem|aaliyahhazem@gmail.com|2025-11-26|feat: Add email view models and services for booking, payment, and notifications
+2	0	Backend/BLL/BLL.csproj
+10	1	Backend/BLL/Global/Global.cs
+13	0	Backend/BLL/ModelVM/Email/BookingConfirmationVM.cs
+12	0	Backend/BLL/ModelVM/Email/CancellationEmailVM.cs
+10	0	Backend/BLL/ModelVM/Email/CheckInReminderEmailVM.cs
+10	0	Backend/BLL/ModelVM/Email/CheckOutReminderEmailVM.cs
+12	0	Backend/BLL/ModelVM/Email/HostNewBooking.cs
+11	0	Backend/BLL/ModelVM/Email/PasswordResetEmailVM.cs
+11	0	Backend/BLL/ModelVM/Email/PaymentReceiptVM.cs
+13	0	Backend/BLL/ModelVM/Email/PayoutNotificationVM.cs
+14	0	Backend/BLL/Services/Abstractions/IEmailService.cs
+3	0	Backend/BLL/Services/Abstractions/IListingService.cs
+104	0	Backend/BLL/Services/Impelementation/EmailMappingService.cs
+173	0	Backend/BLL/Services/Impelementation/EmailService.cs
+27	0	Backend/BLL/Services/Impelementation/ListingService.cs
+17	0	Backend/PL/Controllers/ListingsController.cs
+9	1	Backend/PL/appsettings.json
+3	1	frontend/src/app/app.routes.ts
+13	11	frontend/src/app/app/features/home-page/hero-card/hero-card.css
+6	6	frontend/src/app/app/features/home-page/hero-card/hero-card.html
+66	0	frontend/src/app/app/features/home-page/home-listing-card/home-listing-card.css
+34	0	frontend/src/app/app/features/home-page/home-listing-card/home-listing-card.html
+11	0	frontend/src/app/app/features/home-page/home-listing-card/home-listing-card.ts
+23	0	frontend/src/app/app/features/home-page/home-listing-card/listing-card.spec.ts
+35	3	frontend/src/app/app/features/home-page/home/home.css
+62	5	frontend/src/app/app/features/home-page/home/home.html
+4	3	frontend/src/app/app/features/home-page/home/home.ts
+0	69	frontend/src/app/app/features/home-page/listing-card/listing-card.css
+0	42	frontend/src/app/app/features/home-page/listing-card/listing-card.html
+63	0	frontend/src/app/app/features/home-page/stacked-cards/stacked-cards.css
+39	0	frontend/src/app/app/features/home-page/stacked-cards/stacked-cards.html
+23	0	frontend/src/app/app/features/home-page/stacked-cards/stacked-cards.spec.ts
+11	0	frontend/src/app/app/features/home-page/stacked-cards/stacked-cards.ts
+65	0	frontend/src/app/app/features/listings-page/listing-card/listing-card.css
+52	0	frontend/src/app/app/features/listings-page/listing-card/listing-card.html
+1	1	frontend/src/app/app/features/{home-page => listings-page}/listing-card/listing-card.spec.ts
+0	0	frontend/src/app/app/features/{home-page => listings-page}/listing-card/listing-card.ts
+70	0	frontend/src/app/app/features/listings-page/listings/listings.css
+31	0	frontend/src/app/app/features/listings-page/listings/listings.html
+23	0	frontend/src/app/app/features/listings-page/listings/listings.spec.ts
+12	0	frontend/src/app/app/features/listings-page/listings/listings.ts
+144	0	frontend/src/app/app/features/listings/create-edit/listings-create-edit.css
+63	62	frontend/src/app/app/features/listings/create-edit/listings-create-edit.html
+38	61	frontend/src/app/app/features/listings/create-edit/listings-create-edit.ts
+3	3	frontend/src/app/app/features/listings/list/listing-list.html
+3	3	frontend/src/app/app/shared/components/footer/footer.css
+252	47	frontend/src/app/app/shared/components/navbar/navbar.css
+96	68	frontend/src/app/app/shared/components/navbar/navbar.html
+1	1	frontend/src/styles.css
+
+858018a30671a22d4f3a71cd2524541f371d4915|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-25|chore: resolve conflicts (app.routes.ts, app.ts) after pull
+30	30	Backend/BLL/AutoMapper/DomainProfile.cs
+1	0	Backend/BLL/ModelVM/LIstingVM/ListingOverviewVM.cs
+1	1	Backend/BLL/Services/Impelementation/ListingService.cs
+43	25	Backend/BLL/Services/Impelementation/MapService.cs
+4	1	Backend/DAL/Common/ModularDataAccessLayer.cs
+3	2	Backend/DAL/Repo/Implementation/MapRepo.cs
+27	13	Backend/PL/Controllers/MapController.cs
+14	9	Backend/PL/Program.cs
+3	1	frontend/angular.json
+274	252	frontend/package-lock.json
+3	1	frontend/package.json
+20	6	frontend/src/app/app.routes.ts
+34	19	frontend/src/app/app.ts
+374	0	frontend/src/app/app/features/listings/create-edit/listings-create-edit.css
+213	63	frontend/src/app/app/features/listings/create-edit/listings-create-edit.html
+203	50	frontend/src/app/app/features/listings/create-edit/listings-create-edit.ts
+368	0	frontend/src/app/app/features/listings/detail/listings-detail.css
+104	31	frontend/src/app/app/features/listings/detail/listings-detail.html
+70	12	frontend/src/app/app/features/listings/detail/listings-detail.ts
+64	47	frontend/src/app/app/features/listings/list/listing-list.html
+82	26	frontend/src/app/app/features/listings/list/listing-list.ts
+0	10	frontend/src/app/app/features/listings/models/listing.model.ts
+0	18	frontend/src/app/app/features/listings/services/listing-exists.guard.ts
+0	15	frontend/src/app/app/features/listings/services/listings.spec.ts
+0	131	frontend/src/app/app/features/listings/services/listings.ts
+
+28a84227ac6291da57acbfec716a0e4a47b93be2|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-24|Merge pull request #14 from AbdelrahmanKhalid710/master
+0b19bd1f0443cb7a4173e026087b291eef019d18|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-24|Merge aaliyahhazem's email service and frontend updates with messaging/notification features
+84ce32be10a2358e90fde1278115120ce27b4ec1|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-11-24|Using Stripe Test Keys
+5	0	Backend/PL/appsettings.json
+
+56e879737935f522be26d8968d575071a230e4ea|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-11-24|Removed Stripe Keys and The Review and File Conflicts between Stripe package and System.IO
+1	1	Backend/BLL/AutoMapper/DomainProfile.cs
+1	1	Backend/BLL/Helper/Upload.cs
+0	4	Backend/PL/appsettings.json
+
+60ec5ba53e9db6d30c2485e43b85d6a6304b43ae|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-11-24|Removed Stripe Keys
+1	3	Backend/PL/appsettings.json
+
+869d6254f3de2b38f1c9273a84cd31dd976ab5c2|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-11-24|Integrated Stripe as third party payment gateway with the payment module to accept Card payments
+ed91821f4efcd45a8f809ddf3958bf9905c6d273|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-11-24|Integrated Stripe as third party payment gateway with the Payment Module
+11	0	Backend/.idea/.idea.Backend/.idea/aws.xml
+8	0	Backend/.idea/.idea.Backend/.idea/indexLayout.xml
+8	0	Backend/.idea/.idea.Backend/.idea/projectSettingsUpdater.xml
+6	0	Backend/.idea/.idea.Backend/.idea/vcs.xml
+175	0	Backend/.idea/.idea.Backend/.idea/workspace.xml
+1	0	Backend/BLL/BLL.csproj
+4	4	Backend/BLL/Common/ModularBLL.cs
+6	1	Backend/BLL/Global/Global.cs
+15	0	Backend/BLL/Helper/StripeSettings.cs
+2	2	Backend/BLL/Helper/Upload.cs
+10	0	Backend/BLL/ModelVM/Payment/CreatePaymentIntentVm.cs
+10	0	Backend/BLL/ModelVM/Payment/CreateStripePaymentVM.cs
+16	0	Backend/BLL/ModelVM/Payment/StripeWebhookVM.cs
+11	6	Backend/BLL/Services/Abstractions/IPaymentService.cs
+243	5	Backend/BLL/Services/Impelementation/PaymentService.cs
+1	2	Backend/BLL/Services/Impelementation/ReviewService.cs
+0	979	Backend/DAL/Migrations/20251116134607_1.Designer.cs
+0	683	Backend/DAL/Migrations/20251116134607_1.cs
+62	2	Backend/PL/Controllers/PaymentController.cs
+1	0	Backend/PL/Global/Global.cs
+7	0	Backend/PL/Program.cs
+6	1	Backend/PL/appsettings.json
+
+f95dbb6bfbff3376fa8a63b8ff4897dcbb75cb82|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-24|Enhance review creation logic and authorization
+1	0	Backend/BLL/AutoMapper/DomainProfile.cs
+11	0	Backend/BLL/ModelVM/Message/ConversationVM.cs
+1	1	Backend/BLL/ModelVM/Message/CreateMessageVM.cs
+3	0	Backend/BLL/Services/Abstractions/IMessageService.cs
+43	3	Backend/BLL/Services/Impelementation/MessageService.cs
+11	0	Backend/DAL/DTO/ConversationDto.cs
+1	1	Backend/DAL/Entities/Message.cs
+2	0	Backend/DAL/Repo/Abstraction/IMessageRepository.cs
+1	0	Backend/DAL/Repo/Abstraction/IUserRepository.cs
+47	0	Backend/DAL/Repo/Implementation/MessageRepository.cs
+49	6	Backend/PL/Controllers/MessageController.cs
+3	2	frontend/src/app/app.config.ts
+15	1	frontend/src/app/app.routes.ts
+11	3	frontend/src/app/app.ts
+15	0	frontend/src/app/app/core/guards/auth.guard.ts
+9	1	frontend/src/app/app/core/interceptors/auth-interceptor.ts
+8	0	frontend/src/app/app/core/models/message.ts
+18	0	frontend/src/app/app/core/services/api/base.service.ts
+23	0	frontend/src/app/app/core/services/api/message.service.ts
+22	0	frontend/src/app/app/core/services/api/notification.service.ts
+120	0	frontend/src/app/app/core/services/auth.service.ts
+56	0	frontend/src/app/app/core/services/message-hub.ts
+59	0	frontend/src/app/app/core/services/message-store.ts
+39	19	frontend/src/app/app/core/services/notification-hub.ts
+18	18	frontend/src/app/app/core/services/notification-store.ts
+16	0	frontend/src/app/app/features/admin/dashboard.ts
+6	6	frontend/src/app/app/features/auth/authModels.ts
+7	0	frontend/src/app/app/features/auth/login.css
+9	0	frontend/src/app/app/features/auth/login.html
+28	0	frontend/src/app/app/features/auth/login.ts
+7	0	frontend/src/app/app/features/auth/register.css
+13	0	frontend/src/app/app/features/auth/register.html
+43	0	frontend/src/app/app/features/auth/register.ts
+34	0	frontend/src/app/app/features/booking/booking.ts
+36	0	frontend/src/app/app/features/message/chat-window.css
+34	0	frontend/src/app/app/features/message/chat-window.html
+271	0	frontend/src/app/app/features/message/chat-window.ts
+29	0	frontend/src/app/app/features/payment/payment.ts
+17	0	frontend/src/app/app/shared/components/navbar/navbar.css
+71	34	frontend/src/app/app/shared/components/navbar/navbar.html
+79	32	frontend/src/app/app/shared/components/navbar/navbar.ts
+
+8c3d657e053da2124afc04ae8e2874b04e86f696|aaliyahhazem|aaliyahhazem@gmail.com|2025-11-24|Merge branch 'master' of https://github.com/aaliyahhazem/airbnb-clone
+e8bb4bf3ec65df128387a762947f19df805c4d1f|aaliyahhazem|aaliyahhazem@gmail.com|2025-11-23|Email Service Implementaion -  Structure Modification
+3	6	Backend/BLL/BLL.csproj
+4	1	Backend/BLL/Common/ModularBLL.cs
+9	0	Backend/BLL/Global/Global.cs
+13	0	Backend/BLL/ModelVM/Email/BookingConfirmationVM.cs
+12	0	Backend/BLL/ModelVM/Email/CancellationEmailVM.cs
+10	0	Backend/BLL/ModelVM/Email/CheckInReminderEmailVM.cs
+10	0	Backend/BLL/ModelVM/Email/CheckOutReminderEmailVM.cs
+12	0	Backend/BLL/ModelVM/Email/HostNewBooking.cs
+11	0	Backend/BLL/ModelVM/Email/PasswordResetEmailVM.cs
+11	0	Backend/BLL/ModelVM/Email/PaymentReceiptVM.cs
+13	0	Backend/BLL/ModelVM/Email/PayoutNotificationVM.cs
+14	0	Backend/BLL/Services/Abstractions/IEmailService.cs
+104	0	Backend/BLL/Services/Impelementation/EmailMappingService.cs
+173	0	Backend/BLL/Services/Impelementation/EmailService.cs
+2	2	Backend/DAL/Migrations/{20251116134607_1.Designer.cs => 20251119092314_Init.Designer.cs}
+1	1	Backend/DAL/Migrations/{20251116134607_1.cs => 20251119092314_Init.cs}
+63	63	Backend/PL/Controllers/AuthController.cs
+9	0	Backend/PL/appsettings.json
+30	26	frontend/package-lock.json
+10	11	frontend/src/app/app.routes.ts
+4	4	frontend/src/app/app.ts
+0	24	frontend/src/app/app/features/home-page/home/home.css
+0	35	frontend/src/app/app/features/home-page/home/home.html
+0	34	frontend/src/app/app/features/home-page/listing-card/listing-card.html
+0	60	frontend/src/app/app/shared/components/navbar/navbar.css
+0	73	frontend/src/app/app/shared/components/navbar/navbar.html
+0	0	frontend/src/app/{app => }/core/core-module.ts
+0	0	frontend/src/app/{app => }/core/guards/auth-guard.spec.ts
+0	0	frontend/src/app/{app => }/core/guards/auth-guard.ts
+0	0	frontend/src/app/{app => }/core/interceptors/auth-interceptor.spec.ts
+0	0	frontend/src/app/{app => }/core/interceptors/auth-interceptor.ts
+0	0	frontend/src/app/{app => }/core/models/notification.ts
+0	0	frontend/src/app/{app => }/core/services/auth-service.spec.ts
+1	1	frontend/src/app/{app => }/core/services/auth-service.ts
+0	0	frontend/src/app/{app => }/core/services/notification-hub.spec.ts
+0	0	frontend/src/app/{app => }/core/services/notification-hub.ts
+0	0	frontend/src/app/{app => }/core/services/notification-store.spec.ts
+0	0	frontend/src/app/{app => }/core/services/notification-store.ts
+0	0	frontend/src/app/{app => }/features/admin/admin-module.ts
+0	0	frontend/src/app/{app => }/features/admin/admin-routing-module.ts
+0	0	frontend/src/app/{app => }/features/auth/auth-module.ts
+0	0	frontend/src/app/{app => }/features/auth/auth-routing-module.ts
+0	0	frontend/src/app/{app => }/features/auth/authModels.ts
+0	0	frontend/src/app/{app => }/features/booking/booking-module.ts
+0	0	frontend/src/app/{app => }/features/booking/booking-routing-module.ts
+0	0	frontend/src/app/{app => }/features/chat/chat-module.ts
+0	0	frontend/src/app/{app => }/features/chat/chat-routing-module.ts
+1	2	frontend/src/app/{app => }/features/home-page/hero-card/hero-card.css
+6	7	frontend/src/app/{app => }/features/home-page/hero-card/hero-card.html
+0	0	frontend/src/app/{app => }/features/home-page/hero-card/hero-card.spec.ts
+0	0	frontend/src/app/{app => }/features/home-page/hero-card/hero-card.ts
+13	6	frontend/src/app/{app/features/home-page/listing-card/listing-card.css => features/home-page/home-listing-card/home-listing-card.css}
+34	0	frontend/src/app/features/home-page/home-listing-card/home-listing-card.html
+11	0	frontend/src/app/features/home-page/home-listing-card/home-listing-card.ts
+23	0	frontend/src/app/features/home-page/home-listing-card/listing-card.spec.ts
+30	0	frontend/src/app/features/home-page/home/home.css
+68	0	frontend/src/app/features/home-page/home/home.html
+0	0	frontend/src/app/{app => }/features/home-page/home/home.spec.ts
+2	2	frontend/src/app/{app => }/features/home-page/home/home.ts
+57	0	frontend/src/app/features/home-page/stacked-cards/stacked-cards.css
+39	0	frontend/src/app/features/home-page/stacked-cards/stacked-cards.html
+23	0	frontend/src/app/features/home-page/stacked-cards/stacked-cards.spec.ts
+11	0	frontend/src/app/features/home-page/stacked-cards/stacked-cards.ts
+71	0	frontend/src/app/features/listings-page/listings-card/listing-card.css
+46	0	frontend/src/app/features/listings-page/listings-card/listing-card.html
+1	1	frontend/src/app/{app/features/home-page/listing-card => features/listings-page/listings-card}/listing-card.spec.ts
+0	0	frontend/src/app/{app/features/home-page/listing-card => features/listings-page/listings-card}/listing-card.ts
+65	0	frontend/src/app/features/listings-page/listings/listings.css
+31	0	frontend/src/app/features/listings-page/listings/listings.html
+23	0	frontend/src/app/features/listings-page/listings/listings.spec.ts
+12	0	frontend/src/app/features/listings-page/listings/listings.ts
+0	0	frontend/src/app/{app => }/features/listings/create-edit/listings-create-edit.css
+0	0	frontend/src/app/{app => }/features/listings/create-edit/listings-create-edit.html
+0	0	frontend/src/app/{app => }/features/listings/create-edit/listings-create-edit.spec.ts
+0	0	frontend/src/app/{app => }/features/listings/create-edit/listings-create-edit.ts
+0	0	frontend/src/app/{app => }/features/listings/detail/listings-detail.css
+0	0	frontend/src/app/{app => }/features/listings/detail/listings-detail.html
+0	0	frontend/src/app/{app => }/features/listings/detail/listings-detail.spec.ts
+0	0	frontend/src/app/{app => }/features/listings/detail/listings-detail.ts
+0	0	frontend/src/app/{app => }/features/listings/list/listing-list.css
+0	0	frontend/src/app/{app => }/features/listings/list/listing-list.html
+0	0	frontend/src/app/{app => }/features/listings/list/listing-list.spec.ts
+0	0	frontend/src/app/{app => }/features/listings/list/listing-list.ts
+0	0	frontend/src/app/{app => }/features/listings/models/listing.model.ts
+0	0	frontend/src/app/{app => }/features/listings/services/listing-exists.guard.ts
+0	0	frontend/src/app/{app => }/features/listings/services/listings.spec.ts
+0	0	frontend/src/app/{app => }/features/listings/services/listings.ts
+0	0	frontend/src/app/{app => }/shared/components/footer/footer.css
+0	0	frontend/src/app/{app => }/shared/components/footer/footer.html
+0	0	frontend/src/app/{app => }/shared/components/footer/footer.spec.ts
+0	0	frontend/src/app/{app => }/shared/components/footer/footer.ts
+180	0	frontend/src/app/shared/components/navbar/navbar.css
+79	0	frontend/src/app/shared/components/navbar/navbar.html
+0	0	frontend/src/app/{app => }/shared/components/navbar/navbar.spec.ts
+2	1	frontend/src/app/{app => }/shared/components/navbar/navbar.ts
+0	0	frontend/src/app/{app => }/shared/shared-module.ts
+1	1	frontend/src/styles.css
+
+7d622da981f74a8e0761fa6f1cc25255f9665563|aaliyahhazem|aaliyahhazem@gmail.com|2025-11-23|Home Page and Listings Page Update
+9	0	frontend/package-lock.json
+1	0	frontend/package.json
+3	0	frontend/src/app/app.routes.ts
+13	10	frontend/src/app/app/features/home-page/hero-card/hero-card.css
+3	2	frontend/src/app/app/features/home-page/hero-card/hero-card.html
+23	2	frontend/src/app/app/features/home-page/home/home.css
+27	3	frontend/src/app/app/features/home-page/home/home.html
+3	2	frontend/src/app/app/features/home-page/home/home.ts
+33	43	frontend/src/app/app/features/home-page/listing-card/listing-card.css
+23	31	frontend/src/app/app/features/home-page/listing-card/listing-card.html
+3	3	frontend/src/app/app/shared/components/footer/footer.css
+15	3	frontend/src/app/app/shared/components/navbar/navbar.css
+
+f3099164a77b5af036534d9d3c6a01230c7a010b|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-23|Merge pull request #12 from AbdelrahmanMoohamed/master
+e7bc185dd1215ad4bdc9b623f7354a2f7fdcca32|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-23|promoted for admin and edit rhe auth on the listing controleer and edit the  update and
+17	12	Backend/BLL/AutoMapper/DomainProfile.cs
+16	16	Backend/BLL/AutoMapper/ListingProfile.cs
+1	1	Backend/BLL/Common/ModularBLL.cs
+3	1	Backend/BLL/Global/Global.cs
+43	24	Backend/BLL/Helper/Upload.cs
+6	0	Backend/BLL/ModelVM/LIstingVM/ListingUpdateVM.cs
+12	3	Backend/BLL/Services/Abstractions/IListingService.cs
+46	32	Backend/BLL/Services/Impelementation/ListingImageService.cs
+144	55	Backend/BLL/Services/Impelementation/ListingService.cs
+64	7	Backend/DAL/Entities/Listing.cs
+34	44	Backend/DAL/Repo/Abstraction/IListingRepository.cs
+1	1	Backend/DAL/Repo/Implementation/ListingImageRepository.cs
+122	31	Backend/DAL/Repo/Implementation/ListingRepository.cs
+2	0	Backend/PL/Controllers/AdminController.cs
+2	0	Backend/PL/Controllers/AuthController.cs
+125	70	Backend/PL/Controllers/ListingsController.cs
+81	76	Backend/PL/Program.cs
+-	-	Backend/PL/wwwroot/listings/2af319c2-e07b-4392-9eca-3ee4b5d903fa.png
+-	-	Backend/PL/wwwroot/listings/c5b5fd2b-5e06-4fbb-9fcf-8f69b9bd8cae.jpg
+
+97a48139611645f7b98e17d2727cd2509fa5576c|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-22|before merge
+cdc6ec636ee7456719a3fda6dad2b54c89f718b6|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-22|befor merge
+48	16	Backend/BLL/AutoMapper/DomainProfile.cs
+2	4	Backend/BLL/BLL.csproj
+3	3	Backend/BLL/Common/ModularBLL.cs
+4	0	Backend/BLL/ModelVM/LIstingVM/AddImagesRequest.cs
+3	3	Backend/BLL/ModelVM/LIstingVM/ListingCreateVM.cs
+14	17	Backend/BLL/ModelVM/LIstingVM/ListingDetailVM.cs
+0	8	Backend/BLL/ModelVM/LIstingVM/ListingImageCreateVM.cs
+0	9	Backend/BLL/ModelVM/LIstingVM/ListingImageUpdateVM.cs
+3	3	Backend/BLL/ModelVM/LIstingVM/ListingImageVM.cs
+6	4	Backend/BLL/ModelVM/LIstingVM/ListingOverviewVM.cs
+9	9	Backend/BLL/ModelVM/LIstingVM/ListingUpdateVM.cs
+4	0	Backend/BLL/ModelVM/LIstingVM/UpdateImageRequest.cs
+18	0	Backend/BLL/ModelVM/MapsVM/GeocodeRequestDto.cs
+18	0	Backend/BLL/ModelVM/MapsVM/GeocodeResponseDto.cs
+22	0	Backend/BLL/ModelVM/MapsVM/MapSearchRequestDto.cs
+14	0	Backend/BLL/ModelVM/MapsVM/MapSearchResponseDto.cs
+18	0	Backend/BLL/ModelVM/MapsVM/PropertyMapDto.cs
+22	0	Backend/BLL/Services/Abstractions/IGeocodingService.cs
+10	19	Backend/BLL/Services/Abstractions/IListingImageService.cs
+7	7	Backend/BLL/Services/Abstractions/IListingService.cs
+15	0	Backend/BLL/Services/Abstractions/IMapService.cs
+1	1	Backend/BLL/Services/Abstractions/ModularDataAccessLayer.cs
+91	16	Backend/BLL/Services/Impelementation/ListingImageService.cs
+185	46	Backend/BLL/Services/Impelementation/ListingService.cs
+99	0	Backend/BLL/Services/Impelementation/MapService.cs
+182	0	Backend/BLL/Services/Impelementation/NominatimGeocodingService.cs
+2	1	Backend/DAL/Common/ModularDAL.cs
+3	3	Backend/DAL/Common/ModularDataAccessLayer.cs
+15	13	Backend/DAL/Configurations/AmenityConfiguration.cs
+0	67	Backend/DAL/Configurations/KeywordConfiguration.cs
+7	16	Backend/DAL/Configurations/ListingConfiguration.cs
+14	0	Backend/DAL/DTO/ListingFilterDto.cs
+0	1	Backend/DAL/Database/AppDbContext.cs
+17	11	Backend/DAL/Entities/Amenity.cs
+0	28	Backend/DAL/Entities/Keyword.cs
+68	36	Backend/DAL/Entities/Listing.cs
+2	0	Backend/DAL/Entities/ListingImage.cs
+915	0	Backend/DAL/Migrations/20251120151521_Init.Designer.cs
+615	0	Backend/DAL/Migrations/20251120151521_Init.cs
+24	88	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+9	6	Backend/DAL/Repo/Abstraction/IAmenityRepository.cs
+0	8	Backend/DAL/Repo/Abstraction/IKeywordRepository.cs
+8	22	Backend/DAL/Repo/Abstraction/IListingImageRepository.cs
+37	20	Backend/DAL/Repo/Abstraction/IListingRepository.cs
+18	0	Backend/DAL/Repo/Abstraction/IMapRepo.cs
+0	2	Backend/DAL/Repo/Abstraction/IUnitOfWork.cs
+28	16	Backend/DAL/Repo/Implementation/AmenityRepository.cs
+0	21	Backend/DAL/Repo/Implementation/KeywordRepository.cs
+17	99	Backend/DAL/Repo/Implementation/ListingImageRepository.cs
+135	75	Backend/DAL/Repo/Implementation/ListingRepository.cs
+48	0	Backend/DAL/Repo/Implementation/MapRepo.cs
+0	3	Backend/DAL/Repo/Implementation/UnitOfWork.cs
+54	97	Backend/PL/Controllers/ListingsController.cs
+93	0	Backend/PL/Controllers/MapController.cs
+51	0	Backend/PL/PL.csproj
+33	46	Backend/PL/Program.cs
+-	-	Backend/PL/wwwroot/listings/075e5ccf-0ba4-4257-9178-d5c6f20cb1ae2.jpg
+-	-	Backend/PL/wwwroot/listings/104f2179-6373-4b78-9ff3-2382f5d8ef6a2.jpg
+-	-	Backend/PL/wwwroot/listings/16366044-5b35-4110-827b-ac10efb818a41.jpg
+-	-	Backend/PL/wwwroot/listings/1c1114f8-da2e-40e4-aae4-e2294b04a54cGemini_Generated_Image_ajldi1ajldi1ajld.png
+-	-	Backend/PL/wwwroot/listings/1d9c839b-13cc-43c1-bb20-3fa6b0d1b9c42.jpg
+-	-	Backend/PL/wwwroot/listings/1ff8b0c6-1d3c-4ee3-990e-208f29ada48a2.jpg
+-	-	Backend/PL/wwwroot/listings/2ebf9722-c517-404e-896a-a996d6e191971.jpg
+-	-	Backend/PL/wwwroot/listings/3a6b0b94-4f6a-4186-b5ec-162c296382fc2.jpg
+-	-	Backend/PL/wwwroot/listings/3d6f3c50-1fab-4320-b4d5-3563f358f6851.jpg
+-	-	Backend/PL/wwwroot/listings/463877a7-0936-4d88-973e-db887b2b82221.jpg
+-	-	Backend/PL/wwwroot/listings/4aa99dc1-fc56-44ef-ac16-f1a4fbe274952.jpg
+-	-	Backend/PL/wwwroot/listings/4f492015-12a1-4e2f-b034-e69b351297b91.jpg
+-	-	Backend/PL/wwwroot/listings/5b7634e3-aad5-495b-9a0d-45ec853539531.jpg
+-	-	Backend/PL/wwwroot/listings/60f1478b-e9b6-462f-8011-e63b15e67ce91.jpg
+-	-	Backend/PL/wwwroot/listings/69823c8b-61a8-4096-8933-ce493a5ef03b1.jpg
+-	-	Backend/PL/wwwroot/listings/6dd7947e-621c-4c7e-a718-751a9210ad4c1.jpg
+-	-	Backend/PL/wwwroot/listings/6fd1154e-8980-432f-8302-7ed2130180551.jpg
+-	-	Backend/PL/wwwroot/listings/76647b1a-1ea3-4da5-a973-fb4a27c729601.jpg
+-	-	Backend/PL/wwwroot/listings/78afc9ea-9916-421a-a230-3168983fe01f2.jpg
+-	-	Backend/PL/wwwroot/listings/7d421815-7251-4b1b-85ed-79e0fd0ed50f1.jpg
+-	-	Backend/PL/wwwroot/listings/81892918-0bf5-402d-a2c2-0ec3face048b1.jpg
+-	-	Backend/PL/wwwroot/listings/877cf4c0-cea3-4548-a6fa-3e74698c6b292.jpg
+-	-	Backend/PL/wwwroot/listings/88d401e8-2430-406d-bfb0-34f2c9ce822a1.jpg
+-	-	Backend/PL/wwwroot/listings/93341f3d-f6e0-4cf8-9802-5d47d9e42adf1.jpg
+-	-	Backend/PL/wwwroot/listings/95d5e544-1abf-4f9f-807c-54762a6dcd172.jpg
+-	-	Backend/PL/wwwroot/listings/9a10188c-9193-4927-bfbe-4925ebf8b0ae1.jpg
+-	-	Backend/PL/wwwroot/listings/9cabb03c-e6dc-4d50-bf53-6e743371a5f61.jpg
+-	-	Backend/PL/wwwroot/listings/a5d3183f-b453-4591-b91f-6ae05f7420981.jpg
+-	-	Backend/PL/wwwroot/listings/b32b73dd-0111-4ef8-a592-448a2cd755042.jpg
+-	-	Backend/PL/wwwroot/listings/b74ddbbf-f34b-479d-9939-4295e423cd7d1.jpg
+-	-	Backend/PL/wwwroot/listings/bc901b0e-0ff9-4a60-a274-b381cab84c732.jpg
+-	-	Backend/PL/wwwroot/listings/c00cf98d-060b-4e6f-a269-8f549717dc0f2.jpg
+-	-	Backend/PL/wwwroot/listings/c437c23d-82dd-417b-9007-aa0555c0061c2.jpg
+-	-	Backend/PL/wwwroot/listings/c48ca1fc-871d-41d8-8a5a-a0667f9751f72.jpg
+-	-	Backend/PL/wwwroot/listings/c4d3b8ac-4dfe-4038-8170-6199231d98871.jpg
+-	-	Backend/PL/wwwroot/listings/c4f600ef-c202-40f2-94bd-2b89c34babb22.jpg
+-	-	Backend/PL/wwwroot/listings/cc463051-73a4-41f1-8e01-319a3fc92f871.jpg
+-	-	Backend/PL/wwwroot/listings/cc6ebd9c-1292-4f89-8000-09d575f9e4ee1.jpg
+-	-	Backend/PL/wwwroot/listings/cfc8e777-8522-4c62-a1c3-92ba436502042.jpg
+-	-	Backend/PL/wwwroot/listings/d4da2f4c-228f-4476-aebf-c83f3ec0886e2.jpg
+-	-	Backend/PL/wwwroot/listings/d7782486-2792-4a8e-8756-f0c35595ee4f2.jpg
+-	-	Backend/PL/wwwroot/listings/dc4cff8d-f36c-44a6-ab30-1319e7c955b22.jpg
+-	-	Backend/PL/wwwroot/listings/e59202dd-15af-4081-990a-a1ccf1232a942.jpg
+-	-	Backend/PL/wwwroot/listings/e8e2b51b-d554-40c2-a8b1-10478f5d9a542.jpg
+-	-	Backend/PL/wwwroot/listings/ea35b5ae-4fd7-4cf1-bcc6-6f95062958031.jpg
+-	-	Backend/PL/wwwroot/listings/ee968a24-8cda-43dc-bedc-cf1ae750a0ab2.jpg
+-	-	Backend/PL/wwwroot/listings/f1555731-ba6e-44e5-ae46-fb29b4630c822.jpg
+-	-	Backend/PL/wwwroot/listings/f388fe50-cf76-4e4d-a9fe-a9f136f2fe08Gemini_Generated_Image_ajldi1ajldi1ajld.png
+
+59110fb583a428912c2fdeffe747e918c366b2c6|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-22|update in listings
+3be8d2c9fddcd6946f680d31dd609126ee07fa18|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-22|Refactor services, repositories, and controllers
+5	1	Backend/BLL/AutoMapper/DomainProfile.cs
+2	1	Backend/BLL/ModelVM/Auth/RegisterVM.cs
+0	1	Backend/BLL/ModelVM/Message/CreateMessageVM.cs
+2	3	Backend/BLL/ModelVM/Notification/CreateNotificationVM.cs
+2	2	Backend/BLL/ModelVM/Review/CreateReviewVM.cs
+4	2	Backend/BLL/Services/Abstractions/IIdentityService.cs
+1	2	Backend/BLL/Services/Abstractions/IMessageService.cs
+1	1	Backend/BLL/Services/Abstractions/IReviewService.cs
+8	3	Backend/BLL/Services/Impelementation/BookingService.cs
+89	6	Backend/BLL/Services/Impelementation/IdentityService.cs
+6	7	Backend/BLL/Services/Impelementation/MessageService.cs
+44	14	Backend/BLL/Services/Impelementation/ReviewService.cs
+3	5	Backend/BLL/Services/Impelementation/TokenService.cs
+8	0	Backend/DAL/Configurations/UserConfiguration.cs
+1	1	Backend/DAL/Entities/Booking.cs
+1	1	Backend/DAL/Entities/Message.cs
+3	3	Backend/DAL/Entities/Review.cs
+0	979	Backend/DAL/Migrations/20251116134607_1.Designer.cs
+0	683	Backend/DAL/Migrations/20251116134607_1.cs
+6	2	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+1	0	Backend/DAL/Repo/Abstraction/IBookingRepository.cs
+2	0	Backend/DAL/Repo/Abstraction/IMessageRepository.cs
+5	0	Backend/DAL/Repo/Abstraction/IReviewRepository.cs
+1	0	Backend/DAL/Repo/Abstraction/IUserRepository.cs
+8	0	Backend/DAL/Repo/Implementation/BookingRepository.cs
+8	0	Backend/DAL/Repo/Implementation/MessageRepository.cs
+23	3	Backend/DAL/Repo/Implementation/ReviewRepository.cs
+11	0	Backend/DAL/Repo/Implementation/UserRepository.cs
+1	4	Backend/PL/Controllers/AdminController.cs
+32	8	Backend/PL/Controllers/AuthController.cs
+36	0	Backend/PL/Controllers/BaseController.cs
+1	31	Backend/PL/Controllers/BookingController.cs
+13	18	Backend/PL/Controllers/MessageController.cs
+27	30	Backend/PL/Controllers/NotificationController.cs
+4	7	Backend/PL/Controllers/PaymentController.cs
+6	7	Backend/PL/Controllers/ReviewController.cs
+1	1	Backend/PL/appsettings.json
+
+f7308fde4b0ce202432e2d3e5d73d4863f925711|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-19|**feat(booking-payment): implement complete reservation and transaction workflow**
+15	19	.gitignore
+1	5	Backend/BLL/AutoMapper/DomainProfile.cs
+3	3	Backend/BLL/AutoMapper/ListingProfile.cs
+0	5	Backend/BLL/BLL.csproj
+7	2	Backend/BLL/Common/ModularBLL.cs
+15	0	Backend/BLL/Global/Global.cs
+1	2	Backend/BLL/Helper/Upload.cs
+6	6	Backend/BLL/ModelVM/Admin/SystemStatsVM.cs
+8	8	Backend/BLL/ModelVM/Admin/UserSummaryVM.cs
+7	0	Backend/BLL/ModelVM/Auth/EmailVM.cs
+7	0	Backend/BLL/ModelVM/Auth/FaceVM.cs
+8	0	Backend/BLL/ModelVM/Auth/LoginVM.cs
+8	0	Backend/BLL/ModelVM/Auth/OAuthVM.cs
+11	0	Backend/BLL/ModelVM/Auth/RegisterVM.cs
+9	0	Backend/BLL/ModelVM/Auth/ResetPasswordVM.cs
+10	0	Backend/BLL/ModelVM/Auth/TokenRequestVM.cs
+11	0	Backend/BLL/ModelVM/Booking/CreateBookingVM.cs
+13	0	Backend/BLL/ModelVM/Booking/GetBookingVM.cs
+6	6	Backend/BLL/ModelVM/Message/CreateMessageVM.cs
+9	9	Backend/BLL/ModelVM/Message/GetMessageVM.cs
+9	0	Backend/BLL/ModelVM/Payment/CreatePaymentVM.cs
+8	8	Backend/BLL/ModelVM/Review/CreateReviewVM.cs
+9	9	Backend/BLL/ModelVM/Review/ReviewVM.cs
+5	5	Backend/BLL/ModelVM/Review/UpdateReviewVM.cs
+10	12	Backend/BLL/Services/Abstractions/IAdminService.cs
+11	0	Backend/BLL/Services/Abstractions/IBookingService.cs
+10	11	Backend/BLL/Services/Abstractions/IIdentityService.cs
+0	1	Backend/BLL/Services/Abstractions/IListingService.cs
+0	2	Backend/BLL/Services/Abstractions/IMessageService.cs
+0	3	Backend/BLL/Services/Abstractions/INotificationService.cs
+10	0	Backend/BLL/Services/Abstractions/IPaymentService.cs
+1	2	Backend/BLL/Services/Abstractions/IReviewService.cs
+4	4	Backend/BLL/Services/Abstractions/ITokenService.cs
+92	98	Backend/BLL/Services/Impelementation/AdminService.cs
+124	0	Backend/BLL/Services/Impelementation/BookingService.cs
+105	110	Backend/BLL/Services/Impelementation/IdentityService.cs
+1	62	Backend/BLL/Services/Impelementation/ListingService.cs
+50	56	Backend/BLL/Services/Impelementation/MessageService.cs
+99	0	Backend/BLL/Services/Impelementation/PaymentService.cs
+107	113	Backend/BLL/Services/Impelementation/ReviewService.cs
+5	7	Backend/BLL/Services/Impelementation/TokenService.cs
+1	3	Backend/DAL/Common/ModularDAL.cs
+1	3	Backend/DAL/Common/ModularDataAccessLayer.cs
+0	35	Backend/DAL/Configurations/KeywordConfiguration.cs
+1	7	Backend/DAL/Configurations/ListingConfiguration.cs
+1	4	Backend/DAL/Configurations/ListingImageConfiguration.cs
+1	4	Backend/DAL/Configurations/NotificationConfiguration.cs
+1	3	Backend/DAL/Configurations/ReviewConfiguration.cs
+1	3	Backend/DAL/Database/AppDbContext.cs
+2	2	Backend/DAL/Entities/Booking.cs
+2	2	Backend/DAL/Entities/Payment.cs
+7	0	Backend/DAL/Global/Global.cs
+11	11	Backend/DAL/Repo/Abstraction/IAdminRepository.cs
+3	0	Backend/DAL/Repo/Abstraction/IUnitOfWork.cs
+13	14	Backend/DAL/Repo/Implementation/AdminRepository.cs
+1	3	Backend/DAL/Repo/Implementation/ReviewRepository.cs
+17	0	Backend/DAL/Repo/Implementation/UnitOfWork.cs
+55	56	Backend/PL/Controllers/AdminController.cs
+77	88	Backend/PL/Controllers/AuthController.cs
+88	0	Backend/PL/Controllers/BookingController.cs
+25	0	Backend/PL/Controllers/DebugController.cs
+61	67	Backend/PL/Controllers/MessageController.cs
+1	6	Backend/PL/Controllers/NotificationController.cs
+46	0	Backend/PL/Controllers/PaymentController.cs
+58	59	Backend/PL/Controllers/ReviewController.cs
+0	33	Backend/PL/Controllers/WeatherForecastController.cs
+30	0	Backend/PL/Global/Global.cs
+34	34	Backend/PL/Hubs/MessageHub.cs
+1	3	Backend/PL/Hubs/NotificationHub.cs
+96	62	Backend/PL/Program.cs
+0	13	Backend/PL/WeatherForecast.cs
+
+6b878ca3930c96940eec8a014c43146b39e3c7d5|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-18|temp listing service and controller
+23	8	Backend/BLL/AutoMapper/DomainProfile.cs
+0	21	Backend/BLL/AutoMapper/ListingProfile.cs
+4	0	Backend/BLL/BLL.csproj
+3	4	Backend/BLL/Common/ModularBLL.cs
+8	0	Backend/BLL/Global/Global.cs
+1	3	Backend/BLL/Helper/Upload.cs
+0	46	Backend/BLL/ModelVM/LIstingVM/CreateListingVM.cs
+10	14	Backend/BLL/ModelVM/LIstingVM/{UpdateListingVM.cs => ListingCreateVM.cs}
+5	9	Backend/BLL/ModelVM/LIstingVM/{ListingVM.cs => ListingDetailVM.cs}
+8	0	Backend/BLL/ModelVM/LIstingVM/ListingImageCreateVM.cs
+9	0	Backend/BLL/ModelVM/LIstingVM/ListingImageUpdateVM.cs
+4	8	Backend/BLL/ModelVM/LIstingVM/ListingImageVM.cs
+14	0	Backend/BLL/ModelVM/LIstingVM/ListingOverviewVM.cs
+37	0	Backend/BLL/ModelVM/LIstingVM/ListingUpdateVM.cs
+8	0	Backend/BLL/ModelVM/LIstingVM/PromoteListingRequest.cs
+8	0	Backend/BLL/ModelVM/LIstingVM/RejectListingRequest.cs
+32	3	Backend/BLL/Services/Abstractions/IListingImageService.cs
+34	6	Backend/BLL/Services/Abstractions/IListingService.cs
+28	0	Backend/BLL/Services/Abstractions/ModularDataAccessLayer.cs
+95	0	Backend/BLL/Services/Impelementation/ListingImageService.cs
+180	68	Backend/BLL/Services/Impelementation/ListingService.cs
+1	1	Backend/BLL/Services/Impelementation/NotificationService.cs
+25	25	Backend/DAL/Common/ModularDataAccessLayer.cs
+6	15	Backend/DAL/Configurations/ListingConfiguration.cs
+1	8	Backend/DAL/Configurations/ListingImageConfiguration.cs
+1	6	Backend/DAL/Database/AppDbContext.cs
+1	1	Backend/DAL/Entities/Amenity.cs
+1	1	Backend/DAL/Entities/Booking.cs
+1	1	Backend/DAL/Entities/Keyword.cs
+149	63	Backend/DAL/Entities/Listing.cs
+28	24	Backend/DAL/Entities/ListingImage.cs
+1	1	Backend/DAL/Entities/Message.cs
+1	1	Backend/DAL/Entities/Notification.cs
+1	1	Backend/DAL/Entities/Payment.cs
+1	1	Backend/DAL/Entities/Review.cs
+1	1	Backend/DAL/Entities/User.cs
+2	0	Backend/DAL/Global/Global.cs
+0	848	Backend/DAL/Migrations/20251110082039_Initial.Designer.cs
+0	606	Backend/DAL/Migrations/20251110082039_Initial.cs
+0	848	Backend/DAL/Migrations/20251110111816_CustomIdentityTableNames.Designer.cs
+0	560	Backend/DAL/Migrations/20251110111816_CustomIdentityTableNames.cs
+0	851	Backend/DAL/Migrations/20251114185614_tt.Designer.cs
+0	80	Backend/DAL/Migrations/20251114225739_init.cs
+116	7	Backend/DAL/Migrations/{20251114225739_init.Designer.cs => 20251117202137_init.Designer.cs}
+153	76	Backend/DAL/Migrations/{20251114185614_tt.cs => 20251117202137_init.cs}
+115	6	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+24	11	Backend/DAL/Repo/Abstraction/IListingImageRepository.cs
+38	24	Backend/DAL/Repo/Abstraction/IListingRepository.cs
+2	0	Backend/DAL/Repo/Abstraction/IUserRepository.cs
+180	42	Backend/DAL/Repo/Implementation/ListingImageRepository.cs
+314	155	Backend/DAL/Repo/Implementation/ListingRepository.cs
+13	1	Backend/DAL/Repo/Implementation/UserRepository.cs
+200	0	Backend/PL/Controllers/ListingsController.cs
+0	1	Backend/PL/PL.csproj
+136	100	Backend/PL/Program.cs
+-	-	Backend/PL/wwwroot/listings/1.jpg
+-	-	Backend/PL/wwwroot/listings/2.jpg
+
+c37d2e7d610ea1463f8094da669abb021bd4ef29|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-18|feat(auth): add JWT token service, return tokens on auth, secure controllers ΓÇó Add ITokenService and TokenService (JWT generation with optional orderId/listingId claims) ΓÇó Expose token generation through IIdentityService; return JWT from register/login/oauth endpoints ΓÇó Add /api/auth/token endpoint and validate GUID inputs ΓÇó Wire JWT config into PL/appsettings.json and fix appsettings.Development.json ΓÇó Configure JWT bearer to accept tokens for SignalR (query string) in Program.cs ΓÇó Register token service and update DI registrations in BLL (ModularBLL) ΓÇó Secure controllers: ΓÇó [Authorize(Roles="Admin")] on AdminController ΓÇó [Authorize] on NotificationController and MessageController (keep send-pending anonymous) ΓÇó Leave guest-open/read-only endpoints as-is ΓÇó Add messaging support: MessageHub, message VMs, MessageService, repository usage, automapper mappings ΓÇó Make Message.Create public and fix related build issues ΓÇó Improve error handling and validation for token generation and controller inputs
+4	0	Backend/BLL/Common/ModularBLL.cs
+1	0	Backend/BLL/Services/Abstractions/IIdentityService.cs
+7	0	Backend/BLL/Services/Abstractions/ITokenService.cs
+34	16	Backend/BLL/Services/Impelementation/IdentityService.cs
+44	0	Backend/BLL/Services/Impelementation/TokenService.cs
+1	1	Backend/PL/Controllers/AdminController.cs
+33	5	Backend/PL/Controllers/AuthController.cs
+5	1	Backend/PL/Controllers/MessageController.cs
+7	4	Backend/PL/Controllers/NotificationController.cs
+14	0	Backend/PL/Program.cs
+1	21	Backend/PL/appsettings.Development.json
+18	0	Backend/PL/appsettings.json
+
+d4fa77da46a9ae10750a71d7c5ab2f8f1c783588|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-17|first sprit for notification and massegaes endpoints first sprint for admin and reviews endpoints signalR hubs demo testing for notification hub in the front edit the event for real time notification in navbar.ts
+5	2	Backend/BLL/AutoMapper/DomainProfile.cs
+10	6	Backend/BLL/Common/ModularBLL.cs
+9	0	Backend/BLL/ModelVM/Admin/SystemStatsVM.cs
+11	0	Backend/BLL/ModelVM/Admin/UserSummaryVM.cs
+9	0	Backend/BLL/ModelVM/Message/CreateMessageVM.cs
+12	0	Backend/BLL/ModelVM/Message/GetMessageVM.cs
+3	0	Backend/BLL/ModelVM/Notification/CreateNotificationVM.cs
+23	3	Backend/BLL/ModelVM/Response/Response.cs
+11	0	Backend/BLL/ModelVM/Review/CreateReviewVM.cs
+12	0	Backend/BLL/ModelVM/Review/ReviewVM.cs
+8	0	Backend/BLL/ModelVM/Review/UpdateReviewVM.cs
+16	0	Backend/BLL/Services/Abstractions/IAdminService.cs
+14	0	Backend/BLL/Services/Abstractions/IIdentityService.cs
+12	0	Backend/BLL/Services/Abstractions/IMessageService.cs
+2	0	Backend/BLL/Services/Abstractions/INotificationService.cs
+15	0	Backend/BLL/Services/Abstractions/IReviewService.cs
+109	0	Backend/BLL/Services/Impelementation/AdminService.cs
+96	0	Backend/BLL/Services/Impelementation/IdentityService.cs
+63	0	Backend/BLL/Services/Impelementation/MessageService.cs
+18	2	Backend/BLL/Services/Impelementation/NotificationService.cs
+117	0	Backend/BLL/Services/Impelementation/ReviewService.cs
+3	3	Backend/DAL/Common/ModularDAL.cs
+3	1	Backend/DAL/Common/ModularDataAccessLayer.cs
+1	1	Backend/DAL/Entities/Message.cs
+2	2	Backend/DAL/Entities/Review.cs
+0	848	Backend/DAL/Migrations/20251110082039_Initial.Designer.cs
+0	606	Backend/DAL/Migrations/20251110082039_Initial.cs
+0	848	Backend/DAL/Migrations/20251110111816_CustomIdentityTableNames.Designer.cs
+0	560	Backend/DAL/Migrations/20251110111816_CustomIdentityTableNames.cs
+0	851	Backend/DAL/Migrations/20251114185614_tt.Designer.cs
+0	80	Backend/DAL/Migrations/20251114225739_init.cs
+118	8	Backend/DAL/Migrations/{20251114225739_init.Designer.cs => 20251116134607_1.Designer.cs}
+152	76	Backend/DAL/Migrations/{20251114185614_tt.cs => 20251116134607_1.cs}
+116	6	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+15	0	Backend/DAL/Repo/Abstraction/IAdminRepository.cs
+19	0	Backend/DAL/Repo/Implementation/AdminRepository.cs
+5	1	Backend/DAL/Repo/Implementation/ReviewRepository.cs
+60	0	Backend/PL/Controllers/AdminController.cs
+79	0	Backend/PL/Controllers/AuthController.cs
+75	0	Backend/PL/Controllers/MessageController.cs
+32	4	Backend/PL/Controllers/NotificationController.cs
+69	0	Backend/PL/Controllers/ReviewController.cs
+38	0	Backend/PL/Hubs/MessageHub.cs
+39	0	Backend/PL/Hubs/NotificationHub.cs
+3	0	Backend/PL/PL.csproj
+93	11	Backend/PL/Program.cs
+15	0	Backend/PL/appsettings.Development.json
+196	33	frontend/package-lock.json
+1	0	frontend/package.json
+3	1	frontend/src/app/app.config.ts
+9	0	frontend/src/app/app.ts
+9	0	frontend/src/app/app/core/models/notification.ts
+16	0	frontend/src/app/app/core/services/notification-hub.spec.ts
+34	0	frontend/src/app/app/core/services/notification-hub.ts
+16	0	frontend/src/app/app/core/services/notification-store.spec.ts
+68	0	frontend/src/app/app/core/services/notification-store.ts
+22	1	frontend/src/app/app/shared/components/navbar/navbar.css
+67	41	frontend/src/app/app/shared/components/navbar/navbar.html
+73	4	frontend/src/app/app/shared/components/navbar/navbar.ts
+1	0	frontend/src/main.ts
+
+9b36a0e98e1128a531358cb778c5ef87d9d2de52|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-16|Merge pull request #10 from aaliyahhazem/master
+82e937df4cd72d0d41f60a8f88bfda931e3a1a14|aaliyahhazem|aaliyahhazem@gmail.com|2025-11-16|Merge branch 'Abdelkarimo:master' into master
+55be0d6ec9d6a501f3a0ec6d03dcc74e3e024912|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-16|Merge pull request #9 from AbdelrahmanMoohamed/master
+3759798bb5e1da33569e9d5fd1666f63660a840d|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-16|Merge branch 'Abdelkarimo:master' into master
+657f424174ed0d37b7af45d7e82eaf783b0c7b8e|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-16|Listings Crud for admin,host and user (#8)
+0	1	Backend/DAL/Entities/ListingImage.cs
+3	2	Backend/PL/Program.cs
+
+b1f2f81ff13c1b8e24a609123df77e116f1f5b82|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-16|Commit
+81ab9e4fcf94371588012aab7a35781fd915f290|aaliyahhazem|aaliyahhazem@gmail.com|2025-11-16|Merge branch 'Abdelkarimo:master' into master
+1543c99f0cd579b31bfeb3dcb15195e4c7f308cf|aaliyahhazem|aaliyahhazem@gmail.com|2025-11-16|First Implementation of Home Page (#6)
+5	0	Backend/BLL/BLL.csproj
+1	0	Backend/DAL/Entities/ListingImage.cs
+848	0	Backend/DAL/Migrations/20251110082039_Initial.Designer.cs
+606	0	Backend/DAL/Migrations/20251110082039_Initial.cs
+848	0	Backend/DAL/Migrations/20251110111816_CustomIdentityTableNames.Designer.cs
+560	0	Backend/DAL/Migrations/20251110111816_CustomIdentityTableNames.cs
+7	0	Backend/PL/Program.cs
+5	1	frontend/angular.json
+256	185	frontend/package-lock.json
+-	-	frontend/public/beige.jpg
+-	-	frontend/public/favicon.ico
+-	-	frontend/public/logo.png
+2	0	frontend/src/app/app.html
+5	3	frontend/src/app/app.routes.ts
+3	1	frontend/src/app/app.ts
+187	0	frontend/src/app/app/features/home-page/hero-card/hero-card.css
+22	0	frontend/src/app/app/features/home-page/hero-card/hero-card.html
+23	0	frontend/src/app/app/features/home-page/hero-card/hero-card.spec.ts
+11	0	frontend/src/app/app/features/home-page/hero-card/hero-card.ts
+3	0	frontend/src/app/app/features/home-page/home/home.css
+11	0	frontend/src/app/app/features/home-page/home/home.html
+23	0	frontend/src/app/app/features/home-page/home/home.spec.ts
+13	0	frontend/src/app/app/features/home-page/home/home.ts
+69	0	frontend/src/app/app/features/home-page/listing-card/listing-card.css
+42	0	frontend/src/app/app/features/home-page/listing-card/listing-card.html
+23	0	frontend/src/app/app/features/home-page/listing-card/listing-card.spec.ts
+11	0	frontend/src/app/app/features/home-page/listing-card/listing-card.ts
+17	0	frontend/src/app/app/shared/components/footer/footer.css
+10	1	frontend/src/app/app/shared/components/footer/footer.html
+27	0	frontend/src/app/app/shared/components/navbar/navbar.css
+47	1	frontend/src/app/app/shared/components/navbar/navbar.html
+15	10	frontend/src/index.html
+45	1	frontend/src/styles.css
+
+e86f604c22f245c19bfc8e9cb932d8d52422dc6b|aaliyahhazem|aaliyahhazem@gmail.com|2025-11-16|Merge branch 'master' of https://github.com/aaliyahhazem/airbnb-clone
+d10be9fbeebb3c34c0d36b8631d0e17cfeb73535|aaliyahhazem|aaliyahhazem@gmail.com|2025-11-16|First Implementation for Home Page - Navbar - Footer - Slider
+5	1	frontend/angular.json
+256	185	frontend/package-lock.json
+-	-	frontend/public/beige.jpg
+-	-	frontend/public/favicon.ico
+-	-	frontend/public/logo.png
+2	0	frontend/src/app/app.html
+5	3	frontend/src/app/app.routes.ts
+3	1	frontend/src/app/app.ts
+187	0	frontend/src/app/app/features/home-page/hero-card/hero-card.css
+22	0	frontend/src/app/app/features/home-page/hero-card/hero-card.html
+23	0	frontend/src/app/app/features/home-page/hero-card/hero-card.spec.ts
+11	0	frontend/src/app/app/features/home-page/hero-card/hero-card.ts
+3	0	frontend/src/app/app/features/home-page/home/home.css
+11	0	frontend/src/app/app/features/home-page/home/home.html
+23	0	frontend/src/app/app/features/home-page/home/home.spec.ts
+13	0	frontend/src/app/app/features/home-page/home/home.ts
+69	0	frontend/src/app/app/features/home-page/listing-card/listing-card.css
+42	0	frontend/src/app/app/features/home-page/listing-card/listing-card.html
+23	0	frontend/src/app/app/features/home-page/listing-card/listing-card.spec.ts
+11	0	frontend/src/app/app/features/home-page/listing-card/listing-card.ts
+17	0	frontend/src/app/app/shared/components/footer/footer.css
+10	1	frontend/src/app/app/shared/components/footer/footer.html
+27	0	frontend/src/app/app/shared/components/navbar/navbar.css
+47	1	frontend/src/app/app/shared/components/navbar/navbar.html
+15	10	frontend/src/index.html
+45	1	frontend/src/styles.css
+
+776c7d86fca79476afc95e7092718f6b4b91d977|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-16|Listings Crud for admin,host and user (#5)
+4	0	Backend/BLL/AutoMapper/DomainProfile.cs
+21	0	Backend/BLL/AutoMapper/ListingProfile.cs
+4	0	Backend/BLL/BLL.csproj
+3	1	Backend/BLL/Global/Global.cs
+67	0	Backend/BLL/Helper/Upload.cs
+46	0	Backend/BLL/ModelVM/LIstingVM/CreateListingVM.cs
+10	0	Backend/BLL/ModelVM/LIstingVM/ListingImageVM.cs
+23	0	Backend/BLL/ModelVM/LIstingVM/ListingVM.cs
+38	0	Backend/BLL/ModelVM/LIstingVM/UpdateListingVM.cs
+7	0	Backend/BLL/Services/Abstractions/IListingImageService.cs
+10	0	Backend/BLL/Services/Abstractions/IListingService.cs
+76	0	Backend/BLL/Services/Impelementation/ListingService.cs
+1	1	Backend/DAL/Common/ModularDAL.cs
+28	0	Backend/DAL/Common/ModularDataAccessLayer.cs
+100	19	Backend/DAL/Configurations/ListingConfiguration.cs
+34	3	Backend/DAL/Configurations/ListingImageConfiguration.cs
+8	2	Backend/DAL/Database/AppDbContext.cs
+108	14	Backend/DAL/Entities/Listing.cs
+52	10	Backend/DAL/Entities/ListingImage.cs
+11	0	Backend/DAL/Enum/RevisionStatus.cs
+16	2	Backend/DAL/Repo/Abstraction/IListingImageRepository.cs
+31	6	Backend/DAL/Repo/Abstraction/IListingRepository.cs
+82	11	Backend/DAL/Repo/Implementation/ListingImageRepository.cs
+261	10	Backend/DAL/Repo/Implementation/ListingRepository.cs
+6	0	Backend/PL/PL.csproj
+13	6	Backend/PL/Program.cs
+
+f6be7dc04738c900afb369e4174bc9147d67b4df|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-16|fix the merge conflict
+b51376cfb196b69d769cee8af5bdb346ee06e1c6|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-16|Listings Crud for admin,host and user
+21	0	Backend/BLL/AutoMapper/ListingProfile.cs
+1	5	Backend/BLL/BLL.csproj
+1	0	Backend/BLL/Global/Global.cs
+67	0	Backend/BLL/Helper/Upload.cs
+46	0	Backend/BLL/ModelVM/LIstingVM/CreateListingVM.cs
+10	0	Backend/BLL/ModelVM/LIstingVM/ListingImageVM.cs
+23	0	Backend/BLL/ModelVM/LIstingVM/ListingVM.cs
+39	0	Backend/BLL/ModelVM/LIstingVM/UpdateListingVM.cs
+7	0	Backend/BLL/ResponseResult/Response.cs
+7	0	Backend/BLL/Services/Abstractions/IListingImageService.cs
+11	0	Backend/BLL/Services/Abstractions/IListingService.cs
+84	0	Backend/BLL/Services/Impelementation/ListingService.cs
+28	0	Backend/DAL/Common/ModularDataAccessLayer.cs
+100	19	Backend/DAL/Configurations/ListingConfiguration.cs
+34	3	Backend/DAL/Configurations/ListingImageConfiguration.cs
+0	4	Backend/DAL/DAL.csproj
+8	2	Backend/DAL/Database/AppDbContext.cs
+108	14	Backend/DAL/Entities/Listing.cs
+52	10	Backend/DAL/Entities/ListingImage.cs
+11	0	Backend/DAL/Enum/RevisionStatus.cs
+16	2	Backend/DAL/Repo/Abstraction/IListingImageRepository.cs
+31	6	Backend/DAL/Repo/Abstraction/IListingRepository.cs
+82	11	Backend/DAL/Repo/Implementation/ListingImageRepository.cs
+261	10	Backend/DAL/Repo/Implementation/ListingRepository.cs
+6	0	Backend/PL/PL.csproj
+31	16	Backend/PL/Program.cs
+
+b2ddfb46ae374d02d375a11e99394e3ea9becd0c|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-15|notification CRUD operations
+14	0	Backend/BLL/AutoMapper/DomainProfile.cs
+1	9	Backend/BLL/BLL.csproj
+18	0	Backend/BLL/Common/ModularBLL.cs
+14	0	Backend/BLL/Global/Global.cs
+14	0	Backend/BLL/ModelVM/Notification/CreateNotificationVM.cs
+13	0	Backend/BLL/ModelVM/Notification/GetNotificationVM.cs
+5	0	Backend/BLL/ModelVM/Response/Response.cs
+21	0	Backend/BLL/Services/Abstractions/INotificationService.cs
+158	0	Backend/BLL/Services/Impelementation/NotificationService.cs
+28	0	Backend/DAL/Common/ModularDAL.cs
+1	4	Backend/DAL/DAL.csproj
+22	5	Backend/DAL/Entities/Notification.cs
+0	560	Backend/DAL/Migrations/20251110111816_CustomIdentityTableNames.cs
+5	2	Backend/DAL/Migrations/{20251110111816_CustomIdentityTableNames.Designer.cs => 20251114185614_tt.Designer.cs}
+182	181	Backend/DAL/Migrations/{20251110082039_Initial.cs => 20251114185614_tt.cs}
+32	11	Backend/DAL/Migrations/{20251110082039_Initial.Designer.cs => 20251114225739_init.Designer.cs}
+80	0	Backend/DAL/Migrations/20251114225739_init.cs
+21	0	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+14	3	Backend/DAL/Repo/Abstraction/INotificationRepository.cs
+63	1	Backend/DAL/Repo/Implementation/NotificationRepository.cs
+115	0	Backend/PL/Controllers/NotificationController.cs
+3	0	Backend/PL/Global/Global.cs
+1	0	Backend/PL/PL.csproj
+9	14	Backend/PL/Program.cs
+1	1	Backend/PL/appsettings.json
+
+4fd9324305e3cce02af2b8f385f3ac192475b06f|aaliyahhazem|aaliyahhazem@gmail.com|2025-11-11|DAL Setup (Entities - Configurations - Repos) (#3)
+5	0	Backend/BLL/BLL.csproj
+19	0	Backend/DAL/Configurations/AmenityConfiguration.cs
+51	0	Backend/DAL/Configurations/BookingConfiguration.cs
+67	0	Backend/DAL/Configurations/KeywordConfiguration.cs
+51	0	Backend/DAL/Configurations/ListingConfiguration.cs
+20	0	Backend/DAL/Configurations/ListingImageConfiguration.cs
+33	0	Backend/DAL/Configurations/MessageConfiguration.cs
+37	0	Backend/DAL/Configurations/NotificationConfiguration.cs
+37	0	Backend/DAL/Configurations/PaymentConfiguration.cs
+36	0	Backend/DAL/Configurations/ReviewConfiguration.cs
+89	0	Backend/DAL/Configurations/UserConfiguration.cs
+2	7	Backend/DAL/DAL.csproj
+34	0	Backend/DAL/Database/AppDbContext.cs
+28	0	Backend/DAL/Entities/Amenity.cs
+68	0	Backend/DAL/Entities/Booking.cs
+28	0	Backend/DAL/Entities/Keyword.cs
+82	0	Backend/DAL/Entities/Listing.cs
+32	0	Backend/DAL/Entities/ListingImage.cs
+45	0	Backend/DAL/Entities/Message.cs
+43	0	Backend/DAL/Entities/Notification.cs
+53	0	Backend/DAL/Entities/Payment.cs
+45	0	Backend/DAL/Entities/Review.cs
+68	0	Backend/DAL/Entities/User.cs
+9	0	Backend/DAL/Enum/BookingPaymentStatus.cs
+9	0	Backend/DAL/Enum/BookingStatus.cs
+9	0	Backend/DAL/Enum/NotificationType.cs
+10	0	Backend/DAL/Enum/PaymentStatus.cs
+9	0	Backend/DAL/Enum/UserRole.cs
+8	0	Backend/DAL/Global/Global.cs
+848	0	Backend/DAL/Migrations/20251110082039_Initial.Designer.cs
+606	0	Backend/DAL/Migrations/20251110082039_Initial.cs
+848	0	Backend/DAL/Migrations/20251110111816_CustomIdentityTableNames.Designer.cs
+560	0	Backend/DAL/Migrations/20251110111816_CustomIdentityTableNames.cs
+845	0	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+8	0	Backend/DAL/Repo/Abstraction/IAmenityRepository.cs
+9	0	Backend/DAL/Repo/Abstraction/IBookingRepository.cs
+11	0	Backend/DAL/Repo/Abstraction/IGenericRepository.cs
+8	0	Backend/DAL/Repo/Abstraction/IKeywordRepository.cs
+8	0	Backend/DAL/Repo/Abstraction/IListingImageRepository.cs
+8	0	Backend/DAL/Repo/Abstraction/IListingRepository.cs
+8	0	Backend/DAL/Repo/Abstraction/IMessageRepository.cs
+9	0	Backend/DAL/Repo/Abstraction/INotificationRepository.cs
+8	0	Backend/DAL/Repo/Abstraction/IPaymentRepository.cs
+8	0	Backend/DAL/Repo/Abstraction/IReviewRepository.cs
+19	0	Backend/DAL/Repo/Abstraction/IUnitOfWork.cs
+11	0	Backend/DAL/Repo/Abstraction/IUserRepository.cs
+23	0	Backend/DAL/Repo/Implementation/AmenityRepository.cs
+28	0	Backend/DAL/Repo/Implementation/BookingRepository.cs
+24	0	Backend/DAL/Repo/Implementation/GenericRepository.cs
+21	0	Backend/DAL/Repo/Implementation/KeywordRepository.cs
+27	0	Backend/DAL/Repo/Implementation/ListingImageRepository.cs
+22	0	Backend/DAL/Repo/Implementation/ListingRepository.cs
+25	0	Backend/DAL/Repo/Implementation/MessageRepository.cs
+36	0	Backend/DAL/Repo/Implementation/NotificationRepository.cs
+21	0	Backend/DAL/Repo/Implementation/PaymentRepository.cs
+21	0	Backend/DAL/Repo/Implementation/ReviewRepository.cs
+45	0	Backend/DAL/Repo/Implementation/UnitOfWork.cs
+38	0	Backend/DAL/Repo/Implementation/UserRepository.cs
+5	1	Backend/PL/PL.csproj
+156	5	Backend/PL/Program.cs
+5	0	Backend/PL/appsettings.json
+
+ce271740febfc3655187ad0c23a10444733d1f74|aaliyahhazem|aaliyahhazem@gmail.com|2025-11-11|DAL Setup (Entities - Configurations - Repos)
+5	0	Backend/BLL/BLL.csproj
+19	0	Backend/DAL/Configurations/AmenityConfiguration.cs
+51	0	Backend/DAL/Configurations/BookingConfiguration.cs
+67	0	Backend/DAL/Configurations/KeywordConfiguration.cs
+51	0	Backend/DAL/Configurations/ListingConfiguration.cs
+20	0	Backend/DAL/Configurations/ListingImageConfiguration.cs
+33	0	Backend/DAL/Configurations/MessageConfiguration.cs
+37	0	Backend/DAL/Configurations/NotificationConfiguration.cs
+37	0	Backend/DAL/Configurations/PaymentConfiguration.cs
+36	0	Backend/DAL/Configurations/ReviewConfiguration.cs
+89	0	Backend/DAL/Configurations/UserConfiguration.cs
+2	7	Backend/DAL/DAL.csproj
+34	0	Backend/DAL/Database/AppDbContext.cs
+28	0	Backend/DAL/Entities/Amenity.cs
+68	0	Backend/DAL/Entities/Booking.cs
+28	0	Backend/DAL/Entities/Keyword.cs
+82	0	Backend/DAL/Entities/Listing.cs
+32	0	Backend/DAL/Entities/ListingImage.cs
+45	0	Backend/DAL/Entities/Message.cs
+43	0	Backend/DAL/Entities/Notification.cs
+53	0	Backend/DAL/Entities/Payment.cs
+45	0	Backend/DAL/Entities/Review.cs
+68	0	Backend/DAL/Entities/User.cs
+9	0	Backend/DAL/Enum/BookingPaymentStatus.cs
+9	0	Backend/DAL/Enum/BookingStatus.cs
+9	0	Backend/DAL/Enum/NotificationType.cs
+10	0	Backend/DAL/Enum/PaymentStatus.cs
+9	0	Backend/DAL/Enum/UserRole.cs
+8	0	Backend/DAL/Global/Global.cs
+848	0	Backend/DAL/Migrations/20251110082039_Initial.Designer.cs
+606	0	Backend/DAL/Migrations/20251110082039_Initial.cs
+848	0	Backend/DAL/Migrations/20251110111816_CustomIdentityTableNames.Designer.cs
+560	0	Backend/DAL/Migrations/20251110111816_CustomIdentityTableNames.cs
+845	0	Backend/DAL/Migrations/AppDbContextModelSnapshot.cs
+8	0	Backend/DAL/Repo/Abstraction/IAmenityRepository.cs
+9	0	Backend/DAL/Repo/Abstraction/IBookingRepository.cs
+11	0	Backend/DAL/Repo/Abstraction/IGenericRepository.cs
+8	0	Backend/DAL/Repo/Abstraction/IKeywordRepository.cs
+8	0	Backend/DAL/Repo/Abstraction/IListingImageRepository.cs
+8	0	Backend/DAL/Repo/Abstraction/IListingRepository.cs
+8	0	Backend/DAL/Repo/Abstraction/IMessageRepository.cs
+9	0	Backend/DAL/Repo/Abstraction/INotificationRepository.cs
+8	0	Backend/DAL/Repo/Abstraction/IPaymentRepository.cs
+8	0	Backend/DAL/Repo/Abstraction/IReviewRepository.cs
+19	0	Backend/DAL/Repo/Abstraction/IUnitOfWork.cs
+11	0	Backend/DAL/Repo/Abstraction/IUserRepository.cs
+23	0	Backend/DAL/Repo/Implementation/AmenityRepository.cs
+28	0	Backend/DAL/Repo/Implementation/BookingRepository.cs
+24	0	Backend/DAL/Repo/Implementation/GenericRepository.cs
+21	0	Backend/DAL/Repo/Implementation/KeywordRepository.cs
+27	0	Backend/DAL/Repo/Implementation/ListingImageRepository.cs
+22	0	Backend/DAL/Repo/Implementation/ListingRepository.cs
+25	0	Backend/DAL/Repo/Implementation/MessageRepository.cs
+36	0	Backend/DAL/Repo/Implementation/NotificationRepository.cs
+21	0	Backend/DAL/Repo/Implementation/PaymentRepository.cs
+21	0	Backend/DAL/Repo/Implementation/ReviewRepository.cs
+45	0	Backend/DAL/Repo/Implementation/UnitOfWork.cs
+38	0	Backend/DAL/Repo/Implementation/UserRepository.cs
+5	1	Backend/PL/PL.csproj
+156	5	Backend/PL/Program.cs
+5	0	Backend/PL/appsettings.json
+
+599aa735598d5981f20535ea2cb7869c09222db0|AbdelrahmanKhalid710|abdelrahmankhalid148@gmail.com|2025-11-11|Creating Authentication Service and Authentication Guard and Initializing the Firebase project configurations (#2)
+1	0	airbnb-clone
+90	90	frontend/package-lock.json
+12	11	frontend/package.json
+21	3	frontend/src/app/app/core/guards/auth-guard.ts
+4	4	frontend/src/app/app/core/services/{auth.spec.ts => auth-service.spec.ts}
+213	0	frontend/src/app/app/core/services/auth-service.ts
+0	8	frontend/src/app/app/core/services/auth.ts
+31	0	frontend/src/app/app/features/auth/authModels.ts
+13	0	frontend/src/environments/environment.ts
+
+36550d54070fe70bd0297f0fdb5b313c9b4894c0|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-11|Merge pull request #1 from AbdelrahmanMoohamed/master
+1d065fbaeb9fee0fb100defb269804642f7127fa|Abdelrahman Mohamed|168285096+AbdelrahmanMoohamed@users.noreply.github.com|2025-11-11|first sprint for listings(listings - CreateandEdit -Listing) CRUD & Search
+1	0	frontend/angular.json
+31	0	frontend/package-lock.json
+1	0	frontend/package.json
+1	342	frontend/src/app/app.html
+18	1	frontend/src/app/app.routes.ts
+1	1	frontend/src/app/app.ts
+0	0	frontend/src/app/app/features/listings/create-edit/listings-create-edit.css
+74	0	frontend/src/app/app/features/listings/create-edit/listings-create-edit.html
+23	0	frontend/src/app/app/features/listings/create-edit/listings-create-edit.spec.ts
+98	0	frontend/src/app/app/features/listings/create-edit/listings-create-edit.ts
+0	0	frontend/src/app/app/features/listings/detail/listings-detail.css
+45	0	frontend/src/app/app/features/listings/detail/listings-detail.html
+23	0	frontend/src/app/app/features/listings/detail/listings-detail.spec.ts
+31	0	frontend/src/app/app/features/listings/detail/listings-detail.ts
+3	0	frontend/src/app/app/features/listings/list/listing-list.css
+106	0	frontend/src/app/app/features/listings/list/listing-list.html
+23	0	frontend/src/app/app/features/listings/list/listing-list.spec.ts
+80	0	frontend/src/app/app/features/listings/list/listing-list.ts
+0	14	frontend/src/app/app/features/listings/listings-module.ts
+0	10	frontend/src/app/app/features/listings/listings-routing-module.ts
+10	0	frontend/src/app/app/features/listings/models/listing.model.ts
+18	0	frontend/src/app/app/features/listings/services/listing-exists.guard.ts
+15	0	frontend/src/app/app/features/listings/services/listings.spec.ts
+131	0	frontend/src/app/app/features/listings/services/listings.ts
+9	10	frontend/src/index.html
+
+52858e299195b9ca02ff8d94d58fedf32aca4abf|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-04|Add project files.
+30	0	Backend/.dockerignore
+22	0	Backend/BLL/BLL.csproj
+37	0	Backend/Backend.sln
+29	0	Backend/DAL/DAL.csproj
+33	0	Backend/PL/Controllers/WeatherForecastController.cs
+30	0	Backend/PL/Dockerfile
+23	0	Backend/PL/PL.csproj
+6	0	Backend/PL/PL.http
+36	0	Backend/PL/Program.cs
+52	0	Backend/PL/Properties/launchSettings.json
+13	0	Backend/PL/WeatherForecast.cs
+8	0	Backend/PL/appsettings.Development.json
+9	0	Backend/PL/appsettings.json
+17	0	frontend/.editorconfig
+43	0	frontend/.gitignore
+4	0	frontend/.vscode/extensions.json
+20	0	frontend/.vscode/launch.json
+42	0	frontend/.vscode/tasks.json
+59	0	frontend/README.md
+90	0	frontend/angular.json
+10777	0	frontend/package-lock.json
+58	0	frontend/package.json
+-	-	frontend/public/favicon.ico
+12	0	frontend/src/app/app.config.server.ts
+13	0	frontend/src/app/app.config.ts
+0	0	frontend/src/app/app.css
+342	0	frontend/src/app/app.html
+8	0	frontend/src/app/app.routes.server.ts
+3	0	frontend/src/app/app.routes.ts
+25	0	frontend/src/app/app.spec.ts
+12	0	frontend/src/app/app.ts
+12	0	frontend/src/app/app/core/core-module.ts
+17	0	frontend/src/app/app/core/guards/auth-guard.spec.ts
+5	0	frontend/src/app/app/core/guards/auth-guard.ts
+17	0	frontend/src/app/app/core/interceptors/auth-interceptor.spec.ts
+5	0	frontend/src/app/app/core/interceptors/auth-interceptor.ts
+16	0	frontend/src/app/app/core/services/auth.spec.ts
+8	0	frontend/src/app/app/core/services/auth.ts
+14	0	frontend/src/app/app/features/admin/admin-module.ts
+10	0	frontend/src/app/app/features/admin/admin-routing-module.ts
+14	0	frontend/src/app/app/features/auth/auth-module.ts
+10	0	frontend/src/app/app/features/auth/auth-routing-module.ts
+14	0	frontend/src/app/app/features/booking/booking-module.ts
+10	0	frontend/src/app/app/features/booking/booking-routing-module.ts
+14	0	frontend/src/app/app/features/chat/chat-module.ts
+10	0	frontend/src/app/app/features/chat/chat-routing-module.ts
+14	0	frontend/src/app/app/features/listings/listings-module.ts
+10	0	frontend/src/app/app/features/listings/listings-routing-module.ts
+0	0	frontend/src/app/app/shared/components/footer/footer.css
+1	0	frontend/src/app/app/shared/components/footer/footer.html
+23	0	frontend/src/app/app/shared/components/footer/footer.spec.ts
+11	0	frontend/src/app/app/shared/components/footer/footer.ts
+0	0	frontend/src/app/app/shared/components/navbar/navbar.css
+1	0	frontend/src/app/app/shared/components/navbar/navbar.html
+23	0	frontend/src/app/app/shared/components/navbar/navbar.spec.ts
+11	0	frontend/src/app/app/shared/components/navbar/navbar.ts
+12	0	frontend/src/app/app/shared/shared-module.ts
+13	0	frontend/src/index.html
+8	0	frontend/src/main.server.ts
+6	0	frontend/src/main.ts
+68	0	frontend/src/server.ts
+1	0	frontend/src/styles.css
+17	0	frontend/tsconfig.app.json
+34	0	frontend/tsconfig.json
+14	0	frontend/tsconfig.spec.json
+
+d966af6cea28fc688a68b2f5056bf4d0c189cb24|Abdelkarim Ahmed|99295147+Abdelkarimo@users.noreply.github.com|2025-11-04|Add .gitattributes and .gitignore.
+63	0	.gitattributes
+363	0	.gitignore
