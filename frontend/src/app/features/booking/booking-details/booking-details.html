@@ -30,7 +30,7 @@
           Back to Bookings
         </button>
         <h1>Booking Details</h1>
-        <p class="booking-id">Booking #{{ booking.id }}</p>
+        <p class="booking-id">Booking #{{ booking.Id }}</p>
       </div>
       <div class="header-right">
         <button class="btn-print" (click)="printBooking()">
@@ -44,22 +44,22 @@
     <div class="status-cards">
       <div class="status-card">
         <div class="status-label">Booking Status</div>
-        <div class="status-value" [ngClass]="getStatusClass(booking.bookingStatus)">
+        <div class="status-value" [ngClass]="getStatusClass(booking.BookingStatus)">
           <i class="bi bi-circle-fill"></i>
-          {{ booking.bookingStatus }}
+          {{ booking.BookingStatus }}
         </div>
       </div>
       <div class="status-card">
         <div class="status-label">Payment Status</div>
-        <div class="status-value" [ngClass]="getPaymentStatusClass(booking.paymentStatus)">
+        <div class="status-value" [ngClass]="getPaymentStatusClass(booking.PaymentStatus)">
           <i class="bi bi-circle-fill"></i>
-          {{ booking.paymentStatus }}
+          {{ booking.PaymentStatus }}
         </div>
       </div>
       <div class="status-card">
         <div class="status-label">Total Amount</div>
         <div class="status-value amount">
-          ${{ booking.totalPrice | number:'1.2-2' }}
+          ${{ booking.TotalPrice | number:'1.2-2' }}
         </div>
       </div>
     </div>
@@ -75,14 +75,14 @@
         <div class="card-body">
           <div class="info-row">
             <span class="label">Property Name:</span>
-            <span class="value">{{ booking.listingTitle }}</span>
+            <span class="value">{{ booking.ListingTitle }}</span>
           </div>
           <div class="info-row">
             <span class="label">Listing ID:</span>
-            <span class="value">#{{ booking.listingId }}</span>
+            <span class="value">#{{ booking.ListingId }}</span>
           </div>
           <div class="info-row">
-            <a [routerLink]="['/host-listings/detail', booking.listingId]" class="btn-link">
+            <a [routerLink]="['/host-listings/detail', booking.ListingId]" class="btn-link">
               <i class="bi bi-box-arrow-up-right"></i>
               View Property Details
             </a>
@@ -101,9 +101,9 @@
               <div class="date-label">Check-in</div>
               <div class="date-value">
                 <i class="bi bi-calendar-event"></i>
-                {{ booking.checkInDate | date:'fullDate' }}
+                {{ booking.CheckInDate | date:'fullDate' }}
               </div>
-              <div class="date-time">{{ booking.checkInDate | date:'shortTime' }}</div>
+              <div class="date-time">{{ booking.CheckInDate | date:'shortTime' }}</div>
             </div>
             <div class="date-separator">
               <i class="bi bi-arrow-right"></i>
@@ -112,9 +112,9 @@
               <div class="date-label">Check-out</div>
               <div class="date-value">
                 <i class="bi bi-calendar-event"></i>
-                {{ booking.checkOutDate | date:'fullDate' }}
+                {{ booking.CheckOutDate | date:'fullDate' }}
               </div>
-              <div class="date-time">{{ booking.checkOutDate | date:'shortTime' }}</div>
+              <div class="date-time">{{ booking.CheckOutDate | date:'shortTime' }}</div>
             </div>
           </div>
           <div class="info-row nights">
@@ -132,17 +132,17 @@
         <div class="card-body">
           <div class="info-row">
             <span class="label">Booking Date:</span>
-            <span class="value">{{ booking.createdAt | date:'medium' }}</span>
+            <span class="value">{{ booking.CreatedAt | date:'medium' }}</span>
           </div>
           <div class="info-row">
             <span class="label">Guest ID:</span>
-            <span class="value">{{ booking.guestId }}</span>
+            <span class="value">{{ booking.GuestId }}</span>
           </div>
           <div class="info-row">
             <span class="label">Booking Status:</span>
             <span class="value">
-              <span class="badge" [ngClass]="getStatusClass(booking.bookingStatus)">
-                {{ booking.bookingStatus }}
+              <span class="badge" [ngClass]="getStatusClass(booking.BookingStatus)">
+                {{ booking.BookingStatus }}
               </span>
             </span>
           </div>
@@ -158,17 +158,17 @@
           <div class="payment-breakdown">
             <div class="payment-row">
               <span class="label">Subtotal ({{ calculateNights() }} nights):</span>
-              <span class="value">${{ booking.totalPrice | number:'1.2-2' }}</span>
+              <span class="value">${{ booking.TotalPrice | number:'1.2-2' }}</span>
             </div>
             <div class="payment-row total">
               <span class="label">Total Amount:</span>
-              <span class="value">${{ booking.totalPrice | number:'1.2-2' }}</span>
+              <span class="value">${{ booking.TotalPrice | number:'1.2-2' }}</span>
             </div>
           </div>
           <div class="payment-status-row">
             <span class="label">Payment Status:</span>
-            <span class="badge" [ngClass]="getPaymentStatusClass(booking.paymentStatus)">
-              {{ booking.paymentStatus }}
+            <span class="badge" [ngClass]="getPaymentStatusClass(booking.PaymentStatus)">
+              {{ booking.PaymentStatus }}
             </span>
           </div>
         </div>
@@ -177,7 +177,7 @@
     </div>
 
     <!-- Action Buttons -->
-    <div class="action-buttons" *ngIf="booking.bookingStatus === 'Pending' || booking.bookingStatus === 'Confirmed'">
+    <div class="action-buttons" *ngIf="booking.BookingStatus === 'Pending' || booking.BookingStatus === 'Confirmed'">
       <button class="btn-broker-secondary">
         <i class="bi bi-telephone"></i>
         Contact Support

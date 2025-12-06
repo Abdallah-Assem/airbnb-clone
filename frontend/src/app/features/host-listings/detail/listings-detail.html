@@ -379,8 +379,8 @@
             <select id="bookingId" name="bookingId" class="broker-input"
                     [(ngModel)]="newReview.bookingId" required>
               <option value="0" disabled>-- Select a completed booking to review --</option>
-              <option *ngFor="let booking of userBookingsForThisListing" [value]="booking.id">
-                Booking #{{ booking.id }} - {{ booking.checkInDate | date:'shortDate' }} to {{ booking.checkOutDate | date:'shortDate' }}
+              <option *ngFor="let booking of userBookingsForThisListing" [value]="booking.Id">
+                Booking #{{ booking.Id }} - {{ booking.CheckInDate | date:'shortDate' }} to {{ booking.CheckOutDate | date:'shortDate' }}
               </option>
             </select>
             <small class="text-muted">You can only review properties after your stay is completed</small>
@@ -419,7 +419,7 @@
       </div>
 
       <!-- No Booking Message -->
-      <div class="broker-no-booking-message" *ngIf="!canWriteReview && userBookings.length >= 0">
+      <div class="broker-no-booking-message" *ngIf="!canWriteReview && isUserLoggedIn">
         <div class="no-booking-content">
           <i class="bi bi-calendar-x"></i>
           <h4>Book this property to leave a review</h4>

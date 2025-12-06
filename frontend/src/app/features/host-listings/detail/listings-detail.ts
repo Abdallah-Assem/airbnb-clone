@@ -12,6 +12,7 @@ import { ReviewService } from '../../../core/services/review/review.service';
 import { FavoriteStoreService } from '../../../core/services/favoriteService/favorite-store-service';
 import { FavoriteButton } from '../../favorites/favorite-button/favorite-button';
 import { BookingService, BookingVM } from '../../../core/services/Booking/booking.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-listings-detail',
@@ -26,6 +27,7 @@ export class ListingsDetail implements OnInit, OnDestroy {
   private listingService = inject(ListingService);
   private reviewService = inject(ReviewService);
   private bookingService = inject(BookingService);
+  private authService = inject(AuthService);
   private cdr = inject(ChangeDetectorRef);
   private platformId = inject(PLATFORM_ID);
   private sub: Subscription | null = null;
@@ -37,6 +39,7 @@ export class ListingsDetail implements OnInit, OnDestroy {
   currentImageIndex = 0;
   canEdit = false; // Add edit permission property
   isFavorited = false;
+  isUserLoggedIn = false;
 
 
   //Bookings Props
@@ -80,8 +83,7 @@ Math: any;
           this.loading = false;
           try { this.cdr.detectChanges(); } catch { }
           void this.initDetailMap();
-          this.loadReviews(); // LOAD REVIEWS HERE
-          this.loadUserBookings(); // LOAD USER BOOKINGS
+          this.loadReviews(); // This will also load user bookings
         } else {
           this.error = response.message || 'Failed to load listing';
           this.loading = false;
@@ -217,31 +219,91 @@ Math: any;
   reviewImageUrls: string[] = [];
 
   loadUserBookings() {
+    // Check if user is authenticated
+    this.isUserLoggedIn = this.authService.isAuthenticated();
+
+    if (!this.isUserLoggedIn) {
+      console.log('User is not authenticated, skipping booking load');
+      this.canWriteReview = false;
+      try { this.cdr.detectChanges(); } catch { }
+      return;
+    }
+
+    console.log('Loading user bookings for listing:', this.listing?.id);
+
     this.bookingService.getMyBookings().subscribe({
       next: (bookings) => {
-        this.userBookings = bookings;
-        // Filter bookings for this specific listing
-        this.userBookingsForThisListing = bookings.filter(b => b.listingId === this.listing?.id);
+        console.log('All user bookings:', bookings);
+        console.log('Current listing ID:', this.listing?.id, 'Type:', typeof this.listing?.id);
 
-        // Check if user has completed bookings for this listing
-        const hasCompletedBooking = this.userBookingsForThisListing.some(
-          b => b.bookingStatus === 'Completed'
-        );
-        this.canWriteReview = hasCompletedBooking;
-
-        // Auto-select first completed booking
-        const firstCompleted = this.userBookingsForThisListing.find(
-          b => b.bookingStatus === 'Completed'
-        );
-        if (firstCompleted) {
-          this.newReview.bookingId = firstCompleted.id;
+        // Debug: Log all properties of first booking
+        if (bookings.length > 0) {
+          console.log('First booking object:', bookings[0]);
+          console.log('First booking keys:', Object.keys(bookings[0]));
         }
+
+        this.userBookings = bookings;
+
+        // Filter bookings for this specific listing (use PascalCase from backend)
+        this.userBookingsForThisListing = bookings.filter(b => {
+          console.log(`Comparing booking ${b.Id}: ListingId=${b.ListingId} (type: ${typeof b.ListingId}) vs listing.id=${this.listing?.id} (type: ${typeof this.listing?.id})`);
+          return b.ListingId === this.listing?.id;
+        });
+        console.log('Bookings for this listing:', this.userBookingsForThisListing);
+
+        // Check if user has eligible bookings for this listing
+        // Eligible = Completed OR (Confirmed and checkout date has passed)
+        // TEMPORARY: Also allow Confirmed bookings for testing
+        const now = new Date();
+        console.log('Current date/time:', now.toISOString());
+
+        const eligibleBookings = this.userBookingsForThisListing.filter(b => {
+          const checkoutDate = new Date(b.CheckOutDate);
+          const isCompleted = b.BookingStatus === 'Completed';
+          const isPastCheckout = b.BookingStatus === 'Confirmed' && checkoutDate < now;
+          const isConfirmed = b.BookingStatus === 'Confirmed'; // TEMPORARY: Allow any confirmed booking
+
+          console.log(`Booking ${b.Id}:`);
+          console.log(`  - Raw status: "${b.BookingStatus}" (type: ${typeof b.BookingStatus})`);
+          console.log(`  - Raw checkout: "${b.CheckOutDate}"`);
+          console.log(`  - Parsed checkout date:`, checkoutDate.toISOString());
+          console.log(`  - Is past checkout? ${checkoutDate < now} (${checkoutDate.getTime()} < ${now.getTime()})`);
+          console.log(`  - isCompleted: ${isCompleted}`);
+          console.log(`  - isPastCheckout: ${isPastCheckout}`);
+          console.log(`  - isConfirmed: ${isConfirmed}`);
+
+          // Check if this booking already has a review
+          const hasReview = this.reviews.some(r => r.bookingId === b.Id);
+          console.log(`  - hasReview: ${hasReview}`);
+          console.log(`  - Eligible: ${(isCompleted || isPastCheckout || isConfirmed) && !hasReview}`);
+
+          // TEMPORARY: Allow Completed, past Confirmed, OR any Confirmed booking for testing
+          return (isCompleted || isPastCheckout || isConfirmed) && !hasReview;
+        });
+
+        console.log('Eligible bookings for review:', eligibleBookings);
+        this.canWriteReview = eligibleBookings.length > 0;
+
+        // Auto-select first eligible booking
+        if (eligibleBookings.length > 0) {
+          this.newReview.bookingId = eligibleBookings[0].Id;
+        }
+
+        // Update the filtered list to only show eligible bookings
+        this.userBookingsForThisListing = eligibleBookings;
+
+        console.log('canWriteReview:', this.canWriteReview);
 
         try { this.cdr.detectChanges(); } catch { }
       },
       error: (err) => {
-        console.error('Failed to load user bookings', err);
+        console.error('Failed to load user bookings - Error:', err);
+        console.log('Error status:', err.status);
+        console.log('Error message:', err.message);
         this.canWriteReview = false;
+        // If user is not authenticated, silently set canWriteReview to false
+        // instead of showing an error
+        try { this.cdr.detectChanges(); } catch { }
       }
     });
   }
@@ -253,6 +315,8 @@ Math: any;
       next: (reviews: ReviewVM[]) => {
         this.reviews = reviews;
         this.calculateRatingSummary();
+        // Load user bookings after reviews are loaded so we can check for duplicates
+        this.loadUserBookings();
       },
       error: (err) => console.error('Failed to load reviews', err)
     });
@@ -315,7 +379,7 @@ Math: any;
     this.reviewService.createReview(model).subscribe({
       next: () => {
         alert('Review submitted successfully!');
-        this.loadReviews(); // refresh after submission
+        this.loadReviews(); // This will refresh reviews and reload bookings
         this.newReview.rating = 0;
         this.newReview.comment = '';
         this.newReview.bookingId = 0;

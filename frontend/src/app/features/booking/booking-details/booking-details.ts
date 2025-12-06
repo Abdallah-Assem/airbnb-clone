@@ -79,8 +79,8 @@ export class BookingDetails implements OnInit {
 
   calculateNights(): number {
     if (!this.booking) return 0;
-    const checkIn = new Date(this.booking.checkInDate);
-    const checkOut = new Date(this.booking.checkOutDate);
+    const checkIn = new Date(this.booking.CheckInDate);
+    const checkOut = new Date(this.booking.CheckOutDate);
     const diffTime = Math.abs(checkOut.getTime() - checkIn.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
