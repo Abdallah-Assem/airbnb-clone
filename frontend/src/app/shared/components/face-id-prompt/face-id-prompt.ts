@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
@@ -20,12 +20,16 @@ export class FaceIdPromptComponent implements OnInit, OnDestroy {
   isLoading = false;
 
   private auth = inject(AuthService);
+  private cdr = inject(ChangeDetectorRef);
   private sub = new Subscription();
 
   ngOnInit() {
+    console.log('FaceIdPromptComponent initialized');
+
     // Check if user is authenticated and doesn't have face ID
     this.sub.add(
       this.auth.isAuthenticated$.subscribe(isAuth => {
+        console.log('FaceIdPrompt: isAuthenticated changed to:', isAuth);
         if (isAuth) {
           this.checkFaceIdStatus();
         } else {
@@ -40,12 +44,19 @@ export class FaceIdPromptComponent implements OnInit, OnDestroy {
     const hasFaceId = localStorage.getItem('hasFaceId');
     const dismissed = localStorage.getItem('faceIdPromptDismissed');
 
+    console.log('FaceIdPrompt: Checking status - hasFaceId:', hasFaceId, 'dismissed:', dismissed);
+
     // If user doesn't have face ID and hasn't dismissed the prompt
     if (hasFaceId === 'false' && dismissed !== 'true') {
+      console.log('FaceIdPrompt: Will show prompt in 2 seconds');
       // Show prompt after a short delay for better UX
       setTimeout(() => {
         this.showPrompt = true;
+        this.cdr.detectChanges();
+        console.log('FaceIdPrompt: Prompt should now be visible');
       }, 2000);
+    } else {
+      console.log('FaceIdPrompt: Not showing prompt. Conditions not met.');
     }
   }
 
