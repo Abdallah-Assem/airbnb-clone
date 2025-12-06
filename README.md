@@ -1,6 +1,6 @@
-# Airbnb Clone - Full-Stack Rental Platform
+# Airbnb Clone - "The Broker | السمسارة"
 
-A production-ready, full-stack property rental platform inspired by Airbnb, featuring real-time messaging, booking management, payment integration, and multi-language support.
+A production-ready, full-stack Egyptian-themed property rental platform featuring AI-powered chatbot, Face ID authentication, real-time messaging, Stripe payment integration, and comprehensive multi-language support (English/Arabic with RTL).
 
 ## 📋 Table of Contents
 - [Project Overview](#project-overview)
@@ -19,26 +19,65 @@ A production-ready, full-stack property rental platform inspired by Airbnb, feat
 
 ## 🎯 Project Overview
 
-This is a comprehensive rental property platform that allows users to:
-- Browse and search properties with interactive maps
-- Book accommodations with integrated payment processing
-- Real-time messaging between guests and hosts
+A comprehensive, Egyptian-themed property rental platform branded as **"The Broker | السمسارة"** that allows users to:
+- Browse and search properties with advanced filters and interactive maps
+- Book accommodations with integrated Stripe payment processing
+- Real-time messaging between guests and hosts via SignalR
 - Receive instant notifications for bookings, payments, and messages
-- Manage favorites and reviews
+- Get intelligent assistance from AI-powered RAG chatbot with NLP
+- Manage favorites and write reviews
+- Secure biometric authentication with Face ID
 - Admin dashboard for listing approvals and user management
-- Multi-language support (English, Arabic)
-- Social authentication (Google, Facebook)
+- Complete multi-language support (English/Arabic) with RTL
+- Social authentication (Google via Firebase)
+- Personalized recommendations based on user preferences
 
-### Key Features
-- ✅ **Real-time Communication**: SignalR-powered messaging and notifications
-- ✅ **Payment Processing**: Stripe integration for secure transactions
-- ✅ **Admin Workflow**: Listing approval/rejection system
-- ✅ **Geolocation**: Interactive maps with Leaflet.js
-- ✅ **Internationalization**: Full i18n support with RTL for Arabic
-- ✅ **Social Auth**: Google and Facebook OAuth integration
-- ✅ **Email Notifications**: Automated emails for bookings, payments, and reminders
-- ✅ **Onboarding**: First-time user walkthrough
-- ✅ **Responsive Design**: Bootstrap 5 responsive UI
+### 🌟 Key Features
+
+#### **AI & Intelligence**
+- ✅ **RAG Chatbot**: Advanced NLP-powered assistant with semantic intent detection
+- ✅ **Site Information**: Comprehensive platform knowledge in EN/AR
+- ✅ **Smart Recommendations**: Personalized listing sorting based on user behavior
+- ✅ **Intent Recognition**: Understands search, booking, listing, and help queries
+
+#### **Authentication & Security**
+- ✅ **Face ID**: Biometric authentication for quick secure login
+- ✅ **JWT Tokens**: Secure token-based authentication
+- ✅ **Social Auth**: Google OAuth via Firebase
+- ✅ **Role-Based Access**: Admin, Host, and Guest roles
+- ✅ **Persistent Sessions**: Face ID prompt for unregistered users
+
+#### **Real-Time Features**
+- ✅ **SignalR Messaging**: Instant chat between users
+- ✅ **Live Notifications**: Real-time booking and payment alerts
+- ✅ **Multi-Connection Support**: Same user across multiple devices
+- ✅ **Optimistic UI**: Instant updates with background sync
+
+#### **Payment & Booking**
+- ✅ **Stripe Integration**: Secure payment processing
+- ✅ **Payment Retry**: Failed payment recovery mechanism
+- ✅ **Booking Management**: Complete reservation lifecycle
+- ✅ **Automated Emails**: Booking confirmations and reminders
+
+#### **Listings & Search**
+- ✅ **Advanced Filters**: Destination, type, bedrooms, bathrooms, price
+- ✅ **Interactive Maps**: Leaflet.js with location clustering
+- ✅ **Image Placeholders**: Fallback for failed image loads
+- ✅ **Admin Approval**: Listing review workflow
+- ✅ **Favorites System**: Wishlist with counter
+
+#### **Internationalization**
+- ✅ **Full i18n**: Complete English and Arabic translations
+- ✅ **RTL Support**: Right-to-left layout for Arabic
+- ✅ **Language Switcher**: Dynamic language toggle
+- ✅ **Bilingual Chatbot**: Context-aware responses
+
+#### **User Experience**
+- ✅ **Onboarding Flow**: First-time user walkthrough
+- ✅ **Responsive Design**: Mobile-first Bootstrap 5 UI
+- ✅ **Egyptian Theme**: Culturally adapted branding
+- ✅ **Email Notifications**: Comprehensive email system
+- ✅ **Background Jobs**: Automated cleanup tasks
 
 ---
 
@@ -132,6 +171,7 @@ This is a comprehensive rental property platform that allows users to:
 | **Auth** | Firebase Auth | 11.10.0 | Social authentication |
 | **i18n** | @ngx-translate | 15.0.0 | Internationalization |
 | **Maps** | Leaflet.js | 1.9.4 | Interactive maps |
+| **Alerts** | SweetAlert2 | 11.26.3 | Beautiful modals |
 | **State Management** | RxJS + Custom Stores | 7.8.0 | Reactive state |
 | **HTTP Client** | Angular HttpClient | 20.3.10 | API communication |
 | **SSR** | Angular Universal | 20.3.9 | Server-side rendering |
@@ -159,13 +199,16 @@ PL/
 │   ├── AuthController.cs         # Login, Register, Social Auth
 │   ├── ListingsController.cs     # CRUD for listings
 │   ├── BookingController.cs      # Booking management
-│   ├── PaymentController.cs      # Payment operations
+│   ├── PaymentController.cs      # Payment operations (Stripe)
 │   ├── MessageController.cs      # Messaging endpoints
 │   ├── NotificationController.cs # Notification management
 │   ├── ReviewController.cs       # Review system
 │   ├── FavoriteController.cs     # Favorites/wishlists
+│   ├── FaceIdController.cs       # Face ID registration/login
 │   ├── AdminController.cs        # Admin operations
-│   └── MapController.cs          # Geocoding services
+│   ├── MapController.cs          # Geocoding services
+│   ├── CountsController.cs       # Statistics endpoints
+│   └── DebugController.cs        # Development utilities
 ├── Hubs/                 # SignalR real-time hubs
 │   ├── MessageHub.cs             # Real-time chat
 │   └── NotificationHub.cs        # Real-time notifications
@@ -197,9 +240,12 @@ BLL/Services/Implementation/
 ├── NotificationService.cs  # Notification creation & distribution
 ├── ReviewService.cs        # Review posting & rating calculations
 ├── FavoriteService.cs      # Wishlist management
-├── EmailService.cs         # Transactional emails
+├── FaceIdService.cs        # Face ID registration & verification
+├── EmailService.cs         # Transactional emails (MailKit)
 ├── MapService.cs           # Geocoding & reverse geocoding
 ├── AdminService.cs         # Admin dashboard operations
+├── RagChatService.ts       # AI chatbot with NLP (Frontend)
+├── SiteInfoService.ts      # Platform information (Frontend)
 └── TokenService.cs         # JWT token generation/validation
 ```
 
@@ -309,6 +355,10 @@ frontend/src/
 │   │   ├── interceptors/
 │   │   │   └── auth-interceptor.ts     # JWT token injection
 │   │   ├── models/                     # TypeScript interfaces
+│   │   │   ├── chat.model.ts           # Chatbot models
+│   │   │   ├── listing.model.ts        # Listing interfaces
+│   │   │   ├── booking.ts              # Booking types
+│   │   │   └── ... (others)
 │   │   └── services/
 │   │       ├── auth.service.ts         # Authentication logic
 │   │       ├── message-hub.ts          # SignalR messaging client
@@ -316,33 +366,49 @@ frontend/src/
 │   │       ├── notification-hub.ts     # SignalR notification client
 │   │       ├── notification-store.ts   # Notification state
 │   │       ├── language.service.ts     # i18n language switching
+│   │       ├── user-preferences/       # Personalization service
 │   │       ├── listings/               # Listing services
 │   │       ├── favoriteService/        # Favorite services
+│   │       ├── chat/                   # Chatbot services
+│   │       │   ├── rag-chat.service.ts # AI chatbot with NLP
+│   │       │   └── site-info.service.ts# Platform information
 │   │       ├── map/                    # Map services
 │   │       └── api/                    # HTTP API clients
 │   ├── features/                # Feature modules
-│   │   ├── auth/                       # Login, Register
+│   │   ├── auth/                       # Login, Register, Face ID
+│   │   │   ├── login/
+│   │   │   ├── register/
+│   │   │   ├── face-capture/           # Face ID capture
+│   │   │   └── face-login/             # Face ID login
 │   │   ├── home-page/                  # Landing page
-│   │   ├── listings/                   # Property listings
-│   │   │   ├── list/
-│   │   │   ├── detail/
-│   │   │   ├── create-edit/
-│   │   │   ├── user-listings/
-│   │   │   └── admin-listings/
+│   │   ├── listings/                   # Property listings (admin)
+│   │   ├── listings-page/              # Public listings
+│   │   │   └── listing-card/           # Listing card with placeholders
+│   │   ├── guest-listings/             # Guest view
+│   │   ├── host-listings/              # Host view
+│   │   ├── host/                       # Host dashboard
 │   │   ├── booking/                    # Booking flow
 │   │   ├── payment/                    # Payment processing
 │   │   ├── message/                    # Chat interface
+│   │   ├── chat/                       # Chat module
 │   │   ├── notification/               # Notification center
 │   │   ├── favorites/                  # Wishlist
 │   │   ├── admin/                      # Admin dashboard
 │   │   ├── Map/                        # Map view
+│   │   ├── about/                      # About page
+│   │   ├── contact/                    # Contact page
 │   │   └── onboarding/                 # First-time walkthrough
 │   └── shared/                  # Shared components
 │       └── components/
-│           └── navbar/                 # Navigation bar
+│           ├── navbar/                 # Navigation with Face ID prompt
+│           ├── footer/
+│           └── broker-chat/            # AI chatbot UI
 ├── assets/                      # Static assets
+│   ├── images/                         # Images & placeholders
+│   └── i18n/                           # Translation files (EN/AR)
 ├── environments/                # Environment configs
-└── styles/                      # Global styles
+└── styles/                      # Global styles & RTL
+    └── rtl.css                         # Right-to-left styles
 ```
 
 ### State Management Pattern
@@ -1521,4 +1587,32 @@ For issues and questions:
 
 ---
 
-**Last Updated**: November 30, 2024
+**Last Updated**: December 6, 2025
+
+---
+
+## 🎯 Recent Updates (December 2025)
+
+### Latest Features Added:
+- ✅ **AI-Powered RAG Chatbot** with NLP intent detection and semantic analysis
+- ✅ **Comprehensive Site Information Service** with bilingual platform knowledge
+- ✅ **Face ID Biometric Authentication** with persistent setup prompts
+- ✅ **Smart User Preferences** tracking and personalized recommendations
+- ✅ **Enhanced Payment System** with retry mechanism for failed payments
+- ✅ **Background Jobs** for automated notification and message cleanup
+- ✅ **Image Placeholder System** with graceful fallbacks for failed loads
+- ✅ **Improved Error Handling** with field-specific validation messages
+- ✅ **Enhanced Review System** with comprehensive seeder and rating calculations
+- ✅ **Complete Email System** with transactional notifications
+
+### Team Contributions (32 Days):
+- **Total Commits**: 112 commits (excluding merges)
+- **Lines of Code**: ~65,000+ lines (net contribution)
+- **Contributors**: 5 developers
+  - **Abdelkarim Ahmed** (Lead): AI chatbot, i18n, theme, real-time features
+  - **AbdelrahmanKhalid710**: Stripe payments, bookings, favorites, background jobs
+  - **Abdelrahman Mohamed**: Listings CRUD, filters, maps, host features
+  - **aaliyahhazem**: Email system, Google auth, DAL setup, home page
+  - **AbdallahAssem**: Admin dashboard, Face ID UI
+
+See [PROJECT_CONTRIBUTION_ANALYSIS.md](PROJECT_CONTRIBUTION_ANALYSIS.md) for detailed breakdown.
