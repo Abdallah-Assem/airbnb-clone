@@ -183,7 +183,7 @@ export class Login {
       next: (response) => {
         this.isLoading = false;
         this.successMessage = this.translate.instant('auth.loginSuccess');
-        
+
         this.faceCapture.closeModal();
         setTimeout(() => this.navigateAfterLogin(), 800);
       },
@@ -207,10 +207,11 @@ export class Login {
   private navigateAfterLogin() {
     const isFirstLogin = localStorage.getItem('isFirstLogin') === 'true';
 
-    if (isFirstLogin) {
-      this.router.navigate(['/onboarding']);
-    } else if (this.auth.isAdmin()) {
+    // Admins always go to admin dashboard, even on first login
+    if (this.auth.isAdmin()) {
       this.router.navigate(['/admin']);
+    } else if (isFirstLogin) {
+      this.router.navigate(['/onboarding']);
     } else {
       this.router.navigate(['/']);
     }

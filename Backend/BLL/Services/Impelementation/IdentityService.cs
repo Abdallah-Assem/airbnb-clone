@@ -95,6 +95,26 @@ namespace BLL.Services.Impelementation
 
                 await _userManager.AddToRoleAsync(user, role);
 
+                // Send welcome notification to the new user
+                try
+                {
+                    var welcomeNotification = new CreateNotificationVM
+                    {
+                        UserId = user.Id,
+                        Type = DAL.Enum.NotificationType.General,
+                        Title = "Welcome to Airbnb Clone!",
+                        Message = $"Hi {user.FullName}, welcome to our platform! We're excited to have you here. Click the button below to complete your profile setup and start exploring amazing properties.",
+                        ActionUrl = "/onboarding",
+                        IsRead = false
+                    };
+                    await _notificationService.CreateAsync(welcomeNotification);
+                }
+                catch (Exception notifEx)
+                {
+                    Console.WriteLine($"Failed to send welcome notification: {notifEx.Message}");
+                    // Don't fail registration if notification fails
+                }
+
                 // Generate token for the new user
                 var token = _tokenService.GenerateToken(user.Id, role, user.FullName);
 

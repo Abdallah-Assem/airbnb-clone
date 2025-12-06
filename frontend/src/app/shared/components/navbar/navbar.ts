@@ -42,6 +42,8 @@ export class Navbar implements OnInit, OnDestroy {
 
   isAuthenticated = false;
   userFullName: string | null = null;
+  userThumbnail: string | null = null;
+  userInitials: string | null = null;
 
   private docClickUnlisten?: () => void;
 
@@ -63,8 +65,26 @@ export class Navbar implements OnInit, OnDestroy {
         this.isAuthenticated = isAuth;
         // Get user's full name when authenticated
         this.userFullName = isAuth ? this.auth.getUserFullName() : null;
+        
+        // Get user thumbnail and initials from localStorage
+        if (isAuth) {
+          this.userThumbnail = localStorage.getItem('userThumbnail');
+          this.userInitials = localStorage.getItem('userInitials');
+          
+          // If no initials stored but we have a full name, generate them
+          if (!this.userInitials && this.userFullName) {
+            this.userInitials = this.generateInitials(this.userFullName);
+          }
+        } else {
+          this.userThumbnail = null;
+          this.userInitials = null;
+        }
+        
         console.log('Navbar: Authentication state changed:', isAuth);
         console.log('Navbar: User full name:', this.userFullName);
+        console.log('Navbar: User thumbnail:', this.userThumbnail ? 'Available' : 'Not available');
+        console.log('Navbar: User initials:', this.userInitials);
+        
         // Load notifications and messages when user logs in
         if (isAuth) {
           console.log('User authenticated, loading unread notifications and messages');
@@ -228,6 +248,17 @@ export class Navbar implements OnInit, OnDestroy {
   }
 
   trackById(_index: number, item: NotificationDto) { return item.id; }
+
+  private generateInitials(fullName: string): string {
+    if (!fullName) return '';
+    
+    const names = fullName.trim().split(' ');
+    if (names.length === 1) {
+      return names[0].charAt(0).toUpperCase();
+    }
+    
+    return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
+  }
 
   ngOnDestroy() {
     this.sub.unsubscribe();

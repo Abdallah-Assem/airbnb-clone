@@ -199,6 +199,7 @@ export class AuthService {
         const loginResponse = res?.result;
         const token = loginResponse?.token;
         const isFirstLogin = loginResponse?.isFirstLogin;
+        const user = loginResponse?.user;
 
         if (token) {
           // remove any existing token first (handle multi-login in same client)
@@ -210,6 +211,19 @@ export class AuthService {
           if (this.isBrowser && isFirstLogin !== undefined) {
             localStorage.setItem('isFirstLogin', isFirstLogin.toString());
             console.log('isFirstLogin flag stored:', isFirstLogin);
+          }
+
+          // Save user thumbnail if available
+          if (this.isBrowser && user) {
+            if (user.profileImageUrl) {
+              localStorage.setItem('userThumbnail', user.profileImageUrl);
+            }
+            
+            // Generate and save initials if no profile image
+            if (!user.profileImageUrl && user.fullName) {
+              const initials = this.generateInitials(user.fullName);
+              localStorage.setItem('userInitials', initials);
+            }
           }
 
           // Extract user data from token and save to USER_KEY for new AuthService
@@ -349,5 +363,19 @@ export class AuthService {
    */
   verifyFaceExists(userId: string): Observable<any> {
     return this.http.get<any>(`http://localhost:5235/api/faceid/verify/${userId}`);
+  }
+
+  /**
+   * Generate user initials from full name
+   */
+  private generateInitials(fullName: string): string {
+    if (!fullName) return '';
+    
+    const names = fullName.trim().split(' ');
+    if (names.length === 1) {
+      return names[0].charAt(0).toUpperCase();
+    }
+    
+    return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
   }
 }

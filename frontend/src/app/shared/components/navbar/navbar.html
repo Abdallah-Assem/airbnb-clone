@@ -129,13 +129,26 @@
           <!-- User Menu -->
           <li class="right nav-item dropdown user-dropdown">
             <a class="nav-link dropdown-toggle user-menu" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi bi-person-circle me-2"></i>
+              <!-- User Thumbnail or Initials Avatar -->
+              <div class="user-avatar me-2">
+                <img *ngIf="userThumbnail" [src]="userThumbnail" alt="User Avatar" class="avatar-img">
+                <div *ngIf="!userThumbnail && userInitials" class="avatar-initials">{{ userInitials }}</div>
+                <i *ngIf="!userThumbnail && !userInitials" class="bi bi-person-circle"></i>
+              </div>
               <span class="user-name" *ngIf="userFullName">{{ userFullName }}</span>
               <span class="user-name" *ngIf="!userFullName">{{ 'navbar.account' | translate }}</span>
             </a>
 
             <ul class="dropdown-menu dropdown-menu-end">
-              <li *ngIf="userFullName" class="dropdown-header">{{ userFullName }}</li>
+              <li *ngIf="userFullName" class="dropdown-header">
+                <div class="d-flex align-items-center">
+                  <div class="user-avatar-large me-2">
+                    <img *ngIf="userThumbnail" [src]="userThumbnail" alt="User Avatar" class="avatar-img-large">
+                    <div *ngIf="!userThumbnail && userInitials" class="avatar-initials-large">{{ userInitials }}</div>
+                  </div>
+                  <div>{{ userFullName }}</div>
+                </div>
+              </li>
               <li><a class="dropdown-item" href="#">{{ 'navbar.profile' | translate }}</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#" (click)="auth.logout()">{{ 'navbar.logOut' | translate }}</a></li>

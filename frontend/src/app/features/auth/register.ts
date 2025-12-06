@@ -193,9 +193,30 @@ export class Register {
     console.log('Register payload:', payload);
 
     this.auth.register(payload).subscribe({
-      next: () => {
+      next: (response) => {
         this.isLoading = false;
         this.successMessage = this.translate.instant('auth.registerSuccess') || 'Registration successful!';
+
+        // Store the token from registration response
+        if (response?.result?.Token) {
+          localStorage.setItem('token', response.result.Token);
+          
+          // Store user info including thumbnail if available
+          if (response.result.User) {
+            const user = response.result.User;
+            
+            // Save user thumbnail to localStorage if available
+            if (user.ProfileImageUrl) {
+              localStorage.setItem('userThumbnail', user.ProfileImageUrl);
+            }
+            
+            // Generate initials-based thumbnail if no profile image
+            if (!user.ProfileImageUrl && user.FullName) {
+              const initials = this.generateInitials(user.FullName);
+              localStorage.setItem('userInitials', initials);
+            }
+          }
+        }
 
         // Show face registration suggestion prompt immediately
         this.showFaceRegistrationPrompt = true;
@@ -257,6 +278,14 @@ export class Register {
       return;
     }
 
+    // Convert the captured face image to base64 for thumbnail storage
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      // Save the face image as thumbnail in localStorage
+      localStorage.setItem('userThumbnail', e.target.result);
+    };
+    reader.readAsDataURL(file);
+
     this.auth.registerFace(userId, file).subscribe({
       next: (res) => {
         console.log('Face registration successful:', res);
@@ -284,6 +313,17 @@ export class Register {
   onFaceCaptureCancelled() {
     this.showFaceRegistrationPrompt = false;
     this.proceedToNextStep();
+  }
+
+  private generateInitials(fullName: string): string {
+    if (!fullName) return '';
+    
+    const names = fullName.trim().split(' ');
+    if (names.length === 1) {
+      return names[0].charAt(0).toUpperCase();
+    }
+    
+    return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
   }
 
   private proceedToNextStep() {
